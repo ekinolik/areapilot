@@ -1,0 +1,153 @@
+/* http://meyerweb.com/eric/tools/css/reset/ */
+/* v1.0 | 20080212 */
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
+
+body { line-height: 1; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+
+/* remove the silly firefox outline on links */
+a:focus {       outline: none; border: none; }
+
+/* tables still need 'cellspacing="0"' in the markup */
+table { border-collapse: collapse;      border-spacing: 0; }
+
+/* P.I.E. FLOAT CLEARING
+See http://www.positioniseverything.net/easyclearing.html */
+
+.clearfix:after { content: "."; clear: both; height: 0; visibility: hidden; display: block; }
+
+.clearfix { display: inline-block; /* Fixes IE/Mac */ }
+
+/* Hides from IE-mac \*/ * html .clearfix {height: 1%;} .clearfix {display: block;} /* End hide from IE-mac */
+
+/* Fixes IE's default image-scaling to a smoother, bicubic resizing */
+* img { -ms-interpolation-mode:bicubic; }
+
+/* ========== */
+/* ! Basics   */
+/* ========== */
+
+html, body {
+   height: 100%;
+   overflow: auto;
+}
+
+body {
+   background: #fff;
+   color: #000;
+   font-family: "Trebuchet MS", Helvetica, Arial, Geneva, sans-serif;
+   font-size: 12pt;
+}
+
+#container {
+   margin: 0 auto;
+   width: 60em;
+}
+
+#mainarea {
+   margin: 0 auto;
+   position: relative;
+   width: 60em;
+}
+
+span.errormsg {
+   margin: 0 auto;
+   color: red;
+}
+
+/* ========== */
+/* ! Blocks   */
+/* ========== */
+
+.full_form {
+   margin: 0 auto;
+   width: 20em;
+}
+
+#date_selector {
+   margin: 5em 2em;
+   width: 20em;
+   float: left;
+}
+
+#interval_view {
+   float: left;
+   margin: 3em 0;
+   width: 30em;
+}
+
+table.interval {
+   width: 100%;
+   font-size: 9pt;
+}
+
+table.interval td {
+   width: 25%;
+}
+
+table.interval td.usage {
+   text-align: right;
+}
+
+table.interval td.totals {
+   font-weight: bold;
+}
+/* ========== */
+/* ! Forms    */
+/* ========== */
+
+form.full {
+   margin: 2em auto;
+   width: 30em;
+}
+
+form.full h3,
+#date_selector form legend {
+   font-size: 14pt;
+   padding-bottom: 0.5em;
+}
+
+#date_selector form legend {
+   margin-left: 1em;
+}
+
+form.full fieldset {
+   margin: 2em auto 0;
+   padding-bottom: 1em;
+}
+
+#date_selector form fieldset {
+   border: thin solid black;
+}
+
+form.full li,
+#date_selector form li {
+   clear: both;
+   margin: 0.75em auto;
+   width: 100%;
+   height: 2em;
+}
+
+form.full label,
+#date_selector form label {
+   float: left;
+   font-size: 12pt;
+   line-height: 1.5em;
+   vertical-align: middle;
+   margin-right: 0.75em;
+   text-align: right;
+   width: 10em;
+}
+
+form.full input {
+   font-size: 12pt;
+   width: 15em;
+}
+
+form.full li.submit_line,
+#date_selector li.submit_line {
+   text-align: center;
+}
