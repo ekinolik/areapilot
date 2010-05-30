@@ -29,4 +29,6 @@ if ($session->verify() === FALSE) {
    return TRUE;
 }
 
+define('LOGGED_IN', TRUE);
+
 ?>

@@ -30,16 +30,16 @@ See http://www.positioniseverything.net/easyclearing.html */
 /* ! Basics   */
 /* ========== */
 
-html, body {
-   height: 100%;
+html {
    overflow: auto;
 }
 
 body {
-   background: #fff;
-   color: #000;
-   font-family: "Trebuchet MS", Helvetica, Arial, Geneva, sans-serif;
+   background: #0d0d0d;
+   color: #dfdfdf;
+   font-family: Georgia, "Times New Roman", Times, serif;
    font-size: 12pt;
+   padding-top: 0px;
 }
 
 #container {
@@ -58,6 +58,15 @@ span.errormsg {
    color: red;
 }
 
+input, textarea {
+   background-color: #dfdfdf;
+   color: #0d0d0d;
+   
+   border-left: 2px solid #898989;
+   border-top: 2px solid #898989;
+   border-right: 2px solid #ffffff;
+   border-bottom: 2px solid #ffffff;
+}
 /* ========== */
 /* ! Blocks   */
 /* ========== */
@@ -128,7 +137,6 @@ form.full li,
    clear: both;
    margin: 0.75em auto;
    width: 100%;
-   height: 2em;
 }
 
 form.full label,
@@ -147,7 +155,21 @@ form.full input {
    width: 15em;
 }
 
+form.full input#time {
+   width: 11.5em;
+}
+
+form.full select#meridian {
+   width: 4em;
+}
+
+form.full textarea#description {
+   width: 20.5em;
+   height: 10em;
+}
+
 form.full li.submit_line,
 #date_selector li.submit_line {
+   position: relative;
    text-align: center;
 }

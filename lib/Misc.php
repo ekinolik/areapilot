@@ -12,6 +12,17 @@ function verify_email($address) {
       return ereg("[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]+", $address);
 }
 
+function verify_date($date, $format='mm/dd/yyyy') {
+   if ($format === 'mm/dd/yyyy') {
+      $da = explode('/', $date);
+      if ( ! verify_int_array($da) || $da[0] < 1 || $da[0] > 12 || $da[1] < 1 || $da[1] > 31) {
+	 return FALSE;
+      }
+   }
+
+   return TRUE;
+}
+
 function remove_md_array($array, $col) {
    if ( ! is_array($array)) return array();
 
@@ -78,5 +89,13 @@ function create_random_string($len, $start=48, $end=122) {
 
 function usort_name($a, $b) {
    return strcmp(strtolower($a['name']), strtolower($b['name']));
+}
+
+function verify_int_array($array) {
+   while((list($key, $value) = each($array)) !== FALSE) {
+      if (verify_int($value) === FALSE) return FALSE;
+   }
+
+   return TRUE;
 }
 ?>

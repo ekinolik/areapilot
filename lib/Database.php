@@ -42,7 +42,6 @@ class Database {
    public $echo;
    public $last_seq;
    public $seq_name;
-   public $skip_last;
    public $typecasts;
    public $limit;
    public $offset;
@@ -70,7 +69,6 @@ class Database {
 	   $this->rows = array();
 	   $this->typecasts = array();
 	   $this->query_list = '';
-	   $this->skip_last = FALSE;
 
 	   $this->force_escape = 1;
 	   $this->query_count = 0;
@@ -447,23 +445,23 @@ class Database {
       return $return;
    }
 
-   public function insert_db($table, $input, $exceptions='') {
+   public function insert_db($table, $input, $skip_last=FALSE, $exceptions='') {
       if (($sql = $this->create_insert_query($table, $input, $exceptions)) === FALSE)
 	 return FALSE;
 
       if ($this->sql == 'pgsql') {
 	 if ($this->dbg == '2') echo $sql . "<BR>\n";
 	 $return = $this->query($sql);
-	 if ($return === TRUE && $this->skip_last === FALSE) $this->get_last_seq($table);
+	 if ($return === TRUE && $skip_last === FALSE) $this->get_last_seq($table);
       } elseif ($this->sql == 'mysql') {
 	 if ($this->dbg == '2') echo $sql . "<BR>\n";
 	 $return = $this->query($sql);
-	 if ($return === TRUE && $this->skip_last === FALSE) $this->get_last_seq($table);
+	 if ($return === TRUE && $skip_last === FALSE) $this->get_last_seq($table);
       } elseif ($this->sql == 'mongo') {
 	 $this->db_c = $this->db_x->selectDB($this->database)->selectCollection($table);
 
 	 $return = $this->db_c->insert($sql, true);
-	 if ($return['ok'] == 1 && $this->skip_last === FALSE) $this->get_last_seq($sql);
+	 if ($return['ok'] == 1 && $skip_last === FALSE) $this->get_last_seq($sql);
       }
       return $return;
    }

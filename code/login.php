@@ -12,6 +12,11 @@ if (isset($_POST['username'])) {
       return FALSE;
    }
 
+   $session->user_id = $account->id;
+   if ($session->create() === FALSE) {
+      return FALSE;
+   }
+
 }
 
 ?>

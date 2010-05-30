@@ -45,6 +45,11 @@ define('MAX_LAST_NAME_LEN', 32);
 define('THUMBNAIL_WIDTH', 64);
 define('THUMBNAIL_HEIGHT', 64);
 
+define('MIN_TITLE_LEN', 10);
+define('MAX_TITLE_LEN', 65);
+define('MIN_DESCRIPTION_LEN', 50);
+define('MAX_DESCRIPTION_LEN', 5000);
+
 /* Garbage Collection */
 /* Delete sessions older than this many days, 0 would be anything older than 24 hours */
 define('GC_MAXLIFETIME', 14);
@@ -53,7 +58,7 @@ define('GC_PROBABILITY', 100);
 
 define('ERROR_DEBUG', 1);
 
-$JS = array('jquery-1.3.2.min.js', 'jquery.cookie.js');
+$JS = array('jquery-1.4.2.min.js', 'jquery.cookie.js');
 $CSS = array('default.css');
 
 /* Shouldn't modify below here */

@@ -1,0 +1,365 @@
+/* ============= */
+/* ! Add Areas   */
+/* ============= */
+
+#addareas,
+#editareas,
+#deleteareas {
+	background: #1d1d1d url(../images/greengrad.png) left top repeat-x;
+	clear: both;
+	color: #fff;
+	margin: 10px auto;
+	padding: 10px;
+	width: 860px;
+	border: thin solid #898989;
+}
+
+#editareas {
+	margin-top: 20px;
+	width: 500px;
+}
+
+#deleteareas {
+        width: 500px;
+}
+
+form h2 {
+	font-size: 20px;
+	margin-bottom: 15px;
+}
+
+fieldset#stateselect {
+	font-size: 30px;
+	font-weight: bold;
+	margin: 15px 0 8px;
+	text-align: center;
+}
+
+fieldset#areapool {
+	margin: 0;
+	padding: 0;
+}
+
+#areapool div.list {
+	border-right: 1px dotted #eee;
+	float: left;
+	padding: 0 8px;
+	text-align: center;
+}
+
+div.list select {
+	display: block;
+	height: 150px;
+	margin: 5px auto;
+	text-align: left;
+	width: 120px;
+}
+
+#areapool div.list select#zip,
+#areapool div.list select#areacode {
+	display: block;
+	margin: 5px auto 0;
+	width: 75px;
+}
+
+fieldset#applyareas {
+	float: right;
+	padding: 0 8px;
+	text-align: center;
+}
+
+fieldset#applyareas div.list select {
+	display: block;
+	height: 150px;
+	margin: 5px auto;
+	text-align: left;
+	width: 160px;
+}
+
+fieldset#areaselect {
+	border-top: 1px dotted #eee;
+	margin: 15px auto;
+	padding: 10px 0;
+	text-align: center;
+}
+
+fieldset#areaselect li {
+	margin: 5px 0 0 0;
+}
+
+#editareas fieldset, 
+#deleteareas fieldset {
+	margin: 10px auto;
+	text-align: center;
+	width: 500px;
+}
+
+#editareas fieldset li,
+#deleteareas fieldset li {
+	float: left;
+	margin-left: 35px;
+}
+
+#editareas fieldset li label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+#deleteareas fieldset li label {
+	margin-bottom: 5px;
+}
+
+#editareas fieldset select {
+	display: block;
+	height: 150px;
+	margin: 5px auto;
+	text-align: left;
+	width: 150px;
+}
+
+#deleteareas fieldset select {
+	margin: 5px auto;
+	text-align: left;
+	width: 150px;
+}
+
+#editareas fieldset li#parentdropdown {
+	clear: both;
+	display: block;
+	float: none;
+	margin: 5px 0 10px;
+}
+
+#editareas fieldset li#parentdropdown select#parentarea {
+	display: inline;
+	height: auto;
+	margin: 0;
+}
+
+#editareas fieldset li#actionbuttons {
+	float: left;
+	margin-top: 45px;
+	width: 70px;
+}
+
+#editareas fieldset li#actionbuttons button {
+	background: #eee;
+	border: none;
+	height: 30px;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 10px 0 0 0;
+	width: 65px;
+}
+
+#editareas li#editsubmit {
+	clear: both;
+	float: none;
+	margin: 20px auto 5px;
+	text-align: center;
+}
+
+#deleteareas li#deletesubmit {
+	float: none;
+	margin: 20px auto 5px;
+	text-align: center;
+}
+
+#editareas li#editsubmit button,
+button#savechanges,
+button#btn-addneighborhood,
+button#btn-delneighborhood {
+	background: #fff url(../images/ltgreygrad.png) left bottom repeat-x;
+	border: none;
+	clear: both;
+	display: block;
+	font-size: 12px;
+	margin: 20px auto 10px;
+	padding: 6px 10px;
+	width: 180px;
+}
+
+#deleteareas li#deletesubmit button {
+	background: #fff url(../images/ltgreygrad.png) left bottom repeat-x;
+	border: none;
+	font-size: 12px;
+	padding: 6px 10px;
+}
+
+#editareas li#editsubmit button:hover,
+#deleteareas li#deletesubmit button:hover,
+button#savechanges:hover,
+button#btn-addneighborhood:hover,
+button#btn-delneighborhood:hover {
+	background: #333;
+	color: #fff;
+	cursor: pointer;
+}
+
+.hidden {
+   display: none;
+}
+
+
+/* ====================== */
+/* ! Neighborhood Admin   */
+/* ====================== */
+
+#neighborhoodadmin {
+	background: #50a46e url(../images/greengrad.png) left top repeat-x;
+	clear: both;
+	color: #fff;
+	margin: 10px auto;
+	padding: 10px;
+	width: 500px;
+}
+
+fieldset#selectors {
+	margin: 0 auto 30px;
+	width: 780px;
+}
+
+fieldset#selectors ol li {
+	display: block;
+	height: 30px;
+	margin: 5px 0 0 20px;
+	position: relative;
+	width: 350px;
+}
+
+fieldset#selectors ol li select {
+	position: absolute;
+	right: 10px;
+}
+
+fieldset#newneighborhood,
+fieldset#delneighborhoods {
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+fieldset#newneighborhood div#newhoodname {
+	margin-bottom: 20px;
+}
+
+input#hoodname {
+	font-size: 20px;
+	width: 240px;
+}
+
+select#applylist {
+	width: 240px;
+}
+
+ul#neighborhoodlist {
+	margin: 10px auto;
+	width: 450px;
+}
+
+ul#neighborhoodlist li {
+	margin: 5px 0;
+	position: relative;
+	width: 100%;
+}
+
+ul#neighborhoodlist li a.delhood {
+	color: #000;
+	position: absolute;
+	right: 0;
+	text-decoration: none;
+}
+
+ul#neighborhoodlist li a.delhood:hover {
+	color: #fff;
+}
+
+
+/* =============== */
+/* ! Forms Admin   */
+/* =============== */
+
+.formcaption {
+	background: #eee;
+	display: block;
+	margin: 8px auto;
+	padding: 6px;
+	position: relative;
+	width: 600px;
+}
+
+.formcaption a.downloadform {
+	display: block;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.formcaption a.editform,
+.formcaption a.deleteform {
+	background: #316443;
+	color: #fff;
+	display: block;
+	font-size: 11px;
+	padding: 3px 5px;
+	position: absolute;
+	right: 5px;
+	text-align: center;
+	text-decoration: none;
+	top: 5px;
+	width: 65px;
+}
+
+.formcaption a.deleteform {
+	top: 25px;
+}
+
+.formcaption a.editform:hover,
+.formcaption a.deleteform:hover {
+	background: #333;
+}
+
+.formcaption span.description {
+	margin-right: 75px;
+}
+
+span.formform {
+	background: #eee;
+	display: block;
+	margin: 8px auto;
+	padding: 6px;
+	position: relative;
+	width: 600px;
+}
+
+span.formform li {
+	border-bottom: 1px solid #fff;
+	clear: both;
+	padding: 3px 0;
+}
+
+span.formform label {
+	float: left;
+	text-align: right;
+	width: 160px;
+}
+
+span.formform li.submit_line button {
+	background: #316443;
+	border: none;
+	color: #fff;
+	font-size: 13px;
+	font-weight: bold;
+	display: -moz-inline-box;
+	display: -moz-inline-stack;
+	display: inline-block;
+	*display: inline;
+	_display: inline;
+	margin: 2px 8px;
+	padding: 3px 6px;
+	position: relative;
+	text-align: center;
+}
+
+span.formform li.submit_line button:hover {
+	background: #333;
+	cursor: pointer;
+}

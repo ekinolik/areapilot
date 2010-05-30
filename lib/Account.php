@@ -233,12 +233,10 @@ class Account {
       $insert2['user_id'] = $this->dbc->last_seq;
       $insert2['first_name'] = $this->dbc->escape($this->first_name);
       $insert2['last_name']  = $this->dbc->escape($this->last_name);
-      $this->dbc->skip_last = TRUE;
-      if ($this->dbc->insert_db($this->profile_table, $insert2) === FALSE) {
+      if ($this->dbc->insert_db($this->profile_table, $insert2, TRUE) === FALSE) {
 	 $this->ec->create_error(10, 'Could not insert the profile into the database', $this->ecp);
 	 return FALSE;
       }
-      $this->dbc->skip_last = FALSE;
 
       return TRUE;
    }
