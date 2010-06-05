@@ -8,6 +8,9 @@ print <<<EOF
             <ol>
 	       <li><label for="title">Title</label>
                   <input type="text" name="title" id="title" />
+	       </li>
+               <li><label for="tags">Tags</label>
+                  <input type="text" name="tags" id="tags" />
                </li>
 	       <li><label for="date">Date</label>
                   <input type="text" name="date" id="date" />

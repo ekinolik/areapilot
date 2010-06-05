@@ -80,6 +80,7 @@ abstract class Location {
       $this->dbc->fetch_row();
       if ($this->dbc->row_count < 1) return FALSE;
 
+      $this->zip_id     = $this->dbc->rows['id'];
       $this->city       = $this->dbc->rows['city'];
       $this->county     = $this->dbc->rows['county'];
       $this->state      = $this->dbc->rows['state'];

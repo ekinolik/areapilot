@@ -15,6 +15,8 @@ if ( isset($_POST['title'])) {
    $event->description = $_POST['description'];
    $event->user_id     = $session->user_id;
 
+   $event->tag         = explode(',', $_POST['tags']);
+
    if ( $event->create() === FALSE) {
       return FALSE;
    }

@@ -50,6 +50,8 @@ define('MAX_TITLE_LEN', 65);
 define('MIN_DESCRIPTION_LEN', 50);
 define('MAX_DESCRIPTION_LEN', 5000);
 
+define('EVENT_LIST_COUNT', 20);
+
 /* Garbage Collection */
 /* Delete sessions older than this many days, 0 would be anything older than 24 hours */
 define('GC_MAXLIFETIME', 14);

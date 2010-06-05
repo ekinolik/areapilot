@@ -9,6 +9,8 @@ class Event extends Location {
    public $dbc;
    public $ec;
 
+   public $events;
+
    public $title;
    public $date;
    public $time;
@@ -21,6 +23,11 @@ class Event extends Location {
 
    private $event_table;
    private $event_description_table;
+   private $tag_table;
+   private $event_tag_table;
+
+   // FIXME: Move these to their own class
+   private $user_table;
 
    private $sc;
    private $ecp;
@@ -52,6 +59,11 @@ class Event extends Location {
 
       $this->event_table = 'event';
       $this->event_description_table = 'event_description';
+      $this->tag_table = 'tag';
+      $this->event_tag_table = 'event_tag';
+
+      // FIXME: Move these to their own class
+      $this->user_table = 'user';
 
       return TRUE;
    }
@@ -78,6 +90,8 @@ class Event extends Location {
       //if ($this->verify_event('url') === FALSE)         return FALSE;
       if ($this->verify_event('description') === FALSE) return FALSE;
 
+      if ($this->sanitize_tag() === FALSE) return FALSE;
+
       if ($this->exists()) {
 	 $this->ec->create_error(12, 'This event already exists', $this->ecp);
 	 return FALSE;
@@ -90,7 +104,35 @@ class Event extends Location {
 	 return FALSE;
       }
 
+      if ($this->add_tag() === FALSE) {
+	 $this->dbc->rollback();
+	 return FALSE;
+      }
+
       $this->dbc->commit();
+
+      return TRUE;
+   }
+
+   public function get_events() {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      $sql = 'SELECT e."id", u."username", e."time", e."title", ed."description",
+	        c."name" as city, a."name" as area
+	       FROM "'.$this->event_table.'" as e
+	       LEFT OUTER JOIN "'.$this->event_description_table.'" as ed
+	        ON (ed."event_id" = e."id")
+	       LEFT OUTER JOIN "'.$this->zip_table.'" as z ON (z."id" = ed."zip_id")
+	       LEFT OUTER JOIN "'.$this->zip_city_table.'" as zc ON (zc."zip_id" = z."id")
+	       LEFT OUTER JOIN "'.$this->city_table.'" as c ON (c."id" = zc."city_id")
+	       LEFT OUTER JOIN "'.$this->area_table.'" as a ON (a."id" = e."area_id")
+	       LEFT OUTER JOIN "'.$this->user_table.'" as u ON (u."id" = e."user_id")
+	       ORDER BY ed."date_added" DESC
+	       LIMIT '.EVENT_LIST_COUNT.' ';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_array();
+
+      $this->events = $this->dbc->rows;
 
       return TRUE;
    }
@@ -109,7 +151,9 @@ class Event extends Location {
 	 return FALSE;
       }
 
-      $insert2['event_id']    = $this->dbc->escape($this->dbc->last_seq);
+      $this->event_id = $this->dbc->last_seq;
+
+      $insert2['event_id']    = $this->dbc->escape($this->event_id);
       $insert2['description'] = $this->dbc->escape($this->description);
       $insert2['address']     = $this->dbc->escape($this->zip_id);
       $insert2['zip_id']      = $this->dbc->escape($this->zip_id);
@@ -120,6 +164,60 @@ class Event extends Location {
 	 $this->ec->create_error(14, 'Could not add the event to the database', $this->ecp);
 	 return FALSE;
       }
+
+      return TRUE;
+   }
+
+   private function add_tag() {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      for ($i = 0, $iz = count($this->tag); $i < $iz; ++$i) {
+	 $this->tag[$i] = strtolower(trim($this->tag[$i]));
+	 if (strlen($this->tag[$i]) < 3) continue;
+
+	 if (($tag_id = $this->tag_exists($this->tag[$i])) === FALSE) {
+	    $insert['name'] = $this->dbc->escape($this->tag[$i]);
+	    if ($this->dbc->insert_db($this->tag_table, $insert) === FALSE) {
+	       $this->ec->create_error(17, 'Could not create tag', $this->ecp);
+	       return FALSE;
+	    }
+
+	    $tag_id = $this->dbc->last_seq;
+	 }
+
+	 $insert2['event_id'] = $this->dbc->escape($this->event_id);
+	 $insert2['tag_id'] = $this->dbc->escape($tag_id);
+	 if ($this->dbc->insert_db($this->event_tag_table, $insert2, TRUE) === FALSE) {
+	    $this->ec->create_error(18, 'The event and tag could\'t start a relationship', $this->ecp);
+	    return FALSE;
+	 }
+      }
+
+      return TRUE;
+   }
+
+   private function tag_exists($tag) {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      $tag = $this->dbc->escape($tag);
+
+      $sql = 'SELECT "id"
+	       FROM "'.$this->tag_table.'"
+	       WHERE "name" = \''.$tag.'\' 
+	       LIMIT 1';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_row();
+      if ($this->dbc->row_count < 1) return FALSE;
+
+      return TRUE;
+   }
+
+   private function sanitize_tag() {
+      if ( ! is_array($this->tag)) {
+	 $this->tag = array($this->tag);
+      }
+
+      $this->tag = preg_replace('/[^A-Za-z0-9_\- ]/i', '', $this->tag);
 
       return TRUE;
    }
@@ -250,7 +348,7 @@ class Event extends Location {
 	 $datetime = $this->date;
       }
 
-      $this->timestamp = strtotime($this->date.' '.$this->time);
+      $this->timestamp = strtotime($datetime);
       if ($this->timestamp < CURRENT_TIME + (60 * 30)) {
 	 $this->ec->create_error(2, 'Event time can not be sooner than 30 minutes from now', $this->ecp);
 	 return FALSE;
