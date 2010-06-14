@@ -2,6 +2,7 @@
 
 $html = '';
 for ($i = 0, $iz = count($event->events); $i < $iz; ++$i) {
+   $id          = htmlspecialchars($event->events[$i]['id']);
    $title       = htmlspecialchars($event->events[$i]['title']);
    $time        = htmlspecialchars($event->events[$i]['time']);
    $description = htmlspecialchars(substr($event->events[$i]['description'], 0, 400));
@@ -10,7 +11,7 @@ for ($i = 0, $iz = count($event->events); $i < $iz; ++$i) {
 
    $html .= '<div class="event">'."\n";
    $html .= '  <span class="time">'.$time.'</span>'."\n";
-   $html .= '  <span class="title">'.$title.'</span><br />'."\n";
+   $html .= '  <span class="title"><a href="event.php?id='.$id.'">'.$title.'</a></span><br />'."\n";
    $html .= '  <span class="desc">'.$description.'</span><br />'."\n";
    $html .= '  <span class="area">'.$area.'</span>'."\n";
    $html .= '  <span class="user"><span class="posted">Posted by</span>'."\n";

@@ -179,3 +179,7 @@ form.full li.submit_line,
    position: relative;
    text-align: center;
 }
+
+div#event_details span#title {
+   font-weight: bold;
+}

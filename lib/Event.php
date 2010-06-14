@@ -165,6 +165,43 @@ class Event extends Location {
       return TRUE;
    }
 
+   public function get_event() {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      if ($this->verify_column('event_id') === FALSE) return FALSE;
+
+      $this->event_id = $this->dbc->escape($this->event_id);
+
+      $sql = 'SELECT e."id", u."username", e."time", e."title", ed."description",
+	        c."name" as city, a."name" as area, v."name" as venuename, v."address" as address,
+	        v."phone" as venuephone, z."zip", s."abbr" as state
+	       FROM "'.$this->event_table.'" as e
+	       LEFT OUTER JOIN "'.$this->event_description_table.'" as ed
+	       ON (ed."event_id" = e."id")
+	       LEFT OUTER JOIN "'.$this->venue_table.'" as v ON (v."id" = ed."venue_id")
+	       LEFT OUTER JOIN "'.$this->zip_table.'" as z ON (z."id" = v."zip_id")
+	       LEFT OUTER JOIN "'.$this->zip_city_table.'" as zc ON (zc."zip_id" = z."id")
+	       LEFT OUTER JOIN "'.$this->city_table.'" as c ON (c."id" = zc."city_id")
+	       LEFT OUTER JOIN "'.$this->zip_state_table.'" as zs ON (zs."zip_id" = z."id")
+	       LEFT OUTER JOIN "'.$this->state_table.'" as s ON (s."id" = zs."state_id")
+	       LEFT OUTER JOIN "'.$this->area_table.'" as a ON (a."id" = e."area_id")
+	       LEFT OUTER JOIN "'.$this->user_table.'" as u ON (u."id" = e."user_id")
+	       WHERE e."id" = \''.$this->event_id.'\'
+	       ORDER BY ed."date_added" DESC
+	       LIMIT 1';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_row();
+
+      if ($this->dbc->row_count < 1) {
+	 $this->ec->create_error(23, 'No event found', $this->ecp);
+	 return FALSE;
+      }
+
+      $this->events[] = $this->dbc->rows;
+
+      return TRUE;
+   }
+
    private function add_event() {
       if ($this->sanity_check() === FALSE) return FALSE;
 
@@ -286,6 +323,17 @@ class Event extends Location {
 	 if ($this->verify_user_id() === FALSE) return FALSE;
       } else if ($column === 'category_id') {
 	 if ($this->verify_category_id() === FALSE) return FALSE;
+      } else if ($column === 'event_id') {
+	 if ($this->verify_event_id() === FALSE) return FALSE;
+      }
+
+      return TRUE;
+   }
+
+   private function verify_event_id() {
+      if (verify_int($this->event_id) === FALSE) {
+	 $this->ec->create_error(22, 'Invalid event id', $this->ecp);
+	 return FALSE;
       }
 
       return TRUE;
