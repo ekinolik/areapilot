@@ -41,6 +41,10 @@ abstract class Location {
    public $neighborhood_id;
 
    protected function Location_construct() {
+      $this->city        = NULL;
+      $this->state       = NULL;
+      $this->zip         = NULL;
+
       $this->zip_table = 'zip';
       $this->city_table = 'city';
       $this->county_table = 'county';

@@ -24,7 +24,7 @@ class Account {
    private $profile_table;
 
    public function __construct(&$db_class, &$error_class) {
-      $this->build_vars();
+      $this->init();
 
       if (is_object($db_class)) $this->dbc = &$db_class;
       if (is_object($error_class)) $this->ec = &$error_class;
@@ -94,7 +94,7 @@ class Account {
       return TRUE;
    }
  
-   private function build_vars() {
+   private function init() {
       $this->sc = FALSE;
       $this->ecp = 'Account';
 

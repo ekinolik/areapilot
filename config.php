@@ -49,6 +49,8 @@ define('MIN_TITLE_LEN', 10);
 define('MAX_TITLE_LEN', 65);
 define('MIN_DESCRIPTION_LEN', 50);
 define('MAX_DESCRIPTION_LEN', 5000);
+define('MIN_VENUENAME_LEN', 1);
+define('MAX_VENUENAME_LEN', 100);
 
 define('EVENT_LIST_COUNT', 20);
 

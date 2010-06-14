@@ -67,6 +67,7 @@ input, textarea {
    border-right: 2px solid #ffffff;
    border-bottom: 2px solid #ffffff;
 }
+
 /* ========== */
 /* ! Blocks   */
 /* ========== */
@@ -151,6 +152,11 @@ form.full label,
 }
 
 form.full input {
+   font-size: 12pt;
+   width: 15em;
+}
+
+form.full select {
    font-size: 12pt;
    width: 15em;
 }

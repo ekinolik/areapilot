@@ -46,6 +46,8 @@ class Database {
    public $limit;
    public $offset;
    public $sort;
+   public $savepoints;
+   public $in_transaction;
 
    public $force_escape;
 
@@ -76,6 +78,9 @@ class Database {
 	   $this->limit = FALSE;
 	   $this->offset = FALSE;
 	   $this->sort = FALSE;
+
+	   $this->in_transaction = FALSE;
+	   $this->savepoints = array();
    }
 
    private function connect() {
@@ -179,6 +184,8 @@ class Database {
 	 $this->last_query = $query;
 	 $this->query_list .= $query . "<BR>\n";
 
+	 if ($this->dbg === 2) echo $query;
+
 	 $this->result = @pg_query($this->db_id, $query) or die (pg_last_error($this->db_id));
 	 $this->rows = array();
          $this->row_count = 0;
@@ -261,10 +268,18 @@ class Database {
       }
    }
 
-   public function begin() {
+   public function begin($name='') {
    /* Begin Transaction */
       if ($this->sql == 'pgsql') {
-	 $this->query('begin');
+	 if ($this->in_transaction) {
+	    $time = microtime(TRUE);
+	    $this->savepoint($time);
+	    return $time;
+	 } else {
+	    $this->query('BEGIN');
+	    $this->in_transaction = TRUE;
+	    $this->save_points = array();
+	 }
       } else {
 	 $this->error = 'MySQL can not use transactions';
 	 return FALSE;
@@ -275,7 +290,14 @@ class Database {
    public function commit() {
    /* Commit Transaction */
       if ($this->sql == 'pgsql') {
-	 $this->query('commit');
+	 if ($this->in_transaction && count($this->savepoints) > 0) {
+	    array_pop($this->savepoints);
+	    return TRUE;
+	 }
+
+	 $this->query('COMMIT');
+	 $this->savepoints = array();
+	 $this->in_transactoin = FALSE;
       } else {
 	 $this->error = 'MySQL can not use transactions';
 	 return FALSE;
@@ -285,10 +307,53 @@ class Database {
    }
 
    
-   public function rollback() {
+   public function rollback($all=FALSE, $name='') {
    /* Rolback Transaction */
       if ($this->sql == 'pgsql') {
-	 $this->query('rollback');
+	 if ($all === FALSE && count($this->savepoints) > 0 && strlen(trim($name)) > 0) {
+
+	    $safe = FALSE;
+	    /* Verify the savepoint exists */
+	    for ($i = 0, $iz = count($this->savepoints); $i < $iz; ++$i) {
+	       if ($this->savepoints[$i] == $name) {
+		  /* If it exists remove it and all the savepoints after it */
+		  while (($latest = array_pop($this->savepoints)) != $name); 
+		  $safe = TRUE;
+		  break;
+	       }
+	    }
+	    /* If the savepoint didn't exist exit */
+	    if ($save === FALSE) return FALSE;
+
+	    $this->query('ROLLBACK TO '.$name);
+
+	 } else if ($all === FALSE && count($this->savepoints) > 0) {
+	    $latest = array_pop($this->savepoints);
+	    $this->query('ROLLBACK TO "'.$latest.'"');
+	 } else {
+	    $this->query('ROLLBACK');
+	    $this->savepoints = array();
+	    $this->in_transaction = FALSE;
+	 }
+      } else {
+	 $this->error = 'MySQL can not use transactions';
+	 return FALSE;
+      }
+   }
+
+   public function savepoint($name='') {
+      if ($this->sql === 'pgsql') {
+	 if ($this->in_transaction === FALSE) return $this->begin();
+
+	 if (strlen(trim($name)) < 1) {
+	    $name = microtime(TRUE);
+	    $this->savepoints[] = $name;
+	 } else {
+	    $this->savepoints[] = $name;
+	 }
+
+	 $this->query('SAVEPOINT "'.$name.'"');
+	 return $name;
       } else {
 	 $this->error = 'MySQL can not use transactions';
 	 return FALSE;
@@ -512,13 +577,15 @@ class Database {
 	 $loop_c = 0;
 	 while((list($key, $value) = each($where)) !== FALSE) {
 	    if ($loop_c == 0) { $sql .= ' WHERE '; } else { $sql .= ' AND '; }
-	    
+
+	    list($operator, $key) = $this->get_operator($key);
+
 	    if ($value === 0) {
 	       $sql .= ' "'.$key.'" IS NULL ';
 	    } elseif (substr($value, 0, strlen($FUNC_STRING)) == $FUNC_STRING) {
-	       $sql .= ' "'.$key.'" = '.substr($value, strlen($FUNC_STRING) + 1) . ' ';
+	       $sql .= ' "'.$key.'" '.$operator.' '.substr($value, strlen($FUNC_STRING) + 1) . ' ';
 	    } else {
-	       $sql .= ' "'.$key.'" = \''.$value.'\' ';
+	       $sql .= ' "'.$key.'" '.$operator.' \''.$value.'\' ';
 	    }
 	    $loop_c++;
 	 }
@@ -568,10 +635,12 @@ class Database {
 	    for ($i=0; $i < count($exceptions);$i++) if ($exceptions[$i] == $key) continue 2;
 	    if ($loop_c > 0) $sql .= ' AND ';
 	    
+	    list($operator, $key) = $this->get_operator($key);
+
 	    if ($value === 0) {
 	       $sql .= ' "'.$key.'" IS NULL ';
 	    } else {
-	       $sql .= ' "'.$key.'" = \''.$value.'\' ';
+	       $sql .= ' "'.$key.'" '.$operator.' \''.$value.'\' ';
 	    }
 
 	    $loop_c++;
@@ -906,6 +975,35 @@ class Database {
       while((list($key, $value) = each($array)) !== FALSE) {
 	 if ($key === '_id') $array[$key] = new MongoId($value);
       }
+   }
+
+   private function get_operator($string) {
+      $c1 = substr($string, 0, 1);
+      $c2 = substr($string, 1, 1);
+      $c3 = substr($string, 2, 1);
+
+      if ($c1.$c2 === '>=') {
+	 return array('>=', substr($string, 2));
+      } else if ($c1.$c2 === '<=') {
+	 return array('<=', substr($string, 2));
+      } else if ($c1.$c2 === '!=') {
+	 return array('!=', substr($string, 2));
+      } else if ($c1.$c2.$c3 === '!~*') {
+	 return array('!~*', substr($string, 3));
+      } else if ($c1.$c2.$c3 === '!~~') {
+	 return array('NOT LIKE', substr($string, 3));
+      } else if ($c1.$c2 === '!~') {
+	 return array('!~', substr($string, 2));
+      } else if ($c1.$c2 === '~*') {
+	 return array('!=', substr($string, 2));
+      } else if ($c1.$c2 === '~~') {
+	 return array('LIKE', substr($string, 2));
+      } else if ($c1 === '=') {
+	 return array('=', substr($string, 1));
+      } 
+      
+      return array('=', $string);
+
    }
 
 }
