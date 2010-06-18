@@ -11,6 +11,7 @@ class Event extends Location {
 
    public $events;
 
+   public $event_id;
    public $title;
    public $date;
    public $time;
@@ -448,6 +449,40 @@ class Event extends Location {
       $this->dbc->query($sql);
       $this->dbc->fetch_row();
       if ($this->dbc->row_count < 1) return FALSE;
+
+      return TRUE;
+   }
+
+
+   /* 
+    * The following functions can be used as static class methods
+    */
+
+   public function event_exists($event_id=FALSE, &$db_class=FALSE) {
+      if ($event_id === FALSE) {
+	 $event_id = &$this->event_id;
+      }
+
+      if ($db_class === FALSE) {
+	 if ($this->sanity_check() === FALSE) return FALSE;
+	 $event_table = &$this->event_table;
+	 $db_class = &$this->dbc;
+      } else {
+	 $event_table = 'event';
+      }
+
+      if (verify_int($event_id) === FALSE) {
+	 return FALSE;
+      }
+
+      $event_id = $db_class->escape($event_id);
+
+      $sql = 'SELECT "id"
+	       FROM "'.$event_table.'"
+	       WHERE "id" = \''.$event_id.'\' ';
+      $db_class->query($sql);
+      $db_class->fetch_row();
+      if ($db_class->row_count < 1) return FALSE;
 
       return TRUE;
    }

@@ -98,4 +98,8 @@ function verify_int_array($array) {
 
    return TRUE;
 }
+
+function convert_links($string) {
+   return preg_replace(";(https?://)([-\w\d\.]+)+(:\d+)?(/([^\s]*)?)?;i", '<a href="$1$2$3$4" rel="nofollow">$1$2$3$4</a>', $string);
+}
 ?>

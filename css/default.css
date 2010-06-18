@@ -183,3 +183,19 @@ form.full li.submit_line,
 div#event_details span#title {
    font-weight: bold;
 }
+
+div#comment_container .title {
+   font-size: 16pt;
+}
+
+form.comment textarea {
+   width: 40em;
+   height: 8em;
+}
+
+form.comment label {
+   clear: both;
+   margin: auto 2em;;
+   width: 10em;
+   vertical-align: top;
+}

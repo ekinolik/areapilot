@@ -51,6 +51,7 @@ define('MIN_DESCRIPTION_LEN', 50);
 define('MAX_DESCRIPTION_LEN', 5000);
 define('MIN_VENUENAME_LEN', 1);
 define('MAX_VENUENAME_LEN', 100);
+define('MAX_COMMENT_LEN', 2000);
 
 define('EVENT_LIST_COUNT', 20);
 

@@ -250,6 +250,41 @@ class Account {
       return TRUE;
    }
 
+
+
+   /* 
+    * The following functions can be used as static class methods
+    */
+
+   public function user_exists($user_id=FALSE, &$db_class=FALSE) {
+      if ($user_id === FALSE) {
+	 $user_id = $this->id;
+      }
+
+      if ($db_class === FALSE) {
+	 if ($this->sanity_check() === FALSE) return FALSE;
+	 $user_table = $this->user_table;
+	 $db_class = &$this->dbc;
+      } else {
+	 $user_table = 'user';
+      }
+
+      if (verify_int($user_id) === FALSE) {
+	 return FALSE;
+      }
+
+      $user_id = $db_class->escape($user_id);
+
+      $sql = 'SELECT "id"
+	       FROM "'.$user_table.'"
+	       WHERE "id" = \''.$user_id.'\' ';
+      $db_class->query($sql);
+      $db_class->fetch_row();
+      if ($db_class->row_count < 1) return FALSE;
+
+      return TRUE;
+   }
+
 }
 
 ?>
