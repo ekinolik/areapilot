@@ -24,6 +24,9 @@ class Event extends Location {
 
    public $venue_id;
    public $user_id;
+   public $comment_id;
+
+   public $rating;
 
    public $event_table;
    public $event_description_table;
@@ -32,6 +35,7 @@ class Event extends Location {
    public $venue_table;
    public $category_table;
    public $event_category_table;
+   public $rating_table;
 
    // FIXME: Move these to their own class
    private $user_table;
@@ -63,8 +67,11 @@ class Event extends Location {
       $this->date        = NULL;
       $this->time        = NULL;
       $this->url         = NULL;
+      $this->uri_title   = NULL;
       $this->description = NULL;
       $this->category    = NULL;
+      $this->rating      = NULL;
+      $this->comment_id  = NULL;
 
       $this->event_table = 'event';
       $this->event_description_table = 'event_description';
@@ -76,6 +83,7 @@ class Event extends Location {
 
       // FIXME: Move these to their own class
       $this->user_table = 'user';
+      $this->rating_table = 'rating';
 
       return TRUE;
    }
@@ -106,12 +114,23 @@ class Event extends Location {
       //if ($this->verify_column('url') === FALSE)         return FALSE;
       if ($this->verify_column('description') === FALSE) return FALSE;
 
+      $this->create_uri_title();
       //if ($this->sanitize_tag() === FALSE) return FALSE;
 
       if ($this->exists()) {
 	 $this->ec->create_error(12, 'This event already exists', $this->ecp);
 	 return FALSE;
       }
+
+      return TRUE;
+   }
+
+   protected function create_uri_title() {
+      $date = date("mdy", $this->timestamp);
+      $safe_title = strtolower(str_replace(' ', '_', trim($this->title)));
+      $safe_title = preg_replace("/[^A-Za-z0-9_]/i", '', $safe_title);
+
+      $this->uri_title = $date.'/'.$safe_title;
 
       return TRUE;
    }
@@ -145,9 +164,12 @@ class Event extends Location {
    public function get_events() {
       if ($this->sanity_check() === FALSE) return FALSE;
 
-      $sql = 'SELECT e."id", u."username", e."time", e."title", ed."description",
-	        c."name" as city, a."name" as area
-	       FROM "'.$this->event_table.'" as e
+      $rating_query = $this->create_rating_query();
+
+      $sql = 'SELECT e."id", u."username", e."time", e."title", e."uri_title", ed."description",
+	        c."name" as city, a."name" as area, r."rating"
+	       FROM ( '.$rating_query.' ) as r
+	       LEFT OUTER JOIN "'.$this->event_table.'" as e ON (e."id" = r."event_id")
 	       LEFT OUTER JOIN "'.$this->event_description_table.'" as ed
 	       ON (ed."event_id" = e."id")
 	       LEFT OUTER JOIN "'.$this->venue_table.'" as v ON (v."id" = ed."venue_id")
@@ -156,7 +178,7 @@ class Event extends Location {
 	       LEFT OUTER JOIN "'.$this->city_table.'" as c ON (c."id" = zc."city_id")
 	       LEFT OUTER JOIN "'.$this->area_table.'" as a ON (a."id" = e."area_id")
 	       LEFT OUTER JOIN "'.$this->user_table.'" as u ON (u."id" = e."user_id")
-	       ORDER BY ed."date_added" DESC
+	       ORDER BY r."rating" DESC, ed."date_added" DESC
 	       LIMIT '.EVENT_LIST_COUNT.' ';
       $this->dbc->query($sql);
       $this->dbc->fetch_array();
@@ -166,14 +188,43 @@ class Event extends Location {
       return TRUE;
    }
 
+   private function sanitize_uri_title() {
+      $this->uri_title = trim($this->uri_title);
+
+      while (substr($this->uri_title, 0, 1) === '/') {
+	 $this->uri_title = substr($this->uri_title, 1);
+      }
+
+      while (substr($this->uri_title, -1) === '/') {
+	 $this->uri_title = substr($this->uri_title, 0, -1);
+      }
+
+      return TRUE;
+   }
+
+   protected function event_clause($table='') {
+      if (strlen($table) > 0 && substr($table, -1) !== '.') $table .= '.';
+
+      $this->sanitize_uri_title();
+
+      if ($this->verify_column('uri_title')) {
+	 $this->uri_title = $this->dbc->escape($this->uri_title);
+	 return ' '.$table.'"uri_title" = \''.$this->uri_title.'\' ';
+      } else if ($this->verify_column('event_id')) {
+	 $this->event_id = $this->dbc->escape($this->event_id);
+	 return ' '.$table.'"id" = \''.$this->event_id.'\' ';
+      } else {
+	 return FALSE;
+      }
+
+   }
+
    public function get_event() {
       if ($this->sanity_check() === FALSE) return FALSE;
 
-      if ($this->verify_column('event_id') === FALSE) return FALSE;
+      if (($clause = $this->event_clause('e.')) === FALSE) return FALSE;
 
-      $this->event_id = $this->dbc->escape($this->event_id);
-
-      $sql = 'SELECT e."id", u."username", e."time", e."title", ed."description",
+      $sql = 'SELECT e."id", u."username", e."time", e."title", e."uri_title", ed."description",
 	        c."name" as city, a."name" as area, v."name" as venuename, v."address" as address,
 	        v."phone" as venuephone, z."zip", s."abbr" as state
 	       FROM "'.$this->event_table.'" as e
@@ -187,7 +238,7 @@ class Event extends Location {
 	       LEFT OUTER JOIN "'.$this->state_table.'" as s ON (s."id" = zs."state_id")
 	       LEFT OUTER JOIN "'.$this->area_table.'" as a ON (a."id" = e."area_id")
 	       LEFT OUTER JOIN "'.$this->user_table.'" as u ON (u."id" = e."user_id")
-	       WHERE e."id" = \''.$this->event_id.'\'
+	       WHERE '.$clause.'
 	       ORDER BY ed."date_added" DESC
 	       LIMIT 1';
       $this->dbc->query($sql);
@@ -198,6 +249,7 @@ class Event extends Location {
 	 return FALSE;
       }
 
+      $this->event_id = $this->dbc->rows['id'];
       $this->events[] = $this->dbc->rows;
 
       return TRUE;
@@ -208,10 +260,11 @@ class Event extends Location {
 
       $datetime = date("Y-m-d H:i:00", $this->timestamp);
 
-      $insert['user_id'] = $this->dbc->escape($this->user_id);
-      $insert['title']   = $this->dbc->escape($this->title);
-      $insert['time']    = $this->dbc->escape($datetime);
-      $insert['area_id'] = $this->dbc->escape($this->area_id);
+      $insert['user_id']   = $this->dbc->escape($this->user_id);
+      $insert['title']     = $this->dbc->escape($this->title);
+      $insert['time']      = $this->dbc->escape($datetime);
+      $insert['area_id']   = $this->dbc->escape($this->area_id);
+      $insert['uri_title'] = $this->dbc->escape($this->uri_title);
       if ($this->dbc->insert_db($this->event_table, $insert) === FALSE) {
 	 $this->ec->create_error(13, 'Could not add the event to the database', $this->ecp);
 	 return FALSE;
@@ -227,6 +280,33 @@ class Event extends Location {
       $insert2['venue_id']    = $this->dbc->escape($this->venue_id);
       if ($this->dbc->insert_db($this->event_description_table, $insert2, TRUE) === FALSE) {
 	 $this->ec->create_error(14, 'Could not add the event to the database', $this->ecp);
+	 return FALSE;
+      }
+
+      $this->rating = 1;
+
+      return $this->set_rating('event');
+
+   }
+
+   protected function set_rating($type) {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      if ($this->verify_column('rating') === FALSE) return FALSE;
+
+      if ($type === 'event') {
+	 $insert['event_id'] = $this->dbc->escape($this->event_id);
+      } else if ($type === 'comment') {
+	 $insert['comment_id'] = $this->dbc->escape($this->comment_id);
+      } else {
+	 $this->ec->create_error(25, 'Invalid rating type', $this->ecp);
+	 return FALSE;
+      }
+
+      $insert['user_id'] = $this->dbc->escape($this->user_id);
+      $insert['value']   = $this->dbc->escape($this->rating);
+      if ($this->dbc->insert_db($this->rating_table, $insert, TRUE) === FALSE) {
+	 $this->ec->create_error(26, 'Could not add rating to the database', $this->ecp);
 	 return FALSE;
       }
 
@@ -303,12 +383,19 @@ class Event extends Location {
    private function exists() {
       if ($this->sanity_check() === FALSE) return FALSE;
 
-      //FIXME:
       // This should check if the title exists on that date already
-      //
+
+      $uri_title = $this->dbc->escape($this->uri_title);
+
+      $sql = 'SELECT id
+	       FROM "'.$this->event_table.'"
+	       WHERE uri_title = \''.$uri_title.'\' 
+	       LIMIT 1';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_row();
+      if ($this->dbc->row_count > 0) return TRUE;
 
       return FALSE;
-      return TRUE;
    }
 
    protected function verify_column($column) {
@@ -326,6 +413,10 @@ class Event extends Location {
 	 if ($this->verify_category_id() === FALSE) return FALSE;
       } else if ($column === 'event_id') {
 	 if ($this->verify_event_id() === FALSE) return FALSE;
+      } else if ($column === 'rating') {
+	 if ($this->verify_rating() === FALSE) return FALSE;
+      } else if ($column === 'uri_title') {
+	 if ($this->verify_uri_title() === FALSE) return FALSE;
       }
 
       return TRUE;
@@ -334,6 +425,15 @@ class Event extends Location {
    private function verify_event_id() {
       if (verify_int($this->event_id) === FALSE) {
 	 $this->ec->create_error(22, 'Invalid event id', $this->ecp);
+	 return FALSE;
+      }
+
+      return TRUE;
+   }
+
+   private function verify_rating() {
+      if (verify_int($this->rating) === FALSE || $this->rating < -1 || $this->rating > 2) {
+	 $this->ec->create_error(24, 'Invalid rating value', $this->ecp);
 	 return FALSE;
       }
 
@@ -381,6 +481,18 @@ class Event extends Location {
    private function verify_user_id() {
       if (verify_int($this->user_id) === FALSE || $this->user_id < 1) {
 	 $this->ec->create_error(15, 'Invalid user ID', $this->ecp);
+	 return FALSE;
+      }
+
+      return TRUE;
+   }
+
+   private function verify_uri_title() {
+      /* URI must be at least 7 + MIN_TITLE_LEN characters long, 
+       * 6 for the date, 1 for the slash */
+
+      if (strlen(trim($this->uri_title)) < (7 + MIN_TITLE_LEN)) {
+	 $this->ec->create_error(27, 'Invalid url title', $this->ecp);
 	 return FALSE;
       }
 
@@ -453,6 +565,16 @@ class Event extends Location {
       return TRUE;
    }
 
+   private function create_rating_query() {
+      $sql = 'SELECT "event_id", sum("value") as rating
+	       FROM "'.$this->rating_table.'" as r
+	       WHERE "event_id" IS NOT NULL
+	       GROUP BY "event_id"
+	       ORDER BY rating DESC
+	       LIMIT '.EVENT_LIST_COUNT;
+      return $sql;
+   }
+
 
    /* 
     * The following functions can be used as static class methods
@@ -485,6 +607,71 @@ class Event extends Location {
       if ($db_class->row_count < 1) return FALSE;
 
       return TRUE;
+   }
+
+   public function vote($type, $user_id, $id, $rating, &$db_class=FALSE) {
+      if ($db_class === FALSE) {
+	 if ($this->sanity_check() === FALSE) return FALSE;
+	 $rating_table = &$this->rating_table;
+	 $db_class = &$this->dbc;
+      } else {
+	 $rating_table = 'rating';
+      }
+
+      if (verify_int($rating) === FALSE || $rating < -1 || $rating > 2) return FALSE;
+      if (verify_int($user_id) === FALSE || $user_id === 0) return FALSE;
+      if (verify_int($id) === FALSE || $id == 0) return FALSE;
+
+      if ($type === 'e') {
+	 /* Event */
+	 $insert['user_id']    = $db_class->escape($user_id);
+	 $insert['event_id']   = $db_class->escape($id);
+	 $insert['value']      = $db_class->escape($rating);
+	 $insert['comment_id'] = 0;
+      } else if ($type === 'c' && $rating !== 2) {
+	 /* Comment */
+	 $insert['user_id']    = $db_class->escape($user_id);
+	 $insert['event_id']   = 0;
+	 $insert['value']      = $db_class->escape($rating);
+	 $insert['comment_id'] = 0;
+      } else {
+	 /* WTF? */
+	 return FALSE;
+      }
+
+      if ($db_class->insert_db($rating_table, $insert) === FALSE) return FALSE;
+
+      return TRUE;
+   }
+
+
+   public function rating($type, $id, &$db_class=FALSE) {
+      if ($db_class === FALSE) {
+	 if ($this->sanity_check() === FALSE) return FALSE;
+	 $rating_table = &$this->rating_table;
+	 $db_class = &$this->dbc;
+      } else {
+	 $rating_table = 'rating';
+      }
+
+      if (verify_int($id) === FALSE || $id == 0) return FALSE;
+
+      if ($type === 'e') {
+	 $where = 'WHERE "event_id" = \''.$db_class->escape($id).'\' ';
+      } else if ($type === 'c') {
+	 $where = 'WHERE "comment_id" = \''.$db_class->escape($id).'\' ';
+      } else {
+	 return FALSE;
+      }
+
+      $sql = 'SELECT sum("value") as rating
+	       FROM "'.$rating_table.'"
+	       '.$where;
+      $db_class->query($sql);
+      $db_class->fetch_row();
+      if ($db_class->row_count < 1) return 0;
+
+      return $db_class->rows['rating'];
    }
 
 }

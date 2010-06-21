@@ -46,7 +46,7 @@ define('THUMBNAIL_WIDTH', 64);
 define('THUMBNAIL_HEIGHT', 64);
 
 define('MIN_TITLE_LEN', 10);
-define('MAX_TITLE_LEN', 65);
+define('MAX_TITLE_LEN', 60);
 define('MIN_DESCRIPTION_LEN', 50);
 define('MAX_DESCRIPTION_LEN', 5000);
 define('MIN_VENUENAME_LEN', 1);
@@ -63,8 +63,9 @@ define('GC_PROBABILITY', 100);
 
 define('ERROR_DEBUG', 1);
 
-$JS = array('jquery-1.4.2.min.js', 'jquery.cookie.js');
-$CSS = array('default.css');
+$TITLE = 'Area Pilot';
+$JS = array('jquery-1.4.2.min.js', 'jquery.cookie.js', 'rounded.js', 'ap_basics.js');
+$CSS = array('ap_default.css');
 
 /* Shouldn't modify below here */
 

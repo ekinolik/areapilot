@@ -1,0 +1,417 @@
+/* ==================================================== */
+/* ! Reset Friggin' Everything, and setup some basics   */
+/* ==================================================== */
+
+/* http://meyerweb.com/eric/tools/css/reset/ */
+/* v1.0 | 20080212 */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td { margin:0; padding:0; border:0; outline:0; font-size:100%; vertical-align:baseline; background:transparent; }
+body { line-height:1; }
+ol,ul { list-style:none; }
+blockquote,q { quotes:none; }
+blockquote:before,blockquote:after,q:before,q:after { content:''; content:none; }
+
+/* remove the silly firefox outline on links */
+a:focus { outline:none; border:none; }
+
+/* tables still need 'cellspacing="0"' in the markup */
+table { border-collapse:collapse; border-spacing:0; }
+
+/* P.I.E. FLOAT CLEARING
+See http://www.positioniseverything.net/easyclearing.html */
+.clearfix:after { content:"."; font-size:0; clear:both; height:0; visibility:hidden; display:block; }
+.clearfix { display:inline-block; 
+/* Fixes IE/Mac */
+}
+
+/* Hides from IE-mac \*/
+* html .clearfix { height:1%; }
+.clearfix { display:block; }
+
+/* End hide from IE-mac */
+
+/* Fixes IE's ridiculously stupid default image-scaling to a smoother, bicubic resizing. The way a human with working eyeballs would prefer. */
+* img { -ms-interpolation-mode:bicubic; }
+
+/* For horizontally-centered lists */
+ul.centerlist { position:relative; text-align:center; }
+ul.centerlist li { display:0; display:0; display:inline-block; display:inline; _display:inline; margin:5px 8px; position:relative; text-align:center; }
+
+/* For cross-browser inline-blocks */
+.ib { display:0; display:0; display:inline-block; display:inline; _display:inline; position:relative; }
+
+
+/* ==================================================== */
+/* ! Uncomment to debug and find unclosed/broken tags   */
+/* ==================================================== */
+
+/*
+
+* { outline: 2px dotted red }
+* * { outline: 2px dotted green }
+* * * { outline: 2px dotted orange }
+* * * * { outline: 2px dotted blue }
+* * * * * { outline: 1px solid red }
+* * * * * * { outline: 1px solid green }
+* * * * * * * { outline: 1px solid orange }
+* * * * * * * * { outline: 1px solid blue }
+
+*/
+
+
+
+/* ========== */
+/* ! Colors   */
+/* ========== */
+
+/*
+
+brown :
+#3b2a1c
+
+faded blue/green :
+#91b0b3
+
+blue-grey :
+#3f4445
+
+orange/link :
+#de702b
+
+tan :
+#f1dfc7
+
+*/
+
+/* ========= */
+/* ! Fonts   */
+/* ========= */
+
+@font-face {
+	font-family: 'DejaWebRegular';
+	src: url('/fonts/DejaWeb.eot');
+	src: local('DejaWeb Regular'), local('DejaWeb'), url('/fonts/DejaWeb.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'DejaWebRegular';
+	font-weight: bold;
+	src: url('/fonts/DejaWeb-Bold.eot');
+	src: local('DejaWeb Bold'), local('DejaWeb-Bold'), url('/fonts/DejaWeb-Bold.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'DejaWebRegular';
+	font-style: italic, oblique;
+	src: url('/fonts/DejaWeb-Italic.eot');
+	src: local('DejaWeb Italic'), local('DejaWeb-Italic'), url('/fonts/DejaWeb-Italic.ttf') format('truetype');
+}
+
+
+/* ========== */
+/* ! Basics   */
+/* ========== */
+
+body {
+	background: #3b2a1c;
+	color: #3f4445;
+	font-family: "DejaWebRegular", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
+	font-size: 62.5%;
+	text-align: center;
+}
+
+a {
+	color: #de702b;
+}
+
+a:hover,
+a:visited:hover {
+	color: #333;
+}
+
+a:active,
+a:hover:active,
+a:visited:active {
+	color: #000;
+}
+
+a:visited {
+	color: #f1dfc7;	
+}
+
+#container {
+	margin: 0 auto;
+	text-align: left;
+	width: 960px;
+}
+
+
+/* ========== */
+/* ! Header   */
+/* ========== */
+
+#header {
+	background: #3f4445;
+}
+
+#header h1#logo a {
+	background: url(../images/logo.png) left top no-repeat;
+	display: block;
+	height: 60px;
+	text-indent: -999em;
+	width: 200px;
+}
+
+#header #subhead {
+	background: #91b0b3 url(../images/sep_header.png) left top repeat-x;
+}
+
+ul#categories {
+	margin-left: 1.2em;
+}
+
+ul#categories li {
+	float: left;
+}
+
+ul#categories li a {
+	color: #3f4445;
+	display: block;
+	font-size: 1.3em;
+	font-weight: bold;
+	margin: 0.4em 0.2em;
+	padding: 0.6em 0.75em;
+	text-decoration: none;
+	text-shadow: #a5c8cb 1px 1px 0;
+}
+
+ul#categories li a:hover {
+	color: #fff;
+	text-shadow: #3f4445 1px 1px 0;
+}
+
+/* =============== */
+/* ! Main Basics   */
+/* =============== */
+
+#main {
+	margin-top: 6em;
+}
+
+#inner {
+	background: #fff url(../images/bg_maingrad.png) left top repeat-x;
+	padding: 0 0 0 1em;
+}
+
+#maincol {
+	float: left;
+	width: 630px;
+}
+
+#maincol h2 {
+	border-bottom: 1px solid #91b0b3;
+	font-size: 1.8em;
+	margin: 1.1em 2em 0 0.8em;
+	padding-bottom: 0.2em;
+	text-shadow: #fff 1px 1px 0;
+}
+
+#sidecol {
+	float: right;
+	width: 300px;
+}
+
+
+/* =========== */
+/* ! Timebar   */
+/* =========== */
+
+#timeline {
+	background: #fff url(../images/bg_timebar.png) left bottom repeat-x;
+	margin: 0 0 0 25px;
+	padding: 0 15px;
+	position: relative;
+	width: 700px;
+}
+
+ul#timeoptions {
+	width: 630px;
+}
+
+ul#timeoptions li {
+	float: left;
+}
+
+ul#timeoptions li a {
+	color: #91b0b3;
+	font-size: 1.2em;
+	display: block;
+	padding: 1em 1.2em;
+	text-decoration: none;
+}
+
+ul#timeoptions li a:hover {
+	color: #3f4445;
+}
+
+ul#timeoptions li a.current,
+ul#timeoptions li a.current:hover {
+	background: #91b0b3;
+	color: #fff;
+	font-weight: bold;
+}
+
+#timeline a#rangeselect {
+	color: #de702b;
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 1em 1.2em;
+	position: absolute;
+	right: 0;
+	top: 0;
+	text-decoration: none;
+}
+
+#timeline a#rangeselect:hover {
+	color: #333;
+}
+
+
+/* ================= */
+/* ! Entry Listing   */
+/* ================= */
+
+div.entry {
+	margin: 4em 0.5em;
+}
+
+div.entry div.description {
+	font-size: 1.2em;
+	line-height: 1.3em;
+}
+
+div.entry h3 a {
+	font-size: 1.8em;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+div.entry h3 a:hover {
+	text-decoration: underline;
+}
+
+div.entry ul.actionlinks {
+	margin: 0.5em 0 0 10px;
+}
+
+div.entry ul.actionlinks li {
+	float: left;
+	font-size: 1.2em;
+	border-right: 1px solid #91b0b3;
+	padding: 0 0.8em;
+}
+
+ul.actionlinks li a {
+	display: block;
+	height: 20px;
+	text-decoration: none;
+}
+
+ul.actionlinks li a:hover {
+	text-decoration: underline;
+}
+
+ul.actionlinks li a.attendthis {
+	background: url(../images/icons/plus.png) 0 0 no-repeat;
+	padding-left: 15px;
+}
+
+ul.actionlinks li a.attending {
+	background: url(../images/icons/person.png) 0 0 no-repeat;
+	padding-left: 20px;
+}
+
+ul.actionlinks li a.commentsnum {
+	background: url(../images/icons/comment.png) 0 0 no-repeat;
+	padding-left: 20px;
+}
+
+div.likebox {
+	background: #fff;
+	border: 1px solid #3f4445;
+	float: left;
+	margin: 0 12px 0 0;
+	text-align: center;
+	width: 8em;
+}
+
+div.likebox span.numlikes {
+	display: block;
+	font-size: 24px;
+	font-weight: bold;
+	padding: 5px 0 0 0;
+}
+
+div.likebox span.xtra {
+	display: block;
+	font-size: 10px;
+}
+
+div.likebox a.likeit {
+	background: #3f4445 url(../images/icons/star.png) 8px 0.4em no-repeat;
+	color: #fff;
+	display: block;
+	font-size: 1.3em;
+	margin-top: 0.5em;
+	padding: 0.5em 0 0.5em 27px;
+	text-align: left;
+	text-decoration: none;
+}
+
+div.likebox a.likeit:hover {
+	background-color: #91b0b3;
+}
+
+
+/* ========================== */
+/* ! Side Column, Main Page   */
+/* ========================== */
+
+div.sidebox {
+	margin: 2em 15px 0 0;
+}
+
+div.sidebox h2 {
+	border-bottom: 1px solid #91b0b3;
+	font-size: 1.8em;
+	margin: 0 0 0.5em 0;
+	padding: 0 0 0.2em 0;
+	text-shadow: #fff 1px 1px 0;
+}
+
+div.minievents a.minievent {
+	border-bottom: 1px dotted #91b0b3;
+	clear: both;
+	padding: 0.5em 0.3em;
+	text-decoration: none;
+}
+
+div.minievents a.minievent span.numlikes {
+	background: #fff url(../images/bg_smallcount.png) left bottom repeat-x;
+	border: 1px solid #91b0b3;
+	color: #3f4445;
+	display: block;
+	float: left;
+	font-size: 16px;
+	font-weight: bold;
+	height: 35px;
+	line-height: 35px;
+	margin: 0 8px 0 0;
+	text-align: center;
+	text-decoration: none;
+	width: 40px;
+}
+
+div.minievents a.minievent span.title {
+	font-size: 1.4em;
+	line-height: 1.3em;
+}

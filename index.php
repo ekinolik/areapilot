@@ -10,9 +10,7 @@ $HEADER = ROOT_DIR.'html_output/header.php';
 $FOOTER = ROOT_DIR.'html_output/footer.php';
 define('NOLOCOK', 1);
 
-array_push($JS, 'blockUI.js');
-array_push($JS, 'rounded.js');
-array_push($JS, 'basics.js');
+array_push($JS, '');
 array_push($CSS, '');
 
 require($CURRENT_DIR.'code/init.php');

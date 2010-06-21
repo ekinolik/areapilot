@@ -1,50 +1,39 @@
 <?php
 
-define('JSON_CLASS', 1);
+define('JSONCLASS', 1);
 
-abstract class JSON {
+class JSON {
 
-   public $json_string;
-   public $json;
-
-   public function __construct($json_string='') {
-      if (strlen($json) < 1) return TRUE;
-
-      $this->json_string = $json_string;
-      $this->decode();
-
-      return TRUE;
-   }
-
-   public function decode() {
+   public function decode($json_string) {
       /* Decode a json string to an object*/
-      if (strlen($this->json_string) < 1) return FALSE;
+      if (strlen($json_string) < 1) return FALSE;
 
-      $this->json = json_decode($this->json_string);
+      $json = json_decode($json_string);
 
-      if (is_object($this->json) === FALSE) return FALSE;
+      if (is_object($json) === FALSE) return FALSE;
 
-      return TRUE;
+      return $json;
    }
 
    public function get_from_file($file) {
       /* Load the specified JSON file then decode it returning the result of the decode */
       if (strlen(trim($file)) < 1 || ! is_readable($file)) return FALSE;
 
-      $this->json_string = file_get_contents($file);
+      $json_string = file_get_contents($file);
 
-      return $this->decode();
+      return JSON::decode($json_string);
    }
 
-   public function encode() {
+   public function encode($json) {
       /* Encode a array to a json string */
-      if (is_object($this->json)) return FALSE;
+      if (is_object($json)) return FALSE;
+      if ( ! isset($json['error'])) $json['error'] = '';
 
-      $this->json_string = json_encode($this->json);
+      $json_string = json_encode($json);
 
-      if (strlen(trim($this->json_string)) < 1) return FALSE;
+      if (strlen(trim($json_string)) < 1) return FALSE;
 
-      return TRUE;
+      return $json_string;
    }
 
 }

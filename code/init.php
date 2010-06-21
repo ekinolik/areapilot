@@ -3,6 +3,7 @@
 if ( ! defined('DATABASECLASS'))   require(LIB_DIR.'Database.php');
 if ( ! defined('ERRORCLASS')) require(LIB_DIR.'ErrorClass.php');
 if ( ! defined('SESSION'))    require(LIB_DIR.'Session.php');
+if ( ! defined('HTMLCLASS'))  require(LIB_DIR.'HTML.php');
 
 $error_class = new ErrorClass;
 if (ERROR_DEBUG > 0) $error_class->show_errno = TRUE; else $error_class->show_errno = FALSE;
