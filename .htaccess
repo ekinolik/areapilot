@@ -1,4 +1,37 @@
 php_flag display_errors on
 
 RewriteEngine on
-RewriteRule ^([0-9][0-9][0-9][0-9][0-9][0-9])/([A-Za-z0-9_]+)$ /event.php?title=$1/$2
+
+#Login
+RewriteCond %{REQUEST_URI} ^/login(/|/index.html)?$
+RewriteRule ^login(/|/index.html)?$ login.php [L]
+
+#Sign up
+RewriteCond %{REQUEST_URI} ^/signup(/|/index.html)?$
+RewriteRule ^signup(/|/index.html)?$ signup.php [L]
+
+#Submit
+RewriteCond %{REQUEST_URI} ^/submit(/|/index.html)?$
+RewriteRule ^submit(/|/index.html)?$ submit.php [L]
+
+#Event
+RewriteCond %{REQUEST_URI} !\.
+RewriteRule ^([0-9][0-9][0-9][0-9][0-9][0-9])/([A-Za-z0-9_]+)$ /event.php?title=$1/$2 [L]
+
+#Category no page
+RewriteCond %{REQUEST_URI} !\.
+RewriteCond %{REQUEST_URI} !^/?$
+RewriteRule ^/?([A-Za-z_&]+)?(/date-([0-9]+)-?([0-9]+)?)?/?(/index.html)?$ /index.php?category=$1&page=&date1=$3&date2=$4 [L]
+
+#Category with page and possibly date range
+RewriteCond %{REQUEST_URI} !(\.jpg|\.jpeg|\.ttf|\.css|\.js|\.png|\.gif)$
+RewriteCond %{REQUEST_URI} page[0-9]+/?(index.html)?$
+RewriteRule ^/?([A-Za-z0-9_&]+)/(date-([0-9]+)-?([0-9]+)?)?/?page([0-9]+)/?(/index.html)?$ /index.php?category=$1&page=$5&date1=$3&date2=$4 [L]
+
+RewriteCond %{REQUEST_URI} !\.
+RewriteCond %{REQUEST_URI} page[0-9]+/?(index.html)?$
+RewriteRule (date-([0-9]+)-?([0-9]+)?/)?page([0-9]+)/?(/index.html)?$ /index.php?category=&page=$4&date1=$2&date2=$3 [L]
+
+RewriteCond %{REQUEST_URI} !\.
+RewriteCond %{REQUEST_URI} ^/?date-
+RewriteRule ^/?date-([0-9]+)-?([0-9]+)?/?(/index.html)?$ /index.php?category=&page=&date1=$1&date2=$2 [L]

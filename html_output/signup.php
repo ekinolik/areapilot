@@ -1,6 +1,12 @@
 <?php
 
+if ( ! defined('HTMLCLASS')) require(LIB_DIR.'HTML.php');
+
+$header = HTML::body_header('Create a New Account');
+$footer = HTML::body_footer();
+
 print <<<EOF
+$header
    <div id="signup" class="full_form">
       <form method="post" action="signup.php" class="full">
 	 <fieldset>
@@ -31,5 +37,6 @@ print <<<EOF
          </fieldset>
       </form>
    </div>
+$footer
 EOF;
 ?>

@@ -10,6 +10,7 @@ class Event extends Location {
    public $ec;
 
    public $events;
+   public $total;
 
    public $event_id;
    public $title;
@@ -18,6 +19,9 @@ class Event extends Location {
    public $timestamp;
    public $url;
    public $description;
+
+   public $start_time;
+   public $end_time;
 
    public $category;
    public $category_id;
@@ -72,6 +76,10 @@ class Event extends Location {
       $this->category    = NULL;
       $this->rating      = NULL;
       $this->comment_id  = NULL;
+      $this->start_time  = NULL;
+      $this->end_time    = NULL;
+
+      $this->total = 0;
 
       $this->event_table = 'event';
       $this->event_description_table = 'event_description';
@@ -161,15 +169,19 @@ class Event extends Location {
       return TRUE;
    }
 
-   public function get_events() {
-      if ($this->sanity_check() === FALSE) return FALSE;
-
+   protected function event_query() {
       $rating_query = $this->create_rating_query();
 
-      $sql = 'SELECT e."id", u."username", e."time", e."title", e."uri_title", ed."description",
-	        c."name" as city, a."name" as area, r."rating"
+      //$date_clause = $this->create_date_clause();
+      $date_clause = $this->create_date_clause($this->start_time, $this->end_time);
+      $category_clause = $this->create_category_clause(CATEGORY_ID);
+
+      $sql = '
 	       FROM ( '.$rating_query.' ) as r
 	       LEFT OUTER JOIN "'.$this->event_table.'" as e ON (e."id" = r."event_id")
+	       LEFT OUTER JOIN "'.$this->event_category_table.'" as ec ON (ec."event_id" = e."id")
+	       LEFT OUTER JOIN "'.$this->category_table.'" as cat 
+	       ON (cat."id" = ec."category_id" )
 	       LEFT OUTER JOIN "'.$this->event_description_table.'" as ed
 	       ON (ed."event_id" = e."id")
 	       LEFT OUTER JOIN "'.$this->venue_table.'" as v ON (v."id" = ed."venue_id")
@@ -178,14 +190,115 @@ class Event extends Location {
 	       LEFT OUTER JOIN "'.$this->city_table.'" as c ON (c."id" = zc."city_id")
 	       LEFT OUTER JOIN "'.$this->area_table.'" as a ON (a."id" = e."area_id")
 	       LEFT OUTER JOIN "'.$this->user_table.'" as u ON (u."id" = e."user_id")
+	       WHERE '.$category_clause.' AND '.$date_clause.' ';
+
+      return $sql;
+   }
+
+   public function get_events() {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      $this->get_event_count();
+
+      $offset = $this->create_offset(PAGE);
+      $sql = 'SELECT e."id", u."username", e."time", e."title", e."uri_title", ed."description",
+	       c."name" as city, a."name" as area, r."rating", cat."title" as category
+	       '.$this->event_query().'
 	       ORDER BY r."rating" DESC, ed."date_added" DESC
-	       LIMIT '.EVENT_LIST_COUNT.' ';
+	       LIMIT '.EVENT_LIST_COUNT.' 
+	       '.$offset.' ';
       $this->dbc->query($sql);
       $this->dbc->fetch_array();
 
       $this->events = $this->dbc->rows;
 
       return TRUE;
+   }
+
+   protected function get_event_count() {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      $sql = 'SELECT count(1) as count '.$this->event_query().' ';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_row();
+      if ($this->dbc->row_count < 1) {
+	 $this->total = 0;
+	 return FALSE;
+      }
+
+      $this->total = $this->dbc->rows['count'];
+
+      return TRUE;
+   }
+
+   public function get_top() {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      $rating_query = $this->create_rating_query();
+
+      //$date_clause = $this->create_date_clause(CURRENT_TIME, CURRENT_TIME + 86400);
+      $date_clause = $this->create_date_clause($this->start_time, $this->end_time);
+      $category_clause = $this->create_category_clause(CATEGORY_ID);
+
+      $sql = 'SELECT e."id", u."username", e."time", e."title", e."uri_title", ed."description",
+	        c."name" as city, a."name" as area, r."rating", cat."title" as category
+	       FROM ( '.$rating_query.' ) as r
+	       LEFT OUTER JOIN "'.$this->event_table.'" as e ON (e."id" = r."event_id")
+	       LEFT OUTER JOIN "'.$this->event_category_table.'" as ec ON (ec."event_id" = e."id")
+	       LEFT OUTER JOIN "'.$this->category_table.'" as cat 
+	       ON (cat."id" = ec."category_id" )
+	       LEFT OUTER JOIN "'.$this->event_description_table.'" as ed
+	       ON (ed."event_id" = e."id")
+	       LEFT OUTER JOIN "'.$this->venue_table.'" as v ON (v."id" = ed."venue_id")
+	       LEFT OUTER JOIN "'.$this->zip_table.'" as z ON (z."id" = v."zip_id")
+	       LEFT OUTER JOIN "'.$this->zip_city_table.'" as zc ON (zc."zip_id" = z."id")
+	       LEFT OUTER JOIN "'.$this->city_table.'" as c ON (c."id" = zc."city_id")
+	       LEFT OUTER JOIN "'.$this->area_table.'" as a ON (a."id" = e."area_id")
+	       LEFT OUTER JOIN "'.$this->user_table.'" as u ON (u."id" = e."user_id")
+	       WHERE '.$category_clause.' AND '.$date_clause.'
+	       ORDER BY r."rating" DESC, ed."date_added" DESC
+	       LIMIT '.EVENT_TOP_LIST_COUNT.' ';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_array();
+
+      return $this->dbc->rows;
+   }
+
+   private function create_date_clause($start_ts=CURRENT_TIME, $end_ts=FALSE) {
+      if (verify_int($start_ts) === FALSE) $start_ts = CURRENT_TIME;
+
+      $start = $this->dbc->escape(date('Y-m-d H:i:s', $start_ts));
+
+      $sql = ' ( e."time" > \''.$start.'\' ';
+      if (verify_int($end_ts) !== FALSE && $end_ts > $start_ts) {
+	 $end = $this->dbc->escape(date('Y-m-d H:i:s', $end_ts));
+	 $sql .= ' AND e."time" <= \''.$end.'\' ';
+      }
+      $sql .= ' ) ';
+
+      return $sql;
+   }
+
+   private function create_category_clause($category_id) {
+      if (verify_int($category_id) && $category_id > 0) {
+	 $category_id = $this->dbc->escape($category_id);
+	 $sql  = ' ( ec."category_id" = \''.$category_id.'\' ';
+	 $sql .= ' OR cat."parent" = \''.$category_id.'\'  ) ';
+      } else {
+	 $sql = ' 1=1 ';
+      }
+
+      return $sql;
+   }
+
+   private function create_offset($page) {
+      if (verify_int($page) && $page > 0 && ($page * EVENT_LIST_COUNT) < BIGINT) {
+	 $sql = ' OFFSET '.(($page - 1) * EVENT_LIST_COUNT);
+      } else {
+	 $sql = ' ';
+      }
+
+      return $sql;
    }
 
    private function sanitize_uri_title() {
@@ -283,10 +396,24 @@ class Event extends Location {
 	 return FALSE;
       }
 
-      $this->rating = 1;
+      if ($this->set_event_category() === FALSE) return FALSE;
 
+      $this->rating = 1;
       return $this->set_rating('event');
 
+   }
+
+   protected function set_event_category() {
+      if ($this->sanity_check() === FALSE) return FALSE;
+      
+      $insert['event_id']    = $this->dbc->escape($this->event_id);
+      $insert['category_id'] = $this->dbc->escape($this->category_id);
+      if ($this->dbc->insert_db($this->event_category_table, $insert, TRUE) === FALSE) {
+	 $this->ec->create_error(28, 'Could not associate a category with this event', $this->ecp);
+	 return FALSE;
+      }
+
+      return TRUE;
    }
 
    protected function set_rating($type) {
@@ -317,7 +444,7 @@ class Event extends Location {
       if ($this->sanity_check() === FALSE) return FALSE;
 
       $insert['event_id'] = $this->dbc->escape($this->event_id);
-      $insert['category_id'] = $this->dbc->escape($this->cateogry_id);
+      $insert['category_id'] = $this->dbc->escape($this->category_id);
       if ($this->dbc->insert_db($this->event_category_table, $insert, TRUE) === FALSE) {
 	 $this->ec->create_error(21, 'Could not add category reference', $this->ecp);
 	 return FALSE;
@@ -570,8 +697,7 @@ class Event extends Location {
 	       FROM "'.$this->rating_table.'" as r
 	       WHERE "event_id" IS NOT NULL
 	       GROUP BY "event_id"
-	       ORDER BY rating DESC
-	       LIMIT '.EVENT_LIST_COUNT;
+	       ORDER BY rating DESC ';
       return $sql;
    }
 

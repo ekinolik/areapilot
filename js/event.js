@@ -1,14 +1,14 @@
 jQuery(function($) {
 
       $("a.reply").live('click', function() {
-	 $("div#reply_div").remove();
+	 $("div#reply_div").empty().remove();
 
 	 var event_id = $("input#event_id").val();
-	 var divid = $(this).parent().attr('id');
+	 var divid = $(this).parents('div').attr('id');
 	 var parent_id = divid.substring(divid.lastIndexOf('_')+1);
 
 	 var replyDiv = $(document.createElement('div')).attr('id', 'reply_div');
-	 var replyForm = $(document.createElement('form')).attr('method', 'post').attr('action', 'comment.php').attr('class', 'comment');
+	 var replyForm = $(document.createElement('form')).attr('method', 'post').attr('action', 'comment.php').addClass('comment').addClass('reply');
 	 var replyFieldset = $(document.createElement('fieldset'));
 	 var replyOL = $(document.createElement('ol'));
 	 var replyLI = $(document.createElement('li'));
@@ -29,8 +29,112 @@ jQuery(function($) {
 	 replyLI.append(replyButton);
 	 replyOL.append(replyLI);
 
-	 $(this).parent().append(replyDiv);
+	 $(this).parents('div').append(replyDiv);
 
 	 return false;
       });
+
+      $("form.comment.reply").live('submit', function() {
+	    var comment = $("#add_reply", $(this)).val();
+	    var event_id = $("#reply_id", $(this)).val();
+	    var parent_id = $("#parent_id", $(this)).val();
+	    var queryString = "event_id="+encodeURIComponent(event_id)+"&add_comment="+encodeURIComponent(comment)+"&parent_id="+encodeURIComponent(parent_id);
+
+	    submitComment(queryString);
+
+	    $("#reply_div").empty().remove();
+	    return false;
+      });
+
+      $("form.comment.parent").bind('submit', function() {
+	    var comment = $("textarea#add_comment").val();
+	    var event_id = $("form.comment.parent input#event_id").val();
+	    var queryString = "event_id="+encodeURIComponent(event_id)+"&add_comment="+encodeURIComponent(comment);
+	    
+	    submitComment(queryString);
+
+	    $("textarea#add_comment").val('');
+	    return false;
+      });
+
+      $("a.expand").live('click', function() {
+	    $(this).removeClass('expand').addClass('loading_comments');
+	    $(this).text('Loading...');
+	    var comment = $(this).parents('div').attr('id');
+	    var comment_id = comment.substring(8);
+
+	    $.ajax({
+	       type: "POST",
+	       data: "gch="+comment_id,
+	       url: '/comment.php',
+	       success: function(jsonString) {
+		  for (var i = jsonString.comments.length - 1; i >= 0; i--) {
+		  	displayReply(jsonString.comments[i]);
+		  }
+
+		  return true;
+	       },
+	       complete: function(xmlhr, ts) {
+		  var tmp = $("div#"+comment);
+		  $("a.loading_comments", tmp).html('&laquo; Hide');
+		  $("a.loading_comments", tmp).removeClass('looading_comments').addClass('contract');
+	       }
+	    });
+
+	    return false;
+      });
+
+      $("a.contract").live('click', function() {
+	    $(this).removeClass('contract').addClass('expand');
+	    var parentId = $(this).parents('div').attr('id');
+
+	    while($("div#"+parentId).next('div').hasClass('reply_comment')) {
+	       $("div#"+parentId).next('div').empty().remove();
+	    }
+
+	    return false;
+      });
+
+      function displayReply(jsonComment) {
+	    var newId = jsonComment.id;
+	    var newUsername = jsonComment.username;
+	    var newTime = jsonComment.time;
+	    var message = nl2br(jsonComment.comment);
+	    var parentId = jsonComment.parent;
+	    var parentIdInt = parseInt(parentId);
+
+	    var newCommentDiv = $(document.createElement('div')).attr('id', 'comment_'+newId);
+	    var commentUsername = $(document.createElement('span')).addClass('username').text(newUsername);
+	    var commentTime = $(document.createElement('span')).addClass('time').text(newTime);
+	    var commentMessage = $(document.createElement('span')).addClass('message').html(message);
+	    $(newCommentDiv).append(commentUsername);
+	    $(newCommentDiv).append(commentTime);
+	    $(newCommentDiv).append($(document.createElement('br')));
+	    $(newCommentDiv).append(commentMessage);
+
+	    if (parentIdInt > 0) {
+		  $(newCommentDiv).addClass('reply_comment');
+		  $(newCommentDiv).prepend($(document.createElement('hr')));
+		  $(newCommentDiv).css('paddingLeft', '30px');
+		  $("div#comment_"+parentId).after(newCommentDiv);
+	    } else {
+		  $(newCommentDiv).append($(document.createElement('hr')));
+		  $("div#comment_container").children("hr:last").after(newCommentDiv);
+	    }
+
+	    return true;
+      }
+	    
+      function submitComment(queryString) {
+	    $.ajax({
+               type: "POST",
+               data: queryString,
+               url: '/comment.php',
+               success: function(jsonString) {
+
+		  displayReply(jsonString);
+               }
+	    });
+      }
+
 });

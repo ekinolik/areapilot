@@ -5,9 +5,9 @@ if ( ! defined('config')) require('config.php');
 $TITLE = 'comment';
 
 $CODE = $CURRENT_DIR.'code/comment.php';
-$OUTPUT = $CURRENT_DIR.'html_output/comment.php';
-$HEADER = ROOT_DIR.'html_output/header.php';
-$FOOTER = ROOT_DIR.'html_output/footer.php';
+$OUTPUT = $CURRENT_DIR.'json_output/comment.php';
+$HEADER = ROOT_DIR.'json_output/header.php';
+$FOOTER = ROOT_DIR.'json_output/footer.php';
 define('NOLOCOK', 1);
 
 array_push($JS, 'blockUI.js');

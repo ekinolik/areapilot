@@ -199,3 +199,7 @@ form.comment label {
    width: 10em;
    vertical-align: top;
 }
+
+#comment_container div span.message {
+   white-space: pre;
+}

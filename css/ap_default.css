@@ -37,7 +37,7 @@ ul.centerlist { position:relative; text-align:center; }
 ul.centerlist li { display:0; display:0; display:inline-block; display:inline; _display:inline; margin:5px 8px; position:relative; text-align:center; }
 
 /* For cross-browser inline-blocks */
-.ib { display:0; display:0; display:inline-block; display:inline; _display:inline; position:relative; }
+.ib { display: -moz-inline-box; display: -moz-inline-stack; -moz-box-orient: vertical; display:inline-block; *display: inline; _display:inline; position:relative; vertical-align: middle; }
 
 
 /* ==================================================== */
@@ -77,8 +77,8 @@ blue-grey :
 orange/link :
 #de702b
 
-tan :
-#f1dfc7
+light orange/brow (visited links) :
+#c49577
 
 */
 
@@ -93,14 +93,14 @@ tan :
 }
 
 @font-face {
-	font-family: 'DejaWebRegular';
+	font-family: 'DejaWebBold';
 	font-weight: bold;
 	src: url('/fonts/DejaWeb-Bold.eot');
 	src: local('DejaWeb Bold'), local('DejaWeb-Bold'), url('/fonts/DejaWeb-Bold.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'DejaWebRegular';
+	font-family: 'DejaWebItalic';
 	font-style: italic, oblique;
 	src: url('/fonts/DejaWeb-Italic.eot');
 	src: local('DejaWeb Italic'), local('DejaWeb-Italic'), url('/fonts/DejaWeb-Italic.ttf') format('truetype');
@@ -135,13 +135,17 @@ a:visited:active {
 }
 
 a:visited {
-	color: #f1dfc7;	
+	color: #c49577;
 }
 
 #container {
 	margin: 0 auto;
 	text-align: left;
 	width: 960px;
+}
+
+.modal {
+	display: none;
 }
 
 
@@ -151,6 +155,7 @@ a:visited {
 
 #header {
 	background: #3f4445;
+	position: relative;
 }
 
 #header h1#logo a {
@@ -171,11 +176,14 @@ ul#categories {
 
 ul#categories li {
 	float: left;
+	position: relative;
+	z-index: 99;
 }
 
 ul#categories li a {
 	color: #3f4445;
 	display: block;
+	font-family: "DejaWebBold";
 	font-size: 1.3em;
 	font-weight: bold;
 	margin: 0.4em 0.2em;
@@ -184,17 +192,94 @@ ul#categories li a {
 	text-shadow: #a5c8cb 1px 1px 0;
 }
 
-ul#categories li a:hover {
+ul#categories li a:hover,
+ul#categories li a.hovered {
+	background: #3f4445;
 	color: #fff;
 	text-shadow: #3f4445 1px 1px 0;
 }
+
+ul#categories li a.current {
+	background: #fff;
+	color: #000;
+	text-shadow: none;
+}
+
+ul#categories ul.submenu {
+	background: #91b0b3;
+	border: 1px solid #3f4445;
+	border-width: 0 1px;
+	display: none;
+	float: none;
+	left: 2px;
+	position: absolute;
+	top: 3.1em;
+	width: 130px;
+	z-index: 100;
+}
+
+ul#categories ul.submenu li {
+	float: none;
+}
+
+ul#categories ul.submenu li a {
+	border-bottom: 1px solid #3f4445;
+	font-size: 1.1em;
+	margin: 0;
+}
+
+ul#categories ul.submenu li a:hover {
+	background: #3f4445;
+	color: #eee;
+}
+
+ul#loggedout,
+ul#loggedin {
+	position: absolute;
+	right: 5px;
+	top: 8px;
+}
+
+ul#loggedout li,
+ul#loggedin li {
+	border-right: 1px solid #91b0b3;
+	float: left;
+	padding: 0 0.5em;
+}
+
+ul#loggedout li#btn-signup,
+ul#loggedin li#btn-logout {
+	border: none;
+}
+
+ul#loggedout li a,
+ul#loggedin li a {
+	color: #91b0b3;
+	display: block;
+	font-family: "DejaWebBold";
+	font-size: 1.4em;
+	font-weight: bold;
+	height: 1.6em;
+	line-height: 1.6em;
+	padding: 0 1em;
+	text-decoration: none;
+}
+
+ul#loggedout li a:hover,
+ul#loggedin li a:hover {
+	background: #fff;
+	color: #3f4445;
+}
+
+
 
 /* =============== */
 /* ! Main Basics   */
 /* =============== */
 
 #main {
-	margin-top: 6em;
+	margin: 6em 0 3em;
+	z-index: 1;
 }
 
 #inner {
@@ -257,11 +342,13 @@ ul#timeoptions li a.current,
 ul#timeoptions li a.current:hover {
 	background: #91b0b3;
 	color: #fff;
+	font-family: "DejaWebBold";
 	font-weight: bold;
 }
 
 #timeline a#rangeselect {
 	color: #de702b;
+	font-family: "DejaWebBold";
 	font-size: 1.2em;
 	font-weight: bold;
 	padding: 1em 1.2em;
@@ -275,6 +362,41 @@ ul#timeoptions li a.current:hover {
 	color: #333;
 }
 
+ul#suboptions {
+	clear: both;
+	width: 800px;
+}
+
+ul#suboptions li {
+	float: left;
+}
+
+ul#suboptions li span,
+ul#suboptions li a {
+	font-size: 1.0em;
+	display: block;
+	padding: 0.6em 1.2em;
+	text-decoration: none;
+}
+
+ul#suboptions li a {
+	color: #de702b;
+}
+
+
+ul#suboptions li a:hover {
+	color: #333;
+}
+
+ul#suboptions li a.current,
+ul#suboptions li a.current:hover {
+	background: #91b0b3;
+	color: #fff;
+	font-family: "DejaWebBold";
+	font-weight: bold;
+}
+
+
 
 /* ================= */
 /* ! Entry Listing   */
@@ -284,12 +406,30 @@ div.entry {
 	margin: 4em 0.5em;
 }
 
+
+div.entry div,
+div.entry h3,
+div.entry ul {
+	float: right;
+	width: 525px;
+}
+
+div.entry div * {
+	float: none;
+	width: auto;
+}
+
 div.entry div.description {
 	font-size: 1.2em;
 	line-height: 1.3em;
 }
 
+div.entry h3 {
+	margin-bottom: 0.8em;
+}
+
 div.entry h3 a {
+	font-family: "DejaWebBold";
 	font-size: 1.8em;
 	font-weight: bold;
 	text-decoration: none;
@@ -297,6 +437,15 @@ div.entry h3 a {
 
 div.entry h3 a:hover {
 	text-decoration: underline;
+}
+
+div.entry h4 {
+	font-size: 1.1em;
+	margin-bottom: 0.8em;
+}
+
+div.entry h4 span {
+	font-weight: normal;
 }
 
 div.entry ul.actionlinks {
@@ -335,7 +484,7 @@ ul.actionlinks li a.commentsnum {
 	padding-left: 20px;
 }
 
-div.likebox {
+div.entry div.likebox {
 	background: #fff;
 	border: 1px solid #3f4445;
 	float: left;
@@ -346,6 +495,7 @@ div.likebox {
 
 div.likebox span.numlikes {
 	display: block;
+	font-family: "DejaWebBold";
 	font-size: 24px;
 	font-weight: bold;
 	padding: 5px 0 0 0;
@@ -401,6 +551,7 @@ div.minievents a.minievent span.numlikes {
 	color: #3f4445;
 	display: block;
 	float: left;
+	font-family: "DejaWebBold";
 	font-size: 16px;
 	font-weight: bold;
 	height: 35px;
@@ -415,3 +566,152 @@ div.minievents a.minievent span.title {
 	font-size: 1.4em;
 	line-height: 1.3em;
 }
+
+
+/* ============== */
+/* ! Pagination   */
+/* ============== */
+
+div.pagination {
+	margin: 0 auto 2em;
+	padding: 2em 0;
+}
+
+div.pagination ul {
+	float: right;
+}
+
+div.pagination ul li {
+	float: left;
+	margin: 0 0.2em;
+}
+
+div.pagination ul li a {
+	border: 1px solid #de702b;
+	display: block;
+	font-family: "DejaWebBold";
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 0.4em 0.5em;
+	text-decoration: none;
+}
+
+div.pagination ul li a:hover {
+	background: #333;
+	color: #fff;
+}
+
+div.pagination ul li span {
+	color: #333;
+	display: block;
+	font-family: "DejaWebBold";
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 0.4em 0.5em;
+}
+
+div.pagination ul li span.current {
+	background: #de702b;
+	border: 1px solid #de702b;
+	color: #fff;
+	display: block;
+	font-family: "DejaWebBold";
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 0.4em 0.5em;
+}
+
+
+/* ================== */
+/* ! Login & Signup   */
+/* ================== */
+
+form.modalform {
+	width: 400px;
+}
+
+form.modalform ol {
+	padding: 2em 2.5em 1em;
+}
+
+form.modalform ol li {
+	margin: 0 auto;
+	padding: 0.5em 0;
+	width: 80%;
+}
+
+form.modalform ol li label {
+	color: #3b2a1c;
+	display: block;
+	font-size: 1.5em;
+	text-align: left;
+}
+
+form.modalform ol li input.textfield {
+	background: #91b0b3;
+	border: 1px inset #bbb;
+	color: #3b2a1c;
+	font-family: "DejaWebBold";
+	font-size: 1.6em;
+	font-weight: bold;
+	display: block;
+	padding: 0.2em;
+	width: 100%;
+}
+
+form.modalform ol li span.formnote {
+	float: right;
+	font-size: 0.95em;
+	margin: 0.3em 0 0 0;
+}
+
+form.modalform button.btn-submit {
+	background-image: -moz-linear-gradient(top,#7b573a,#3b2a1c);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#7b573a), to(#3b2a1c));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff7b573a,endColorstr=#ff3b2a1c);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff7b573a,endColorstr=#ff3b2a1c)";
+	background-color: #3b2a1c;
+	border: 2px solid #7b573a;
+	clear: both;
+	color: #fff;
+	display: block;
+	font-size: 1.6em;
+	margin: 1.3em auto 0.6em;
+	padding: 0.3em 1.1em;
+	text-align: center;
+	text-shadow: -1px -1px 0 #000;
+}
+
+form.modalform button.btn-submit:hover {
+	background-image: -moz-linear-gradient(top,#3b2a1c,#7b573a);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#3b2a1c), to(#7b573a));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff3b2a1c,endColorstr=#ff7b573a);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff3b2a1c,endColorstr=#ff7b573a)";
+	background-color: #7b573a;
+	cursor: pointer;
+}
+
+form.modalform button.btn-submit:active {
+	background: #000;
+	border-color: #666;
+}
+
+.hidden {
+	display: none;
+}
+
+div#map_canvas {
+	width: 300px;
+	height: 200px;
+}
+
+div#eventdetailswrapper {
+	width: 100%;
+	float: left;
+	clear: right;
+}
+
+span.comment_footer {
+	padding-left: 10px;
+}
+

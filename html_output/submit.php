@@ -1,5 +1,7 @@
 <?php
 
+if ( ! defined('HTMLCLASS')) require(LIB_DIR.'HTML.php');
+
 $cat_opts = '';
 for ($i = 0, $iz = count($category->category); $i < $iz; ++$i) {
    $cat = &$category->category[$i];
@@ -14,7 +16,11 @@ for ($i = 0, $iz = count($category->category); $i < $iz; ++$i) {
    $cat_opts .= '</optgroup>'."\n";
 }
 
+$header = HTML::body_header('Submit an Event');
+$footer = HTML::body_footer();
+
 print <<<EOF
+$header
    <div id="signup" class="full_form">
       <form method="post" action="submit.php" class="full">
 	 <fieldset>
@@ -66,5 +72,7 @@ print <<<EOF
          </fieldset>
       </form>
    </div>
+$footer
 EOF;
+
 ?>

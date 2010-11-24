@@ -2,6 +2,7 @@
 
 $eventdetails = HTML::eventdetails($venue->events[0]);
 $venuedetails = HTML::venuedetails($venue->events[0]);
+$map = HTML::map($venue->events[0]);
 
 /*
 $event = &$venue->events[0];
@@ -40,10 +41,10 @@ for ($i = 0, $iz = count($comment->comment); $i < $iz; ++$i) {
     */
 }
 
-$commentform = HTML::commentform();
+$commentform = HTML::commentform($error_class, $comment->event_id);
 $commentlist = HTML::commentlist($comments, $commentform);
 
-$event = HTML::event($venue->events[0]['title'], $eventdetails, $venuedetails, $commentlist);
+$event = HTML::event($venue->events[0]['title'], $eventdetails, $venuedetails, $map, $commentlist);
 
 print <<<EOF
 

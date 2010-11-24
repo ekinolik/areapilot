@@ -137,10 +137,12 @@ class Chat {
 
       $this->event_id = $this->dbc->escape($this->event_id);
 
-      $sql = 'SELECT c."id", c."user_id", c."comment", c."time", u."username"
+      $sql = 'SELECT c."id", c."user_id", c."comment", c."time", u."username", count(1) - 1 as replies
 	       FROM "'.$this->comment_table.'" as c
 	       LEFT OUTER JOIN "'.$this->user_table.'" as u ON (u."id" = c."user_id")
+	       LEFT OUTER JOIN "'.$this->comment_table.'" as c2 ON (c."id" = c2."parent")
 	       WHERE c."event_id" = \''.$this->event_id.'\' AND c."parent" IS NULL
+	       GROUP BY c."id", c."user_id", c."comment", c."time", u."username"
 	       ORDER BY c."time" ';
       $this->dbc->query($sql);
       $this->dbc->fetch_array();
@@ -153,11 +155,21 @@ class Chat {
    public function get_comments() {
       if ($this->sanity_check() === FALSE) return FALSE;
 
-      $this->event_id = $this->dbc->escape($this->event_id);
+      if (isset($this->id) && verify_int($this->id)) {
+	 $this->id = $this->dbc->escape($this->id);
+	 $where_clause = 'c."parent" = \''.$this->id.'\' ';
+      } else if (isset($this->event_id) && verify_int($this->event_id)) {
+	 $this->event_id = $this->dbc->escape($this->event_id);
+	 $where_clause = 'c."event_id" = \''.$this->event_id.'\' ';
+      } else {
+	 $this->ec->create_error(6, 'No comment type of comments select', $this->ecp);
+	 return FALSE;
+      }
+
       $sql = 'SELECT c."id", c."user_id", c."comment", c."time", c."parent", u."username"
 	       FROM "'.$this->comment_table.'" as c
 	       LEFT OUTER JOIN "'.$this->user_table.'" as u ON (u."id" = c."user_id")
-	       WHERE c."event_id" = \''.$this->event_id.'\'
+	       WHERE '.$where_clause.'
 	       ORDER BY c."time" ';
       $this->dbc->query($sql);
       $this->dbc->fetch_array();

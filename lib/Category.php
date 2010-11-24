@@ -174,6 +174,44 @@ class Category extends Event {
 
       return TRUE;
    }
+
+   /* 
+    * The following functions can be used as static class methods
+    */
+
+   public function get_by_title($category_title=FALSE, $db_class=FALSE) {
+      if ($category_title === FALSE) {
+	 $category_title = &$this->category_title;
+      }
+
+      if ($db_class === FALSE) {
+	 if ($this->sanity_check() === FALSE) return FALSE;
+	 $category_table = &$this->category_table;
+	 $db_class = &$this->dbc;
+      } else {
+	 $category_table = 'category';
+      }
+
+      $category_title = trim($category_title);
+      if (strlen($category_title) < 1) {
+	 return FALSE;
+      }
+
+      $category_title = strtolower(str_replace('_', ' ', $category_title));
+      $sql = 'SELECT c."id", c."title", c."parent", c."active", c."sequence", 
+	        p."title" as parent_title 
+	       FROM "'.$category_table.'" as c
+	       LEFT OUTER JOIN "'.$category_table.'" as p ON (p."id" = c."parent")
+	       WHERE lower(c."title") = \''.$category_title.'\' 
+	       LIMIT 1';
+      $db_class->query($sql);
+      $db_class->fetch_row();
+      if ($db_class->row_count < 1) return FALSE;
+
+      return $db_class->rows;
+   }
+
+
 }
 
 ?>

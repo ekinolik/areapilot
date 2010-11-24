@@ -1,6 +1,12 @@
 <?php
 
+if ( ! defined('HTMLCLASS')) require(LIB_DIR.'HTML.php');
+
+$header = HTML::body_header('Login');
+$footer = HTML::body_footer();
+
 print <<<EOF
+$header
    <div id="login" class="full_form">
       <form method="post" action="login.php" class="full">
 	 <fieldset>
@@ -19,5 +25,6 @@ print <<<EOF
          </fieldset>
       </form>
    </div>
+$footer
 EOF;
 ?>

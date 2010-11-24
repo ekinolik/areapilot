@@ -17,14 +17,14 @@ define('UPLOAD_FORM_DIR', ROOT_DIR.'forms/');
 define('UPLOAD_FORM_URL', ROOT_URL.'forms/');
 $CURRENT_DIR = ROOT_DIR;
 
-define('MAIL_RELAY', '192.168.1.87');
+define('MAIL_RELAY', 'mail.direnetworks.com');
 define('MAIL_HOSTNAME', 'wh.direnetworks.com');
 define('CONTACT_EMAIL', 'eric@direnetworks.com');
 define('CONTACT_NAME', 'eric');
 
 define('SESS_RAND', 853);
 
-define('DB_HOST', '192.168.1.74');
+define('DB_HOST', 'direpgsql.direnetworks.com');
 define('DB_NAME', 'wh');
 define('DB_USER', 'wh');
 define('DB_PASS', 'wh!p@$$w0rD');
@@ -53,7 +53,10 @@ define('MIN_VENUENAME_LEN', 1);
 define('MAX_VENUENAME_LEN', 100);
 define('MAX_COMMENT_LEN', 2000);
 
-define('EVENT_LIST_COUNT', 20);
+define('EVENT_LIST_COUNT', 5);
+define('EVENT_TOP_LIST_COUNT', 5);
+
+define('MAX_PAGES', 5);
 
 /* Garbage Collection */
 /* Delete sessions older than this many days, 0 would be anything older than 24 hours */
@@ -64,10 +67,11 @@ define('GC_PROBABILITY', 100);
 define('ERROR_DEBUG', 1);
 
 $TITLE = 'Area Pilot';
-$JS = array('jquery-1.4.2.min.js', 'jquery.cookie.js', 'rounded.js', 'ap_basics.js');
+$JS = array('jquery-1.4.2.min.js', 'blockUI.js', 'jquery.cookie.js', 'rounded.js', 'ap_basics.js');
 $CSS = array('ap_default.css');
 
 /* Shouldn't modify below here */
 
 define('CURRENT_TIME', time());
+define('BIGINT', 9223372036854775807);
 ?>
