@@ -88,9 +88,13 @@ jQuery(function($) {
 	    $(this).removeClass('contract').addClass('expand');
 	    var parentId = $(this).parents('div').attr('id');
 
+	    var count = 0;
 	    while($("div#"+parentId).next('div').hasClass('reply_comment')) {
 	       $("div#"+parentId).next('div').empty().remove();
+	       ++count;
 	    }
+
+	    $(this).html(count+' Replies &raquo;');
 
 	    return false;
       });
