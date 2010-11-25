@@ -137,7 +137,7 @@ class Chat {
 
       $this->event_id = $this->dbc->escape($this->event_id);
 
-      $sql = 'SELECT c."id", c."user_id", c."comment", c."time", u."username", count(1) - 1 as replies
+      $sql = 'SELECT c."id", c."user_id", c."comment", c."time", u."username", count(c2."id") as replies
 	       FROM "'.$this->comment_table.'" as c
 	       LEFT OUTER JOIN "'.$this->user_table.'" as u ON (u."id" = c."user_id")
 	       LEFT OUTER JOIN "'.$this->comment_table.'" as c2 ON (c."id" = c2."parent")
