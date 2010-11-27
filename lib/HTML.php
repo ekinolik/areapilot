@@ -318,7 +318,7 @@ class HTML {
       if ($comment['replies'] > 1)
 	 $reply_txt = $comment['replies'].' Replies &raquo;';
       else if ($comment['replies'] == 1)
-	 $reply_txt = '1 Reply';
+	 $reply_txt = '1 Reply &raquo;';
 
       $s = '							';
       $html  = $s.'<div id="comment_'.$cid.'">'."\n";
