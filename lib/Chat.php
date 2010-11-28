@@ -198,7 +198,7 @@ class Chat {
 	 $comment_table = $this->comment_table;
 	 $db_class = &$this->dbc;
       } else {
-	 $comment_table = 'user';
+	 $comment_table = 'comment';
       }
 
       if (verify_int($comment_id) === FALSE) {
@@ -217,6 +217,50 @@ class Chat {
       if ($db_class->row_count < 1) return FALSE;
 
       return TRUE;
+   }
+
+   public function get_comment_count($event_id=FALSE, &$db_class=FALSE) {
+      if ($event_id === FALSE) {
+	 $event_id = $this->event_id;
+      }
+
+      if ($db_class === FALSE) {
+	 if ($this->sanity_check() === FALSE) return FALSE;
+	 $comment_table = $this->comment_table;
+	 $db_class = &$this->dbc;
+      } else {
+	 $comment_table = 'comment';
+      }
+
+      if ( ! is_array($event_id))
+	 $event_id = array($event_id);
+
+      $where_clause = ' WHERE ';
+      for ($i = 0, $iz = count($event_id); $i < $iz; ++$i) {
+	 if ($i !== 0) 
+	    $where_clause .= ' OR ';
+
+	 if (verify_int($event_id[$i]) === FALSE)
+	    return FALSE;
+
+	 $where_clause .= ' "event_id" = \''.$db_class->escape($event_id[$i]).'\' ';
+      }
+
+      if (strlen($where_clause) === 7) return FALSE;
+
+      $sql = 'SELECT "event_id", count(1) as count
+	       FROM "'.$comment_table.'"
+	      '.$where_clause.' 
+	       GROUP BY "event_id" ';
+      $db_class->query($sql);
+      $db_class->fetch_array();
+      if ($db_class->row_count < 1) return FALSE;
+
+      for ($i = 0, $iz = count($db_class->rows); $i < $iz; ++$i) {
+	 $events[$db_class->rows[$i]['event_id']] = $db_class->rows[$i]['count'];
+      }
+
+      return $events;
    }
 
 }

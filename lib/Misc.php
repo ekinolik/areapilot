@@ -69,6 +69,17 @@ function remove_dupe_md_array($array, $col, $reindex=TRUE) {
    return $new_array;
 }
 
+function array_from_md_element($array, $key) {
+   if ( ! is_array($array)) return FALSE;
+
+   while((list($idx, $value) = each($array)) !== FALSE) {
+      if ( ! array_key_exists($key, $array[$idx])) continue;
+      $new[] = $array[$idx][$key];
+   }
+
+   return $new;
+}
+
 function create_random_string($len, $start=48, $end=122) {
    /*
     * 48 - 57  = 0 - 9
@@ -271,5 +282,21 @@ function time_age($datetime, $convert=7) {
 
    return $ago;
 }
-   
+
+function char_replace($haystack, $needle, $repl) {
+   $pos = strpos($haystack, $needle);
+   return char_all_replace($haystack, $needle, $repl, $pos);
+}
+
+function char_rreplace($haystack, $needle, $repl) {
+   $pos = strrpos($haystack, $needle);
+   return char_all_replace($haystack, $needle, $repl, $pos);
+}
+
+function char_all_replace($haystack, $needle, $repl, $pos) {
+   $begin = substr($haystack, 0, $pos);
+   $end = substr($haystack, $pos + strlen($needle));
+
+   return $begin.$repl.$end;
+}
 ?>

@@ -27,11 +27,26 @@ class HTML {
       $html .= $s.'	<ul class="actionlinks">'."\n";
       $html .= $s.'		<li><a href="vote.php?id='.$id.'&t=e&a=a&r=h" name="'.$id.'" class="attendthis">Attend This Event</a></li>'."\n";
       $html .= $s.'		<li><a href="#" class="attending">89 People Attending</a></li>'."\n";
-      $html .= $s.'		<li><a href="'.ROOT_URL.$uri_title.'" class="commentsnum">123 Comments</a></li>'."\n";
+      $html .= $s.'		<li><a href="'.ROOT_URL.$uri_title.'" class="commentsnum"><!--___COMMENT_COUNT___--></a></li>'."\n";
       $html .= $s.'	</ul>'."\n";
       $html .= $s.'</div><!-- end .entry -->'."\n";
 
       return $html;
+   }
+
+   public function replace_comment_count($str, $comments, $event_id) {
+      if ( ! array_key_exists($event_id, $comments)) 
+	 $comments[$event_id] = '0';
+
+      $count = $comments[$event_id];
+      if ($count === 1)    $repl = '1 Comment';
+      else if ($count > 1) $repl = $count.' Comments';
+      else                 $repl = '0 Comments';
+
+      $search = '<!--___COMMENT_COUNT___-->';
+      $str = char_rreplace($str, $search, $repl);
+
+      return $str;
    }
 
    public function likebox($event) {

@@ -6,6 +6,7 @@ $entries = '';
 for ($i = 0, $iz = count($event->events); $i < $iz; ++$i) {
 
    $entries .= HTML::entry($event->events[$i], $i+1);
+   $entries = HTML::replace_comment_count($entries, $comment_count, $event->events[$i]['id']);
 }
 
 $pages = ceil($event->total / EVENT_LIST_COUNT);
