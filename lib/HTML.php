@@ -335,21 +335,20 @@ class HTML {
       $ctime = htmlspecialchars($comment['time']);
 
       if ($comment['replies'] > 1)
-	 $reply_txt = $comment['replies'].' Replies &raquo;';
+	 $reply_txt = $comment['replies'].' replies &raquo;';
       else if ($comment['replies'] == 1)
-	 $reply_txt = '1 Reply &raquo;';
+	 $reply_txt = '1 reply &raquo;';
 
       $s = '							';
-      $html  = $s.'<div id="comment_'.$cid.'">'."\n";
+      $html  = $s.'<div class="comment" id="comment_'.$cid.'">'."\n";
       $html .= $s.'	<span class="username">'.$cuser.'</span>'."\n";
       $html .= $s.'	<span class="time">'.$age.'</span><br />'."\n";
       $html .= $s.'	<div class="message">'.$cmsg.'</div>'."\n";
       if (LOGGED_IN === TRUE)
-	 $html .= $s.'	<span class="comment_footer"><a href="#" class="reply">Reply</a></span>'."\n";
+	 $html .= $s.'	<span class="comment_footer"><a href="#" class="reply">reply</a></span>'."\n";
       if ($comment['replies'] > 0) 
 	 $html .= $s.'	<span class="comment_footer"><a href="#" class="expand">'.$reply_txt.'</a></span>'."\n";
       $html .= $s.'</div>'."\n";
-      $html .= $s.'<hr />'."\n";
 
       return $html;
    }
@@ -392,7 +391,7 @@ class HTML {
    public function eventdetails($event) {
       $id          = htmlspecialchars($event['id']);
       //$title       = htmlspecialchars($event['title']);
-      $time        = htmlspecialchars(date("l g:i (F d, Y)", strtotime($event['time'])));
+      $time        = htmlspecialchars(date("l g:i A (F d, Y)", strtotime($event['time'])));
       $description = nl2br(htmlspecialchars($event['description']));
       $area        = htmlspecialchars($event['area']);
       $username    = htmlspecialchars($event['username']);

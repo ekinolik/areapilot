@@ -740,6 +740,10 @@ div#comment_container span.title {
 	font-weight: bold;
 }
 
+div#comment_container div.comment {
+	padding-bottom: 10px;
+}
+
 div#comment_container span.username {
 	padding-left: 2px;
 	font-weight: bold;
@@ -763,4 +767,5 @@ span.comment_footer {
 
 span.comment_footer a, span.comment_footer a:visited {
 	color: #DE702B;
+	text-decoration: none;
 }

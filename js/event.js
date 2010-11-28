@@ -12,7 +12,7 @@ jQuery(function($) {
 	 var replyFieldset = $(document.createElement('fieldset'));
 	 var replyOL = $(document.createElement('ol'));
 	 var replyLI = $(document.createElement('li'));
-	 replyLI.append($(document.createElement('label')).attr('for', 'add_reply').text('Reply'));
+	 replyLI.append($(document.createElement('label')).attr('for', 'add_reply').text('reply'));
 	 replyLI.append($(document.createElement('input')).attr('name', 'event_id').attr('id', 'reply_id').attr('type', 'hidden').val(event_id));
 	 replyLI.append($(document.createElement('input')).attr('name', 'parent_id').attr('id', 'parent_id').attr('type', 'hidden').val(parent_id));
 	 replyLI.append($(document.createElement('textarea')).attr('name', 'add_comment').attr('id', 'add_reply'));
@@ -94,7 +94,10 @@ jQuery(function($) {
 	       ++count;
 	    }
 
-	    $(this).html(count+' Replies &raquo;');
+	    if (count == 1)
+	       $(this).html('1 reply &raquo;');
+	    else
+	       $(this).html(count+' replies &raquo;');
 
 	    return false;
       });
@@ -115,15 +118,14 @@ jQuery(function($) {
 	    $(newCommentDiv).append(commentTime);
 	    $(newCommentDiv).append($(document.createElement('br')));
 	    $(newCommentDiv).append(commentMessage);
+	    $(newCommentDiv).addClass('comment');
 
 	    if (parentIdInt > 0) {
 		  $(newCommentDiv).addClass('reply_comment');
-		  $(newCommentDiv).prepend($(document.createElement('hr')));
 		  $(newCommentDiv).css('paddingLeft', '30px');
 		  $("div#comment_"+parentId).after(newCommentDiv);
 	    } else {
-		  $(newCommentDiv).append($(document.createElement('hr')));
-		  $("div#comment_container").children("hr:last").after(newCommentDiv);
+		  $("div#comment_container").children("div:last").after(newCommentDiv);
 	    }
 
 	    return true;
