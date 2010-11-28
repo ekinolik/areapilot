@@ -344,7 +344,7 @@ class HTML {
       $html  = $s.'<div id="comment_'.$cid.'">'."\n";
       $html .= $s.'	<span class="username">'.$cuser.'</span>'."\n";
       $html .= $s.'	<span class="time">'.$age.'</span><br />'."\n";
-      $html .= $s.'	<span class="message">'.$cmsg.'</span><br />'."\n";
+      $html .= $s.'	<div class="message">'.$cmsg.'</div>'."\n";
       $html .= $s.'	<span class="comment_footer"><a href="#" class="reply">Reply</a></span>'."\n";
       if ($comment['replies'] > 0) 
 	 $html .= $s.'	<span class="comment_footer"><a href="#" class="expand">'.$reply_txt.'</a></span>'."\n";

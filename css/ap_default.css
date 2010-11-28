@@ -711,8 +711,27 @@ div#eventdetailswrapper {
 	clear: right;
 }
 
-span.comment_footer {
-	padding-left: 10px;
+div#comment_container span.username {
+	padding-left: 2px;
 	font-weight: bold;
 }
 
+div#comment_container span.time {
+	padding-left: 15px;
+}
+
+div#comment_container div.message {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+}
+
+span.comment_footer {
+	padding-left: 2px;
+	padding-right: 8px;
+	font-weight: bold;
+}
+
+span.comment_footer a, span.comment_footer a:visited {
+	color: #DE702B;
+}

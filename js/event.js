@@ -110,7 +110,7 @@ jQuery(function($) {
 	    var newCommentDiv = $(document.createElement('div')).attr('id', 'comment_'+newId);
 	    var commentUsername = $(document.createElement('span')).addClass('username').text(newUsername);
 	    var commentTime = $(document.createElement('span')).addClass('time').text(newTime);
-	    var commentMessage = $(document.createElement('span')).addClass('message').html(message);
+	    var commentMessage = $(document.createElement('div')).addClass('message').html(message);
 	    $(newCommentDiv).append(commentUsername);
 	    $(newCommentDiv).append(commentTime);
 	    $(newCommentDiv).append($(document.createElement('br')));
