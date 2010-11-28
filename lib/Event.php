@@ -384,7 +384,6 @@ class Event extends Location {
 	       GROUP BY "event_id" ';
       $this->dbc->query($sql);
       $this->dbc->fetch_array();
-      if ($this->dbc->row_count < 1) return FALSE;
       
       for ($i = 0, $iz = count($this->events); $i < $iz; ++$i) {
 	 $this->events[$i]['attendance'] = 0;
