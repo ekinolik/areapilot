@@ -109,10 +109,11 @@ jQuery(function($) {
 	    var message = nl2br(jsonComment.comment);
 	    var parentId = jsonComment.parent;
 	    var parentIdInt = parseInt(parentId);
+	    var newAge = jsonComment.age;
 
 	    var newCommentDiv = $(document.createElement('div')).attr('id', 'comment_'+newId);
 	    var commentUsername = $(document.createElement('span')).addClass('username').text(newUsername);
-	    var commentTime = $(document.createElement('span')).addClass('time').text(newTime);
+	    var commentTime = $(document.createElement('span')).addClass('time').text(newAge);
 	    var commentMessage = $(document.createElement('div')).addClass('message').html(message);
 	    $(newCommentDiv).append(commentUsername);
 	    $(newCommentDiv).append(commentTime);

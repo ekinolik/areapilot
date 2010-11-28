@@ -176,6 +176,10 @@ class Chat {
 
       $this->comment = $this->dbc->rows;
 
+      for ($i = 0, $iz = count($this->comment); $i < $iz; ++$i) {
+	 $this->comment[$i]['age'] = time_age($this->comment[$i]['time']);
+      }
+
       return TRUE;
    }
 
