@@ -5,7 +5,7 @@ if ( ! defined('JSONCLASS')) require(LIB_DIR.'JSON.php');
 if ( ! defined('ACCOUNTCLASS')) require(LIB_DIR.'Account.php');
 
 $json = '';
-if (isset($_POST['add_comment'])) {
+if (isset($_POST['add_comment']) && LOGGED_IN === TRUE) {
    
    $comment = new Chat($db_class, $error_class);
 

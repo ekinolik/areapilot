@@ -41,7 +41,11 @@ for ($i = 0, $iz = count($comment->comment); $i < $iz; ++$i) {
     */
 }
 
-$commentform = HTML::commentform($error_class, $comment->event_id);
+if (LOGGED_IN === TRUE)
+   $commentform = HTML::commentform($error_class, $comment->event_id);
+else
+   $commentform = '';
+
 $commentlist = HTML::commentlist($comments, $commentform);
 
 $event = HTML::event($venue->events[0]['title'], $eventdetails, $venuedetails, $map, $commentlist);
