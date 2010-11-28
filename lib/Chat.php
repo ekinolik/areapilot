@@ -254,7 +254,7 @@ class Chat {
 	       GROUP BY "event_id" ';
       $db_class->query($sql);
       $db_class->fetch_array();
-      if ($db_class->row_count < 1) return FALSE;
+      if ($db_class->row_count < 1) return array();
 
       for ($i = 0, $iz = count($db_class->rows); $i < $iz; ++$i) {
 	 $events[$db_class->rows[$i]['event_id']] = $db_class->rows[$i]['count'];
