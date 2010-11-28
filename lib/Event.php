@@ -357,10 +357,11 @@ class Event extends Location {
 
       if (($clause = $this->event_clause('e.')) === FALSE) return FALSE;
 
+      $rating_query = $this->create_rating_query();
       $sql = 'SELECT e."id", u."username", e."time", e."title", e."uri_title", ed."description",
 	        c."name" as city, a."name" as area, v."name" as venuename, v."address" as address,
-	        v."phone" as venuephone, z."zip", s."abbr" as state
-	       FROM "'.$this->event_table.'" as e
+	        v."phone" as venuephone, z."zip", s."abbr" as state, r."rating"
+		FROM "'.$this->event_table.'" as e
 	       LEFT OUTER JOIN "'.$this->event_description_table.'" as ed
 	       ON (ed."event_id" = e."id")
 	       LEFT OUTER JOIN "'.$this->venue_table.'" as v ON (v."id" = ed."venue_id")
@@ -371,6 +372,7 @@ class Event extends Location {
 	       LEFT OUTER JOIN "'.$this->state_table.'" as s ON (s."id" = zs."state_id")
 	       LEFT OUTER JOIN "'.$this->area_table.'" as a ON (a."id" = e."area_id")
 	       LEFT OUTER JOIN "'.$this->user_table.'" as u ON (u."id" = e."user_id")
+	       LEFT OUTER JOIN ( '.$rating_query.' ) as r ON (r."event_id" = e."id")
 	       WHERE '.$clause.'
 	       ORDER BY ed."date_added" DESC
 	       LIMIT 1';
@@ -743,10 +745,16 @@ class Event extends Location {
       return TRUE;
    }
 
-   private function create_rating_query() {
+   private function create_rating_query($event_id=FALSE) {
+      if (verify_int($event_id)) {
+	 $where_clause = ' "event_id" = \''.$this->dbc->escape($event_id).'\' ';
+      } else {
+	 $where_clause = ' "event_id" IS NOT NULL ';
+      }
+
       $sql = 'SELECT "event_id", sum("value") as rating
 	       FROM "'.$this->rating_table.'" as r
-	       WHERE "event_id" IS NOT NULL
+	       WHERE '.$where_clause.'
 	       GROUP BY "event_id"
 	       ORDER BY rating DESC ';
       return $sql;

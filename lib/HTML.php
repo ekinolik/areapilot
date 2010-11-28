@@ -55,10 +55,11 @@ class HTML {
    }
 
    public function likebox($event) {
-      if ($event['rating'] < 2) {
+      if (! isset($event['rating'])) $event['rating'] = 0;
+      if ($event['rating'] == 1) {
 	 $liketext = 'person likes it';
-	 if ($event['rating'] < 1) $event['rating'] = 0;
       } else {
+	 if ($event['rating'] < 1) $event['rating'] = 0;
 	 $liketext = 'people like it';
       }
 
@@ -389,6 +390,7 @@ class HTML {
    }
 
    public function eventdetails($event) {
+      $likebox = HTML::likebox($event);
       $id          = htmlspecialchars($event['id']);
       //$title       = htmlspecialchars($event['title']);
       $time        = htmlspecialchars(date("l g:i A (F d, Y)", strtotime($event['time'])));
@@ -418,6 +420,7 @@ class HTML {
       $html .= $s.'	<h3 class="subtitle" id="time">'.$time.'</h3>';
       $html .= $s.'	<h3 class="subtitle" id="address">'.$address.'</h3>';
       $html .= $s.'	<h3 class="subtitle" id="citystatezip">'.$city.', '.$state.' '.$zip.'</h3><br />';
+      $html .= $likebox;
       $html .= $s.'	<span id="description">'.$description.'</span><br />'."\n";
       $html .= $s.'	<br />'."\n";
       $html .= $s.'	<h6 class="footer">Submitted by ( <span id="username">'.$username.'</span> ) to &lt; '.$categories.' &gt;</h6>'."\n";

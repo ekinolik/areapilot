@@ -503,7 +503,8 @@ ul.actionlinks li a.commentsnum {
 	padding-left: 20px;
 }
 
-div.entry div.likebox {
+div.entry div.likebox,
+div#event_details div.likebox {
 	background: #fff;
 	border: 1px solid #3f4445;
 	float: left;
