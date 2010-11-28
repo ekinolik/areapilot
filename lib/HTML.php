@@ -329,6 +329,7 @@ class HTML {
    }
 
    public function comment($comment) {
+      echo 'blah: '.$comment['time']."<br />\n";
       $cid   = htmlspecialchars($comment['id']);
       $cmsg  = convert_links(nl2br(htmlspecialchars($comment['comment'])));
       $cuser = htmlspecialchars($comment['username']);

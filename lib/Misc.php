@@ -257,7 +257,7 @@ function time_convert_24_to_12($time) {
    return $hour.substr($time, 2).$ampm;
 }
 
-function time_age($datetime, $convert=7) {
+function time_age($datetime, $convert=7, $beautify_date=TRUE) {
    $year  = substr($datetime, 0, 4);
    $month = substr($datetime, 5, 2);
    $day   = substr($datetime, 8, 2);
@@ -269,7 +269,10 @@ function time_age($datetime, $convert=7) {
 
    $diff = CURRENT_TIME - $time;
    if (($diff / 86400) > $convert) {
-      $ago = $year.'-'.$month.'-'.$day;
+      if ($beautify_date === TRUE)
+	 $ago = date("M d, Y", strtotime($datetime));
+      else
+	 $ago = $year.'-'.$month.'-'.$day;
    } else if ($diff > 86400) {
       $ago = floor($diff / 60 / 60 / 24) . ' day(s) ago';
    } else if ($diff > 3600) {
