@@ -6,6 +6,10 @@ RewriteEngine on
 RewriteCond %{REQUEST_URI} ^/login(/|/index.html)?$
 RewriteRule ^login(/|/index.html)?$ login.php [L]
 
+#Logout
+RewriteCond %{REQUEST_URI} ^/logout(/|/index.html)?$
+RewriteRule ^logout(/|/index.html)?$ logout.php [L]
+
 #Sign up
 RewriteCond %{REQUEST_URI} ^/signup(/|/index.html)?$
 RewriteRule ^signup(/|/index.html)?$ signup.php [L]

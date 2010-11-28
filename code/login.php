@@ -17,6 +17,7 @@ if (isset($_POST['username'])) {
       return FALSE;
    }
 
+   header('Location: '.$_SERVER['HTTP_REFERER']);
 }
 
 ?>

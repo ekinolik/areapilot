@@ -151,6 +151,13 @@ class Session extends Database {
       return TRUE;
    }
 
+   public function logout() {
+      if (isset($_COOKIE['id']))
+	 setcookie('id', '', CURRENT_TIME-86400, '/', COOKIE_DOMAIN);
+
+      return $this->delete();
+   }
+
    public function delete() {
       if ($this->sanity_check() === FALSE) return FALSE;
 

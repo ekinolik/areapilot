@@ -377,6 +377,7 @@ class Event extends Location {
 	 $id = &$this->events[$i]['id'];
 	 $where_clause .= ' "event_id" = \''.$this->dbc->escape($id).'\' ';
       }
+      if (strlen($where_clause) < 1) $where_clause = ' 1=0 ';
 
       $sql = 'SELECT "event_id", sum(value) as attendance 
 	       FROM "'.$this->rating_table.'" as r
