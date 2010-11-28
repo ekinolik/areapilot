@@ -1,7 +1,8 @@
 <?php
 
 $eventdetails = HTML::eventdetails($venue->events[0]);
-$venuedetails = HTML::venuedetails($venue->events[0]);
+//$venuedetails = HTML::venuedetails($venue->events[0]);
+$venuedetails = '';
 $map = HTML::map($venue->events[0]);
 
 /*

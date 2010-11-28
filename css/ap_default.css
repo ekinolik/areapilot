@@ -292,7 +292,7 @@ ul#loggedin li a:hover {
 	width: 630px;
 }
 
-#maincol h2 {
+#maincol h2#title {
 	border-bottom: 1px solid #91b0b3;
 	font-size: 1.8em;
 	margin: 1.1em 2em 0 0.8em;
@@ -300,6 +300,19 @@ ul#loggedin li a:hover {
 	text-shadow: #fff 1px 1px 0;
 }
 
+#maincol h3#time {
+	width: 100%;
+	padding-bottom: 5px;
+}
+#maincol h3.subtitle {
+	font-size: 1.2em;
+	margin-left: 2em;
+}
+
+#maincol h6.footer {
+	font-size: 0.8em;
+	font-weight: bold;
+}
 #sidecol {
 	float: right;
 	width: 300px;

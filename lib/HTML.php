@@ -95,7 +95,7 @@ class HTML {
       $html  = $s.'<div id="inner" class="clearfix">'."\n";
       $html .= $s.'	<div id="maincol">'."\n";
       $html .= $s.'		<div id="posts">'."\n";
-      $html .= $s.'			<h2>'.$title.'</h2>'."\n";
+      $html .= $s.'			<h2 id="title">'.$title.'</h2>'."\n";
 
       return $html;
    }
@@ -113,7 +113,6 @@ class HTML {
       $s = '			';
 
       $html  = HTML::body_header($title);
-      $html .= $s.'			<br />'."\n";
       $html .= $s.'			<div id="eventdetailswrapper">'."\n";
       $html .= $eventdetails;
       $html .= $s.'			<br />'."\n";
@@ -393,19 +392,36 @@ class HTML {
    public function eventdetails($event) {
       $id          = htmlspecialchars($event['id']);
       //$title       = htmlspecialchars($event['title']);
-      $time        = htmlspecialchars(date("l g:i (m/d/y)", strtotime($event['time'])));
+      $time        = htmlspecialchars(date("l g:i (F d, Y)", strtotime($event['time'])));
       $description = nl2br(htmlspecialchars($event['description']));
       $area        = htmlspecialchars($event['area']);
       $username    = htmlspecialchars($event['username']);
 
+      $event_name  = htmlspecialchars($event['venuename']);
+      $address     = htmlspecialchars($event['address']);
+      $city        = htmlspecialchars(ucwords($event['city']));
+      $state       = htmlspecialchars(strtoupper($event['state']));
+      $zip         = htmlspecialchars($event['zip']);
+
+      $categories = '';
+      for ($i = 0, $iz = count($event['category']); $i < $iz; ++$i) {
+	 if (strlen($event['category'][$i]) < 1) continue;
+	 if (strlen($categories) > 0) $categories .= ', ';
+
+	 $ct = &$event['category'][$i]['title'];
+	 $categories .= '<a href="/'.strtolower(str_replace(' ', '_', $ct)).'">';
+	 $categories .= $ct;
+	 $categories .= '</a>';
+      }
+
       $s = '						';
       $html  = $s.'<div id="event_details">'."\n";
-      //$html .= $s.'	<span id="title">'.$title.'</span>'."\n";
-      $html .= $s.'	<span id="time">'.$time.'</span><br />'."\n";
-      $html .= $s.'	<br />'."\n";
+      $html .= $s.'	<h3 class="subtitle" id="time">'.$time.'</h3>';
+      $html .= $s.'	<h3 class="subtitle" id="address">'.$address.'</h3>';
+      $html .= $s.'	<h3 class="subtitle" id="citystatezip">'.$city.', '.$state.' '.$zip.'</h3><br />';
       $html .= $s.'	<span id="description">'.$description.'</span><br />'."\n";
-      $html .= $s.'	<span id="area">'.$area.'</span>,'."\n";
-      $html .= $s.'	Posted by (<span id="username">'.$username.'</span>)<br />'."\n";
+      $html .= $s.'	<br />'."\n";
+      $html .= $s.'	<h6 class="footer">Submitted by ( <span id="username">'.$username.'</span> ) to &lt; '.$categories.' &gt;</h6>'."\n";
       $html .= $s.'</div>'."\n";
 
       return $html;

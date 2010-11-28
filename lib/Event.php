@@ -116,6 +116,26 @@ class Event extends Location {
       return $this->create_event();
    }
 
+   public function get_categories() {
+      if (verify_int($this->event_id) === FALSE) {
+	 $this->ec->create_error(6, 'Invalid event ID', $this->ecp);
+	 return FALSE;
+      }
+
+      $this->event_id = $this->dbc->escape($this->event_id);
+
+      $sql = 'SELECT c."id", c."title"
+	       FROM "'.$this->event_category_table.'" as ec
+	       LEFT OUTER JOIN "'.$this->category_table.'" as c ON (ec."category_id" = c."id")
+	       WHERE ec."event_id" = \''.$this->event_id.'\' AND c."active" = \'t\' ';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_array();
+
+      $this->category = $this->dbc->rows;
+
+      return TRUE;
+   }
+
    protected function verify_event() {
       if ($this->verify_column('title') === FALSE)       return FALSE;
       if ($this->verify_column('time') === FALSE)        return FALSE;
