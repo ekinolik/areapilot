@@ -405,7 +405,7 @@ class HTML {
 
       $categories = '';
       for ($i = 0, $iz = count($event['category']); $i < $iz; ++$i) {
-	 if (strlen($event['category'][$i]) < 1) continue;
+	 if (strlen($event['category'][$i]['title']) < 1) continue;
 	 if (strlen($categories) > 0) $categories .= ', ';
 
 	 $ct = &$event['category'][$i]['title'];

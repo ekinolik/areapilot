@@ -309,10 +309,16 @@ ul#loggedin li a:hover {
 	margin-left: 2em;
 }
 
+#maincol span#description {
+	font-size: 1.2em;
+	line-height: 1.3em;
+}
+
 #maincol h6.footer {
-	font-size: 0.8em;
+	font-size: 0.9em;
 	font-weight: bold;
 }
+
 #sidecol {
 	float: right;
 	width: 300px;
@@ -722,6 +728,16 @@ div#eventdetailswrapper {
 	width: 100%;
 	float: left;
 	clear: right;
+}
+
+div#comment_container {
+	font-size: 1.1em;
+	line-height: 1.2em;
+}
+
+div#comment_container span.title {
+	font-size: 1.2em;
+	font-weight: bold;
 }
 
 div#comment_container span.username {
