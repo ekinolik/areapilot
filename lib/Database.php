@@ -178,7 +178,9 @@ class Database {
 
 
    public function query($query, $table='') {
-   /* Query DB */
+      /* Query DB */
+      if (ERROR_DEBUG === 2) echo $query."\n";
+
       if ($this->sql == 'pgsql') {
 
 	 $this->last_query = $query;
