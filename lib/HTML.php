@@ -15,8 +15,13 @@ class HTML {
       $area        = htmlspecialchars($event['area']);
       $city        = htmlspecialchars(ucwords($event['city']));
       $username    = htmlspecialchars($event['username']);
+      $attendance  = htmlspecialchars($event['attendance']);
 
       $time = strtolower(substr($time, 0, 5).substr($time, 9));
+
+      if ($attendance > 1)          $attendance .= ' People Attending';
+      else if ($attendance === '1') $attendance .= ' Person Attending';
+      else                          $attendance =  ' 0 People Attending';
 
       $html  = $s.'<div class="entry clearfix" id="entry_'.$count.'">'."\n";
       $html .= HTML::likebox($event);
@@ -26,7 +31,7 @@ class HTML {
       $html .= $s.'	</div><!-- end .description -->'."\n";
       $html .= $s.'	<ul class="actionlinks">'."\n";
       $html .= $s.'		<li><a href="vote.php?id='.$id.'&t=e&a=a&r=h" name="'.$id.'" class="attendthis">Attend This Event</a></li>'."\n";
-      $html .= $s.'		<li><a href="#" class="attending">89 People Attending</a></li>'."\n";
+      $html .= $s.'		<li><a href="#" class="attending">'.$attendance.'</a></li>'."\n";
       $html .= $s.'		<li><a href="'.ROOT_URL.$uri_title.'" class="commentsnum"><!--___COMMENT_COUNT___--></a></li>'."\n";
       $html .= $s.'	</ul>'."\n";
       $html .= $s.'</div><!-- end .entry -->'."\n";
@@ -40,7 +45,7 @@ class HTML {
 
       $count = $comments[$event_id];
       if ($count === 1)    $repl = '1 Comment';
-      else if ($count > 1) $repl = $count.' Comments';
+      else if ($count > 1) $repl = htmlspecialchars($count).' Comments';
       else                 $repl = '0 Comments';
 
       $search = '<!--___COMMENT_COUNT___-->';

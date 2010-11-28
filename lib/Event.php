@@ -368,6 +368,37 @@ class Event extends Location {
       return TRUE;
    }
 
+   public function get_attendance() {
+
+      $where_clause = '';
+      for ($i = 0, $iz = count($this->events); $i < $iz; ++$i) {
+	 if ($i > 0) $where_clause .= ' OR ';
+
+	 $id = &$this->events[$i]['id'];
+	 $where_clause .= ' "event_id" = \''.$this->dbc->escape($id).'\' ';
+      }
+
+      $sql = 'SELECT "event_id", sum(value) as attendance 
+	       FROM "'.$this->rating_table.'" as r
+	       WHERE "value" = \'2\' AND ( '.$where_clause.' )
+	       GROUP BY "event_id" ';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_array();
+      if ($this->dbc->row_count < 1) return FALSE;
+      
+      for ($i = 0, $iz = count($this->events); $i < $iz; ++$i) {
+	 $this->events[$i]['attendance'] = 0;
+
+	 for ($j = 0; $j < $this->dbc->row_count; ++$j) {
+	    if ($this->events[$i]['id'] === $this->dbc->rows[$j]['event_id']) {
+	       $this->events[$i]['attendance'] = floor($this->dbc->rows[$j]['attendance'] / 2);
+	    }
+	 }
+      }
+
+      return TRUE;
+   }
+
    private function add_event() {
       if ($this->sanity_check() === FALSE) return FALSE;
 
