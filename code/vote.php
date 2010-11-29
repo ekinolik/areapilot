@@ -18,13 +18,20 @@ if ( ! defined('EVENTCLASS')) require(LIB_DIR.'Event.php');
 if ( ! defined('JSONCLASS'))  require(LIB_DIR.'JSON.php');
 
 $json = '';
+
+if (LOGGED_IN === FALSE) {
+   $error_class->create_error(4, 'You must be logged in to vote', 'Code');
+   $json = JSON::encode(array('error'=>$error_class));
+   return FALSE;
+}
+
 if (isset($_GET['id']) && isset($_GET['a'])) {
 
    if ($_GET['t'] === 'e')      $id = $_GET['id'];
    else if ($_GET['t'] === 'c') $id = $_GET['id'];
    else {
       $error_class->create_error(1, 'Invalid vote type', 'Code');
-      JSON::encode(array($error_class));
+      $json = JSON::encode(array('error'=>$error_class));
       return FALSE;
    }
 
@@ -33,14 +40,14 @@ if (isset($_GET['id']) && isset($_GET['a'])) {
    else if ($_GET['a'] === 'd')                  $rating = -1;
    else {
       $error_class->create_error(2, 'Invalid vote', 'Code');
-      JSON::encode(array($error_class));
+      $json = JSON::encode(array('error'=>$error_class));
       return FALSE;
    }
 
    /* Enter vote */
    if (Event::vote($_GET['t'], $session->user_id, $id, $rating, $db_class) === FALSE) {
       $error_class->create_error(3, 'Could not add vote', 'Code');
-      JSON::encode(array($error_class));
+      $json = JSON::encode(array('error'=>$error_class));
       return FALSE;
    }
 

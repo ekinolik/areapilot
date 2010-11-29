@@ -87,8 +87,12 @@ function vote(id, a, t) {
 }
 
 function readRating(json) {
-   if (json.error.length > 0) {
-      alert(json.error);
+   if (json.error.error.length > 0) {
+      if (json.error.errno == 4) {
+	 blockThis("body",$("#modal-login"),nothing(),false,true);
+      } else {
+	 alert(json.error);
+      }
       return false;
    }
 
