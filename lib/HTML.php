@@ -17,7 +17,7 @@ class HTML {
       $username    = htmlspecialchars($event['username']);
       $attendance  = htmlspecialchars($event['attendance']);
 
-      $time = strtolower(substr($time, 0, 5).substr($time, 9));
+      $time = strtolower(substr($time, 0, 4).substr($time, 8));
 
       if ($attendance > 1)          $attendance .= ' People Attending';
       else if ($attendance === '1') $attendance .= ' Person Attending';
