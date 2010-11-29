@@ -416,6 +416,17 @@ ul#suboptions li a.current:hover {
 }
 
 
+/* ================= */
+/* ! Listing Page    */
+/* ================= */
+
+#maincol h2#listing_title {
+	border-bottom: 1px solid #91b0b3;
+	font-size: 1.8em;
+	margin: 1.1em 2em 0 0.8em;
+	padding-bottom: 0.2em;
+	text-shadow: #fff 1px 1px 0;
+}
 
 /* ================= */
 /* ! Entry Listing   */

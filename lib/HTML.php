@@ -80,7 +80,7 @@ class HTML {
       $html  = $s.'<div id="inner" class="clearfix">'."\n";
       $html .= $s.'	<div id="maincol">'."\n";
       $html .= $s.'		<div id="posts">'."\n";
-      $html .= $s.'			<h2>'.$title.'</h2>'."\n";
+      $html .= $s.'			<h2 id="listing_title">'.$title.'</h2>'."\n";
       $html .= $entries;
       $html .= $s.'		</div><!-- end #posts -->'."\n";
       $html .= $pagination;
