@@ -1,4 +1,4 @@
 jQuery(function($) {
-      $("div#signup form.full input#date").datepicker();
+      $("div#submitform form.fullform input#date").datepicker();
       $("button.submitter").button();
 });

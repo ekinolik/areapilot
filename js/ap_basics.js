@@ -65,7 +65,18 @@ $(document).ready(function() {
 	    blockThis("body",$("#modal-login"),nothing(),false,true);
 	    return false;
       });
+
+      $("#btn-signup").click(function() {
+	    blockThis("body", $("#modal-signup"),nothing(), false, true);
+	    return false;
+      });
 	
+      $("div#submitform form.fullform input.defaultvalue").bind('click', function() {
+	    $(this).val('');
+	    $(this).removeClass('defaultvalue');
+      });
+
+      $("div#submitform form.fullform input#date").datepicker();
 });
 
 function vote(id, a, t) {

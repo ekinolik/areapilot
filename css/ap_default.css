@@ -300,6 +300,14 @@ ul#loggedin li a:hover {
 	text-shadow: #fff 1px 1px 0;
 }
 
+div.modal h2.title {
+	border-bottom: 1px solid #91b0b3;
+	font-size: 1.8em;
+	margin: 1.1em 2em 0 0.8em;
+	padding-bottom: 0.2em;
+	text-shadow: #fff 1px 1px 0;
+}
+
 #maincol h3#time {
 	width: 100%;
 	padding-bottom: 5px;
@@ -727,6 +735,138 @@ form.modalform button.btn-submit:active {
 	border-color: #666;
 }
 
+form.fullform {
+	width: 600px;
+}
+
+div.submitform {
+	width: 800px;
+}
+
+form.fullform ol {
+	padding: 0em 2.5em 1em;
+}
+
+form.fullform ol li {
+	margin: 0 auto;
+	padding: 0.5em 0;
+	width: 480px;
+}
+
+div.submitform form.fullform ol li {
+	width: 680px;
+}
+
+form.fullform ol li label {
+	color: #3b2a1c;
+	font-size: 1.5em;
+	text-align: right;
+	float: left;
+	width: 200px;
+}
+
+div.submitform form.fullform ol li label {
+	width: 150px;
+}
+
+form.fullform ol li input.textfield {
+	background: #91b0b3;
+	border: 1px inset #bbb;
+	color: #3b2a1c;
+	font-family: "DejaWebBold";
+	font-size: 1.6em;
+	font-weight: bold;
+	padding: 0.2em;
+	width: 270px;
+}
+
+div.submitform form.fullform ol li input.textfield {
+	width: 500px;
+}
+
+div.submitform form.fullform ol li input.textfield.time {
+	width: 300px;
+}
+
+div.submitform form.fullform ol li select.textfield {
+	width: 500px;
+}
+
+form.fullform ol li textarea.textfield {
+	background: #91b0b3;
+	border: 1px inset #bbb;
+	color: #3b2a1c;
+	font-family: "DejaWebBold";
+	font-size: 1.6em;
+	font-weight: bold;
+	padding: 0.2em;
+	width: 270px;
+}
+
+div.submitform form.fullform ol li textarea.textfield {
+	width: 500px;
+}
+
+form.fullform p.column {
+   line-height: 1.9em;
+   float: left;
+}
+
+form.fullform ol li span.formnote {
+	float: right;
+	font-size: 0.95em;
+	margin: 0.3em 0 0 0;
+}
+
+form.fullform button.btn-submit {
+	background-image: -moz-linear-gradient(top,#7b573a,#3b2a1c);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#7b573a), to(#3b2a1c));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff7b573a,endColorstr=#ff3b2a1c);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff7b573a,endColorstr=#ff3b2a1c)";
+	background-color: #3b2a1c;
+	border: 2px solid #7b573a;
+	clear: both;
+	color: #fff;
+	display: block;
+	font-size: 1.6em;
+	margin: 1.3em auto 0.6em;
+	padding: 0.3em 1.1em;
+	text-align: center;
+	text-shadow: -1px -1px 0 #000;
+}
+
+form.fullform button.btn-submit:hover {
+	background-image: -moz-linear-gradient(top,#3b2a1c,#7b573a);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#3b2a1c), to(#7b573a));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff3b2a1c,endColorstr=#ff7b573a);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff3b2a1c,endColorstr=#ff7b573a)";
+	background-color: #7b573a;
+	cursor: pointer;
+}
+
+form.fullform button.btn-submit:active {
+	background: #000;
+	border-color: #666;
+}
+
+form.fullform input#date.textfield,
+form.fullform input#zip.textfield {
+	width: 10em !important;
+}
+
+form.fullform input#time.textfield {
+	width: 6em !important;
+}
+
+form.fullform select#category.textfield,
+form.fullform input#venuephone.textfield {
+	width: 15em !important;
+}
+
+.defaultvalue {
+	color: lightblue !important;
+}
+
 .hidden {
 	display: none;
 }
@@ -780,4 +920,11 @@ span.comment_footer {
 span.comment_footer a, span.comment_footer a:visited {
 	color: #DE702B;
 	text-decoration: none;
+}
+
+span.errormsg {
+	color: red;
+	font-weight: bold;
+	font-size: 14px;
+	margin-left: 20px;
 }

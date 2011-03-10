@@ -238,6 +238,7 @@ class Account {
 	 return FALSE;
       }
 
+      $this->id = $insert2['user_id'];;
       return TRUE;
    }
 

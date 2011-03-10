@@ -526,6 +526,93 @@ class HTML {
       return $html;
    }
 
+   public function modal_signup() {
+      $s = '			';
+      $html  = $s.'<div id="modal-signup" class="modal">'."\n";
+      $html .= $s.'	<h2 class="title">Create a New Account</h2>'."\n";
+      $html .= HTML::signup_form('modalform', '');
+      $html .= $s.'<div><!-- end #modal-signup -->'."\n";
+
+      return $html;
+   }
+
+   public function signup_form($class='', $error='') {
+      $s = '			';
+      $html  = $s.'<form name="signup-form" class="'.$class.'" id="signup-form" action="/signup" method="post">'."\n";
+      $html .= $s.'	<fieldset>'."\n";
+      $html .= $s.'		<span class="errormsg">'.$error.'</span>'."\n";
+      $html .= $s.'		<ol>'."\n";
+      $html .= $s.'			<li><label for="signup-username">Desired Username :</label><input type="text" id="signup-username" name="username" class="textfield" /></li>'."\n";
+      $html .= $s.'			<li><label for="signup-email">Email address :</label><input type="text" id="signup-email" name="email" class="textfield" /></li>'."\n";
+      $html .= $s.'			<li><label for="signup-password">Password :</label><input type="password" id="signup-password" name="password" class="textfield" />'."\n";
+      $html .= $s.'			<li><label for="signup-password2">Confirm Password :</label><input type="password" id="signup-password2" name="password2" class="textfield" />'."\n";
+      $html .= $s.'			<li><label for="signup-first-name">First Name :</label><input type="text" id="signup-first-name" name="first_name" class="textfield" /></li>'."\n";
+      $html .= $s.'			<li><label for="signup-last-name">Last Name :</label><input type="text" id="signup-last-name" name="last_name" class="textfield" /></li>'."\n";
+      $html .= $s.'			</li>'."\n";
+      $html .= $s.'		</ol>'."\n";
+      $html .= $s.'		<button type="submit" class="btn-submit ib" id="btn-signupsubmit">Register</button>'."\n";
+      $html .= $s.'	</fieldset>'."\n";
+      $html .= $s.'</form>'."\n";
+
+      return $html;
+   }
+
+   public function submit_form($cat_opts, $error='') {
+      $s = '   ';
+      $html  = $s.'<div id="submitform" class="submitform">'."\n";
+      $html .= $s.'   <form method="post" action="submit.php" class="fullform">'."\n";
+      $html .= $s.'   <fieldset>'."\n";
+      $html .= $s.'      <span class="errormsg">'.$error.'</span><br />'."\n";
+      $html .= $s.'      <ol>'."\n";
+      $html .= $s.'         <li><label for="title">Title :</label>'."\n";
+      $html .= $s.'            <input type="text" name="title" id="title" class="textfield"/>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'<!--'."\n";
+      $html .= $s.'         <li><label for="tags">Tags :</label>'."\n";
+      $html .= $s.'            <input type="text" name="tags" id="tags" class="textfield"/>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'-->'."\n";
+      $html .= $s.'         <li><label for="date">Date :</label>'."\n";
+      $html .= $s.'            <input type="text" name="date" id="date" class="textfield defaultvalue" value="MM/DD/YYYY"/>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'         <li><label for="time">Time :</label>'."\n";
+      $html .= $s.'            <input type="text" name="time" id="time" class="textfield time defaultvalue" value="HH:MM"/>'."\n";
+      $html .= $s.'            <select name="meridian" id="meridian">'."\n";
+      $html .= $s.'               <option value="pm">PM</option>'."\n";
+      $html .= $s.'               <option value="am">AM</option>'."\n";
+      $html .= $s.'            </select>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'         <li><label for="category">Category :</label>'."\n";
+      $html .= $s.'            <select name="category" id="category" class="textfield">'.$cat_opts.'</select>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'         <li><label for="venue">Venue Name :</label>'."\n";
+      $html .= $s.'            <input type="text" name="venue" id="venue" class="textfield"/>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'         <li><label for="address">Street Address :</label>'."\n";
+      $html .= $s.'            <input type="text" name="address" id="address" class="textfield" title="This is for the street address.  You do not need to include a city or state"/>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'         <li><label for="zip">Zip :</label>'."\n";
+      $html .= $s.'            <input type="text" name="zip" id="zip" class="textfield"/>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'         <li><label for="venue">Venue Phone :</label>'."\n";
+      $html .= $s.'            <input type="text" name="venuephone" id="venuephone" class="textfield"/>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'         <li><label for="url">Link URL :</label>'."\n";
+      $html .= $s.'            <input type="text" name="url" id="url" class="textfield"/>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'         <li><label for="description">Description :</label>'."\n";
+      $html .= $s.'            <textarea name="description" id="description" rows="5" cols="20" class="textfield"></textarea>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'         <li class="submit_line">'."\n";
+      $html .= $s.'            <button type="submit" class="submitter">Create</button>'."\n";
+      $html .= $s.'         </li>'."\n";
+      $html .= $s.'         </ol>'."\n";
+      $html .= $s.'      </fieldset>'."\n";
+      $html .= $s.'   </form>'."\n";
+      $html .= $s.'</div>'."\n";
+      return $html;
+   }
+
    public function create_css_links($CSS) {
       $s = '	';
 

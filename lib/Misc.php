@@ -72,6 +72,7 @@ function remove_dupe_md_array($array, $col, $reindex=TRUE) {
 function array_from_md_element($array, $key) {
    if ( ! is_array($array)) return FALSE;
 
+   $new = array();
    while((list($idx, $value) = each($array)) !== FALSE) {
       if ( ! array_key_exists($key, $array[$idx])) continue;
       $new[] = $array[$idx][$key];

@@ -1,5 +1,10 @@
 <?php
 
+if (LOGGED_IN === TRUE) {
+   header('Location: '.ROOT_URL);
+   exit;
+}
+
 if (isset($_POST['username'])) {
    if ( ! defined('ACCOUNTCLASS')) require(LIB_DIR.'Account.php');
 
@@ -15,5 +20,12 @@ if (isset($_POST['username'])) {
    if ($account->create() === FALSE) {
       return FALSE;
    }
+
+   $session->user_id = $account->id;
+   if ($session->create() === FALSE) {
+      return FALSE;
+   }
+
+   header('Location: '.$_SERVER['HTTP_REFERER']);
 }
 ?>
