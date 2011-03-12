@@ -2,7 +2,7 @@
 
 if ( ! defined('config')) require('config.php');
 
-$TITLE = 'event';
+$TITLE .= 'event';
 
 $CODE = $CURRENT_DIR.'code/event.php';
 $OUTPUT = $CURRENT_DIR.'html_output/event.php';

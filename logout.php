@@ -2,7 +2,7 @@
 
 if ( ! defined('config')) require('config.php');
 
-$TITLE = 'Logout';
+$TITLE .= ' - Logout';
 
 $CODE = $CURRENT_DIR.'code/logout.php';
 $OUTPUT = $CURRENT_DIR.'html_output/logout.php';

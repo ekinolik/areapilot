@@ -2,7 +2,7 @@
 
 if ( ! defined('config')) require('config.php');
 
-$TITLE = 'vote';
+$TITLE .= ' - Vote';
 
 $CODE = $CURRENT_DIR.'code/vote.php';
 $OUTPUT = $CURRENT_DIR.'json_output/vote.php';

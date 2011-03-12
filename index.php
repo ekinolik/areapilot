@@ -2,7 +2,7 @@
 
 if ( ! defined('config')) require('config.php');
 
-$TITLE = 'index';
+#$TITLE = 'Area Pilot';
 
 $CODE = $CURRENT_DIR.'code/index.php';
 $OUTPUT = $CURRENT_DIR.'html_output/index.php';

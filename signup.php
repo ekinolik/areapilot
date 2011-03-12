@@ -2,7 +2,7 @@
 
 if ( ! defined('config')) require('config.php');
 
-$TITLE = 'Signup';
+$TITLE .= ' - Signup';
 
 $CODE = $CURRENT_DIR.'code/signup.php';
 $OUTPUT = $CURRENT_DIR.'html_output/signup.php';

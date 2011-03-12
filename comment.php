@@ -2,7 +2,7 @@
 
 if ( ! defined('config')) require('config.php');
 
-$TITLE = 'comment';
+$TITLE .= ' - Comment';
 
 $CODE = $CURRENT_DIR.'code/comment.php';
 $OUTPUT = $CURRENT_DIR.'json_output/comment.php';

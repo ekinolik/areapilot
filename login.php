@@ -2,7 +2,7 @@
 
 if ( ! defined('config')) require('config.php');
 
-$TITLE = 'Login';
+$TITLE .= ' - Login';
 
 $CODE = $CURRENT_DIR.'code/login.php';
 $OUTPUT = $CURRENT_DIR.'html_output/login.php';

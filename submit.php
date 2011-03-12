@@ -2,7 +2,7 @@
 
 if ( ! defined('config')) require('config.php');
 
-$TITLE = 'Submit';
+$TITLE .= ' - Submit';
 
 $CODE = $CURRENT_DIR.'code/submit.php';
 $OUTPUT = $CURRENT_DIR.'html_output/submit.php';
