@@ -110,6 +110,32 @@ class HTML {
       return $html;
    }
 
+   public function profile($details) {
+      $s = '   ';
+      $html  = $s.'<div id="profilewrapper">'."\n";
+      $html .= $details;
+      $html .= $s.'</div>'."\n";
+
+      return $html;
+   }
+
+   public function profile_details($account) {
+      $username = htmlspecialchars($account['username']);
+      $email    = htmlspecialchars($account['email']);
+      $first    = htmlspecialchars($account['first_name']);
+      $last     = htmlspecialchars($account['last_name']);
+
+      $s = '      ';
+      $html  = $s.'<div id="profile_details">'."\n";
+      $html .= $s.'	<h3 class="subtitle" id="username">'.$username.'</h3>';
+      $html .= $s.'	<h3 class="subtitle" id="email">'.$email.'</h3>';
+      $html .= $s.'	<h3 class="subtitle" id="first">'.$first.' '.$last.'</h3>';
+      $html .= $s.'     <br />'."\n";
+      $html .= $s.'</div>'."\n";
+
+      return $html;
+   }
+
    public function event($title, $eventdetails, $venuedetails, $map, $commentlist) {
       $s = '			';
 
