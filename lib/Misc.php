@@ -303,4 +303,27 @@ function char_all_replace($haystack, $needle, $repl, $pos) {
 
    return $begin.$repl.$end;
 }
+
+function pbkdf2($pass, $salt, $c, $key_length) {
+   if (strlen($salt) < 8) {
+      return FALSE;
+   }
+
+   $hash_length = strlen(hash('sha512', ' ', TRUE));
+   $parts = ceil($key_length / $hash_length);
+   $key = '';
+
+   for ($i = 0; $i < $parts; ++$i) {
+      $ib = $b = hash_hmac('sha512', $salt . pack('N', $i), $pass, true);
+
+      for ($j = 1; $j < $c; ++$j) {
+	 $ib ^= ($b = hash_hmac('sha512', $b, $pass, true));
+      }
+
+      $key .= $ib;
+   }
+
+   return substr($key, 0, $key_length);
+}
+
 ?>

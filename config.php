@@ -22,7 +22,7 @@ define('MAIL_HOSTNAME', 'wh.direnetworks.com');
 define('CONTACT_EMAIL', 'eric@direnetworks.com');
 define('CONTACT_NAME', 'eric');
 
-define('SESS_RAND', 853);
+define('SESS_RAND', 'UT4FW$wiT8z');
 
 define('DB_HOST', 'direpgsql.direnetworks.com');
 define('DB_NAME', 'wh');

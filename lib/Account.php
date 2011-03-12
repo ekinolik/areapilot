@@ -1,6 +1,7 @@
 <?php
 
 define('ACCOUNTCLASS', 1);
+if ( ! defined('MISC'))		include(LIB_DIR.'Misc.php');
 
 class Account {
 
@@ -216,6 +217,22 @@ class Account {
       return $this->dbc->rows['id'];
    }
 
+   public function change_password() {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      if ($this->encrypt_password($this->username) === FALSE)
+	 return FALSE;
+
+      $update['password'] = '__SQL_FUNCTION__' . $this->enc_password;
+      $where['username'] = $this->dbc->escape($this->username);
+      if ($this->dbc->update_db($this->user_table, $update, $where) === FALSE) {
+	 $this->ec->create_error(15, 'Could not update password', $this->ecp);
+	 return FALSE;
+      }
+
+      return TRUE;
+   }
+      
    private function add_user() {
       if ($this->sanity_check() === FALSE) return FALSE;
 
@@ -243,7 +260,10 @@ class Account {
    }
 
    private function encrypt_password($key) {
-      if (($this->enc_password = $this->dbc->encrypt($this->password, strtolower($key).SESS_RAND, 'aes')) === FALSE) {
+
+      $hash = base64_encode(pbkdf2($this->password, SESS_RAND, 1000, 256));
+
+      if (($this->enc_password = $this->dbc->encrypt($hash, strtolower($key).SESS_RAND, 'aes')) === FALSE) {
 	    $this->ec->create_error(8, 'Could not encrypt password', $this->ecp);
 	    return FALSE;
 	 }
@@ -313,6 +333,40 @@ class Account {
       if ($db_class->row_count < 1) return FALSE;
 
       return $db_class->rows['username'];
+   }
+
+   public function get_account_details($user_id=FALSE, &$db_class=FALSE) {
+      if ($user_id === FALSE) {
+	 $user_id = $this->id;
+      }
+
+      if ($db_class === FALSE) {
+	 if ($this->sanity_check() === FALSE) return FALSE;
+	 $user_table = $this->user_table;
+	 $profile_table = $this->profile_table;
+	 $db_class = &$this->dbc;
+      } else {
+	 $user_table = 'user';
+	 $profile_table = 'profile';
+      }
+
+      if (verify_int($user_id) === FALSE) {
+	 return FALSE;
+      }
+
+      $user_id = $db_class->escape($user_id);
+
+      $sql = 'SELECT u."id", u."username", u."email", 
+	        p."first_name", p."last_name", p."area_id"
+	       FROM "'.$user_table.'" as u
+	       LEFT OUTER JOIN "'.$profile_table.'" as p 
+		ON (u."id" = p."user_id")
+	       WHERE u."id" = \''.$user_id.'\' ';
+      $db_class->query($sql);
+      $db_class->fetch_row();
+      if ($db_class->row_count < 1) return FALSE;
+
+      return $db_class->rows;
    }
 
 }
