@@ -2,6 +2,11 @@ php_flag display_errors on
 
 RewriteEngine on
 
+#Location
+RewriteCond %{HTTP_HOST} !^wh.direnetworks.com$ [NC]
+RewriteCond %{HTTP_HOST} ^(www.)?([a-z0-9-]+).wh.direnetworks.com$ [NC]
+RewriteRule ^(.*) http://wh.direnetworks.com [L,co=test:%2:.wh.direnetworks.com:7200:/,R=302]
+
 #Login
 RewriteCond %{REQUEST_URI} ^/login(/|/index.html)?$
 RewriteRule ^login(/|/index.html)?$ login.php [L]
@@ -17,6 +22,10 @@ RewriteRule ^signup(/|/index.html)?$ signup.php [L]
 #Submit
 RewriteCond %{REQUEST_URI} ^/submit(/|/index.html)?$
 RewriteRule ^submit(/|/index.html)?$ submit.php [L]
+
+#Profile
+RewriteCond %{REQUEST_URI} ^/profile(/|/index.html)?$
+RewriteRule ^profile(/|/index.html)?$ profile.php [L]
 
 #Event
 RewriteCond %{REQUEST_URI} !\.
