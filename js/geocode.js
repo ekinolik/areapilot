@@ -1,5 +1,5 @@
 $(document).ready(function() {
-      myAddress = $("div#map_canvas").text();
+   myAddress = $("div#map_canvas").text();
    geocodeInitialize();
    codeAddress(myAddress);
 });

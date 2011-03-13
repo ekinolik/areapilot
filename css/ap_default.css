@@ -292,6 +292,10 @@ ul#loggedin li a:hover {
 	width: 630px;
 }
 
+.onlycol {
+	width: 940px !important;
+}
+
 #maincol h2#title {
 	border-bottom: 1px solid #91b0b3;
 	font-size: 1.8em;
@@ -871,13 +875,17 @@ form.fullform input#venuephone.textfield {
 	display: none;
 }
 
+div#eventmapwrapper {
+   left: 100px;
+}
 div#map_canvas {
 	width: 300px;
 	height: 200px;
+	float: right;
 }
 
 div#eventdetailswrapper {
-	width: 100%;
+	width: 630px;
 	float: left;
 	clear: right;
 }

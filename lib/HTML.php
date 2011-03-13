@@ -94,7 +94,7 @@ class HTML {
    public function body_header($title) {
       $s = '			';
       $html  = $s.'<div id="inner" class="clearfix">'."\n";
-      $html .= $s.'	<div id="maincol">'."\n";
+      $html .= $s.'	<div id="maincol" class="onlycol">'."\n";
       $html .= $s.'		<div id="posts">'."\n";
       $html .= $s.'			<h2 id="title">'.$title.'</h2>'."\n";
 
@@ -150,10 +150,7 @@ class HTML {
       $html .= $s.'			<br />'."\n";
       $html .= $s.'			<br />'."\n";
       $html .= $s.'			</div>'."\n";
-      $html .= $s.'			<div id="eventmapwrapper">'."\n";
       $html .= $map;
-      $html .= $s.'			</div>'."\n";
-      $html .= $s.'			<br class="clearfix" />'."\n";
       $html .= $commentlist;
       $html .= HTML:: body_footer();
 
@@ -752,7 +749,8 @@ class HTML {
       $address .= htmlspecialchars($event['state']).' ';
       $address .= htmlspecialchars($event['zip']);
 
-      $map = '<div id="map_canvas">'.$address.'</div>'."\n";
+      $img = '<img src="http://maps.google.com/maps/api/staticmap?center='.urlencode($address).'&zoom=13&size=300x200&format=JPEG&sensor=false&markers=color:blue'.urlencode('|'.$address).'" alt="'.$address.'" />';
+      $map = '<div id="map_canvas">'.$img.'</div>'."\n";
 
       return $map;
    }
