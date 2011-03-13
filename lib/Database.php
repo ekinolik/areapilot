@@ -181,6 +181,9 @@ class Database {
       /* Query DB */
       if (ERROR_DEBUG === 2) echo $query."\n";
 
+      if (ERROR_DEBUG === 3) 
+	 system('echo '.escapeshellarg($query).' >> /tmp/db_queries');
+
       if ($this->sql == 'pgsql') {
 
 	 $this->last_query = $query;
