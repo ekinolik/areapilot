@@ -10,8 +10,6 @@ $HEADER = ROOT_DIR.'json_output/header.php';
 $FOOTER = ROOT_DIR.'json_output/footer.php';
 define('NOLOCOK', 1);
 
-array_push($JS, 'blockUI.js');
-array_push($JS, 'rounded.js');
 array_push($JS, 'basics.js');
 array_push($CSS, '');
 

@@ -11,8 +11,6 @@ $FOOTER = ROOT_DIR.'html_output/footer.php';
 define('NOLOCOK', 1);
 
 array_push($JS, 'add_neighborhood.js');
-array_push($JS, 'blockUI.js');
-array_push($JS, 'rounded.js');
 array_push($JS, 'basics.js');
 array_push($CSS, 'admin.css');
 

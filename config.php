@@ -67,7 +67,7 @@ define('GC_PROBABILITY', 100);
 define('ERROR_DEBUG', 1);
 
 $TITLE = 'Area Pilot';
-$JS = array('jquery-1.4.2.min.js', 'blockUI.js', 'jquery.cookie.js', 'rounded.js', 'ap_basics.js');
+$JS = array('tp/jquery-1.4.2.min.js', 'tp/blockUI.js', 'tp/jquery.cookie.js', 'tp/rounded.js', 'ap_basics.js');
 $CSS = array('ap_default.css');
 
 /* Shouldn't modify below here */

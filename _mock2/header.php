@@ -7,8 +7,8 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="css/ap_default.css" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-	<script type="text/javascript" src="js/blockUI.js"></script>
-	<script type="text/javascript" src="js/rounded.js"></script>
+	<script type="text/javascript" src="js/tp/blockUI.js"></script>
+	<script type="text/javascript" src="js/tp/rounded.js"></script>
 	<script type="text/javascript" src="js/ap_basics.js"></script>
 </head>
 <body>
