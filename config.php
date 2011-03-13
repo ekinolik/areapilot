@@ -45,7 +45,7 @@ define('MAX_LAST_NAME_LEN', 32);
 define('THUMBNAIL_WIDTH', 64);
 define('THUMBNAIL_HEIGHT', 64);
 
-define('MIN_TITLE_LEN', 10);
+define('MIN_TITLE_LEN', 8);
 define('MAX_TITLE_LEN', 60);
 define('MIN_DESCRIPTION_LEN', 50);
 define('MAX_DESCRIPTION_LEN', 5000);
