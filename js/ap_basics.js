@@ -119,7 +119,7 @@ function vote(id, a, t) {
 }
 
 function readRating(json) {
-   if (json.error.error.length > 0) {
+   if (json.error.length > 0) {
       if (json.error.errno == 4) {
 	 blockThis("body",$("#modal-login"),nothing(),false,true);
       } else {
