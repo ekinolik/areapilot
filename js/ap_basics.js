@@ -30,6 +30,10 @@ $(document).ready(function() {
 	 return false;
       });
 
+      $("a.attending").click(function() {
+	    return false;
+      });
+
 
       $("a#futuredates").bind('click', function() {
 	    $("li.selectdate.show").filter(':not(:animated)').animate({
