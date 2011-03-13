@@ -57,7 +57,7 @@ jQuery(function($) {
 	    return false;
       });
 
-      $("a.expand").live('click', function() {
+      $("a.expand").click(function() {
 	    $(this).removeClass('expand').addClass('loading_comments');
 	    $(this).text('Loading...');
 	    var comment = $(this).parents('div').attr('id');
