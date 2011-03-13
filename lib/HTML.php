@@ -151,6 +151,7 @@ class HTML {
       $html .= $s.'			<br />'."\n";
       $html .= $s.'			</div>'."\n";
       $html .= $map;
+      $html .= $s.'			<div class="clearfix"></div>'."\n";
       $html .= $commentlist;
       $html .= HTML:: body_footer();
 
@@ -171,7 +172,7 @@ class HTML {
 
       /* Create entries for the sidecol */
       for ($i = 0, $iz = count($list); $i < $iz; ++$i) {
-	 $html .= '			<a href="#" class="minievent clearfix"><span class="numlikes">'.$list[$i]['rating'].'</span><span class="title">'.$list[$i]['title'].'</span></a>'."\n";
+	 $html .= '			<a href="'.$list[$i]['uri_title'].'" class="minievent clearfix"><span class="numlikes">'.$list[$i]['rating'].'</span><span class="title">'.$list[$i]['title'].'</span></a>'."\n";
       }
 
       $html .= '		</div>'."\n";
@@ -404,9 +405,9 @@ class HTML {
       $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span><br />'."\n";
       $html .= $s.'		<ol>'."\n";
-      $html .= $s.'			<li><label for="add_comment">Title</label>'."\n";
+      $html .= $s.'			<li><label for="add_comment">Comment</label><br />'."\n";
       $html .= $s.'				<input type="hidden" name="event_id" value="'.$id.'" id="event_id" />'."\n";
-      $html .= $s.'				<textarea type="text" name="add_comment" id="add_comment" rows="5" cols="20"></textarea>'."\n";
+      $html .= $s.'				<textarea type="text" name="add_comment" id="add_comment" rows="5" cols="60"></textarea>'."\n";
       $html .= $s.'			</li>'."\n";
       $html .= $s.'			<li class="submit_line">'."\n";
       $html .= $s.'				<button type="submit" class="submitter">Submit Comment</button>'."\n";
@@ -749,7 +750,7 @@ class HTML {
       $address .= htmlspecialchars($event['state']).' ';
       $address .= htmlspecialchars($event['zip']);
 
-      $img = '<img src="http://maps.google.com/maps/api/staticmap?center='.urlencode($address).'&zoom=13&size=300x200&format=JPEG&sensor=false&markers=color:blue'.urlencode('|'.$address).'" alt="'.$address.'" />';
+      $img = '<img src="http://maps.google.com/maps/api/staticmap?center='.urlencode($address).'&zoom=14&size=300x200&format=JPEG&sensor=false&markers=color:blue'.urlencode('|'.$address).'" alt="'.$address.'" />';
       $map = '<div id="map_canvas">'.$img.'</div>'."\n";
 
       return $map;

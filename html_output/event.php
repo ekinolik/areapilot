@@ -40,6 +40,9 @@ for ($i = 0, $iz = count($comment->comment); $i < $iz; ++$i) {
    $comment_html .= '   <hr />'."\n";
     */
 }
+if (strlen($comments) < 1) {
+   $comments = 'Be the first to leave a comment';
+}
 
 if (LOGGED_IN === TRUE)
    $commentform = HTML::commentform($error_class, $comment->event_id);
