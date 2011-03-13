@@ -125,8 +125,11 @@ function blockThis(element, text, callback, roundit, overlayClose) {
 	}
 	$(element).block({
 		message: text,
+		centerY: false,
 		css: {
-			width: 'auto'
+			width: 'auto',
+			position: 'fixed',
+			'top': '5px'
 		},
 		overlayCSS: {
 			background:'#333',
