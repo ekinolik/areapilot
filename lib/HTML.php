@@ -17,7 +17,8 @@ class HTML {
       $username    = htmlspecialchars($event['username']);
       $attendance  = htmlspecialchars($event['attendance']);
 
-      $time = strtolower(substr($time, 0, 4).substr($time, 8));
+      $time = sprintf("%011s", $time);
+      $time = strtolower(substr($time, 0, strrpos($time, ':')).substr($time, 8));
 
       if ($attendance > 1)          $attendance .= ' People Attending';
       else if ($attendance === '1') $attendance .= ' Person Attending';
@@ -26,7 +27,7 @@ class HTML {
       $html  = $s.'<div class="entry clearfix" id="entry_'.$count.'">'."\n";
       $html .= HTML::likebox($event);
       $html .= $s.'	<h3><a href="'.ROOT_URL.$uri_title.'">'.$title.'</a></h3>'."\n";
-      $html .= $s.'	<h4><span>Location : </span><a href="#">'.$city.'</a> &nbsp;&#124;&nbsp; <span>Time : </span>'.$time.'</h4>'."\n";
+      $html .= $s.'	<h4><span>Location : </span>'.$city.' &nbsp;<span>&#124;</span>&nbsp; <span>Time : </span>'.$time.'</h4>'."\n";
       $html .= $s.'	<div class="description"><p>'.$description.'</p>'."\n";
       $html .= $s.'	</div><!-- end .description -->'."\n";
       $html .= $s.'	<ul class="actionlinks">'."\n";
