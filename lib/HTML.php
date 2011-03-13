@@ -127,9 +127,11 @@ class HTML {
 
       $s = '      ';
       $html  = $s.'<div id="profile_details">'."\n";
-      $html .= $s.'	<h3 class="subtitle" id="username">'.$username.'</h3>';
-      $html .= $s.'	<h3 class="subtitle" id="email">'.$email.'</h3>';
-      $html .= $s.'	<h3 class="subtitle" id="first">'.$first.' '.$last.'</h3>';
+      $html .= $s.'	<h3 class="subtitle" id="username">'.$username.'</h3>'."\n";
+      $html .= $s.'	<h3 class="subtitle" id="email">'.$email.'</h3>'."\n";
+      $html .= $s.'	<h3 class="subtitle" id="first">'.$first.' '.$last.'</h3>'."\n";
+      $html .= $s.'     <br />'."\n";
+      $html .= $s.'	<h3 class="subtitle"><a href="/change_password" id="change_my_password">Change My Password</a></h3>'."\n";
       $html .= $s.'     <br />'."\n";
       $html .= $s.'</div>'."\n";
 
@@ -536,17 +538,8 @@ class HTML {
    public function modal_login() {
       $s = '			';
       $html  = $s.'<div id="modal-login" class="modal">'."\n";
-      $html .= $s.'	<form name="login-form" class="modalform" id="login-form" action="/login" method="post">'."\n";
-      $html .= $s.'		<fieldset>'."\n";
-      $html .= $s.'			<ol>'."\n";
-      $html .= $s.'				<li><label for="login-username">Username :</label><input type="text" id="login-username" name="username" class="textfield" /></li>'."\n";
-      $html .= $s.'				<li><label for="login-password">Password :</label><input type="password" id="login-password" name="password" class="textfield" />'."\n";
-      $html .= $s.'					<span class="formnote"><a href="#">forgot password?</a></span>'."\n";
-      $html .= $s.'				</li>'."\n";
-      $html .= $s.'			</ol>'."\n";
-      $html .= $s.'			<button type="submit" class="btn-submit ib" id="btn-loginsubmit">Log In</button>'."\n";
-      $html .= $s.'		</fieldset>'."\n";
-      $html .= $s.'	</form>'."\n";
+      $html .= $s.'	<h2 class="title">Log in</h2>'."\n";
+      $html .= HTML::login_form('modalform', '');
       $html .= $s.'<div><!-- end #modal-login -->'."\n";
 
       return $html;
@@ -557,7 +550,34 @@ class HTML {
       $html  = $s.'<div id="modal-signup" class="modal">'."\n";
       $html .= $s.'	<h2 class="title">Create a New Account</h2>'."\n";
       $html .= HTML::signup_form('modalform', '');
-      $html .= $s.'<div><!-- end #modal-signup -->'."\n";
+      $html .= $s.'</div><!-- end #modal-signup -->'."\n";
+
+      return $html;
+   }
+
+   public function modal_change_password() {
+      $s = '			';
+      $html  = $s.'<div id="modal-change-password" class="modal">'."\n";
+      $html .= $s.'	<h2 class="title">Change My Password</h2>'."\n";
+      $html .= HTML::change_password_form('modalform', '');
+      $html .= $s.'</div><!-- end #modal-change-password -->'."\n";
+
+      return $html;
+   }
+
+   public function login_form($class='', $error='') {
+      $s = '			';
+      $html = $s.'<form name="login-form" class="modalform" id="login-form" action="/login" method="post">'."\n";
+      $html .= $s.'	<fieldset>'."\n";
+      $html .= $s.'		<ol>'."\n";
+      $html .= $s.'			<li><label for="login-username">Username :</label><input type="text" id="login-username" name="username" class="textfield" /></li>'."\n";
+      $html .= $s.'			<li><label for="login-password">Password :</label><input type="password" id="login-password" name="password" class="textfield" />'."\n";
+      $html .= $s.'				<span class="formnote"><a href="#">forgot password?</a></span>'."\n";
+      $html .= $s.'			</li>'."\n";
+      $html .= $s.'		</ol>'."\n";
+      $html .= $s.'		<button type="submit" class="btn-submit ib" id="btn-loginsubmit">Log In</button>'."\n";
+      $html .= $s.'	</fieldset>'."\n";
+      $html .= $s.'</form>'."\n";
 
       return $html;
    }
@@ -574,9 +594,24 @@ class HTML {
       $html .= $s.'			<li><label for="signup-password2">Confirm Password :</label><input type="password" id="signup-password2" name="password2" class="textfield" />'."\n";
       $html .= $s.'			<li><label for="signup-first-name">First Name :</label><input type="text" id="signup-first-name" name="first_name" class="textfield" /></li>'."\n";
       $html .= $s.'			<li><label for="signup-last-name">Last Name :</label><input type="text" id="signup-last-name" name="last_name" class="textfield" /></li>'."\n";
-      $html .= $s.'			</li>'."\n";
       $html .= $s.'		</ol>'."\n";
       $html .= $s.'		<button type="submit" class="btn-submit ib" id="btn-signupsubmit">Register</button>'."\n";
+      $html .= $s.'	</fieldset>'."\n";
+      $html .= $s.'</form>'."\n";
+
+      return $html;
+   }
+
+   public function change_password_form($class='', $error='') {
+      $s = '			';
+      $html  = $s.'<form name="change_password_form" class="'.$class.'" id="change_password_form" action="/change_password" method="post">'."\n";
+      $html .= $s.'	<fieldset'."\n";
+      $html .= $s.'		<span class="errormsg">'.$error.'</span>'."\n";
+      $html .= $s.'		<ol>'."\n";
+      $html .= $s.'			<li><label for="change_password">New Password :</label><input type="password" id="change_password" name="password" class="textfield" />'."\n";
+      $html .= $s.'			<li><label for="change_password2">Confirm Password :</label><input type="password" id="change_password2" name="password2" class="textfield" />'."\n";
+      $html .= $s.'		</ol>'."\n";
+      $html .= $s.'		<button type="submit" class="btn-submit ib" id="btn_submit_password">Change Password</button>'."\n";
       $html .= $s.'	</fieldset>'."\n";
       $html .= $s.'</form>'."\n";
 

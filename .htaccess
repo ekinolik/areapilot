@@ -27,6 +27,10 @@ RewriteRule ^submit(/|/index.html)?$ submit.php [L]
 RewriteCond %{REQUEST_URI} ^/profile(/|/index.html)?$
 RewriteRule ^profile(/|/index.html)?$ profile.php [L]
 
+#Change Password
+RewriteCond %{REQUEST_URI} ^/change_password(/|/index.html)?$
+RewriteRule ^change_password(/|/index.html)?$ change_password.php [L]
+
 #Event
 RewriteCond %{REQUEST_URI} !\.
 RewriteRule ^([0-9][0-9][0-9][0-9][0-9][0-9])/([A-Za-z0-9_]+)$ /event.php?title=$1/$2 [L]

@@ -156,7 +156,7 @@ class Account {
 
    private function verify_password() {
       if ($this->confirm !== NULL && $this->password !== $this->confirm) {
-	 $this->ec->create_error(2, 'Passwords do not match', $this->ecp);
+	 $this->ec->create_error(2, 'Passwords do not match '.$this->password.'-'.$this->confirm, $this->ecp);
 	 return FALSE;
       }
 
@@ -220,11 +220,14 @@ class Account {
    public function change_password() {
       if ($this->sanity_check() === FALSE) return FALSE;
 
+      if ($this->verify_profile('password') === FALSE) return FALSE;
+      if ($this->verify_profile('username') === FALSE) return FALSE;
+
       if ($this->encrypt_password($this->username) === FALSE)
 	 return FALSE;
 
       $update['password'] = '__SQL_FUNCTION__' . $this->enc_password;
-      $where['username'] = $this->dbc->escape($this->username);
+      $where['id'] = $this->dbc->escape($this->id);
       if ($this->dbc->update_db($this->user_table, $update, $where) === FALSE) {
 	 $this->ec->create_error(15, 'Could not update password', $this->ecp);
 	 return FALSE;

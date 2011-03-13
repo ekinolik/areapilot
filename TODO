@@ -1,4 +1,4 @@
-Login form needs to be centered better
+#Login form needs to be centered better
 # Fix signup form
 # Fix submit form
 # Add calendar to submit page
@@ -8,7 +8,7 @@ Login form needs to be centered better
 # Do redirects work?
 
 Make profile page look better
-Add a change password form
+#Add a change password form
 Fix redirects with real domain
 
 Add Location selection

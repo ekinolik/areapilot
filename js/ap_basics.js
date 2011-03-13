@@ -70,7 +70,29 @@ $(document).ready(function() {
 	    blockThis("body", $("#modal-signup"),nothing(), false, true);
 	    return false;
       });
+
+      $("a#change_my_password").click(function() {
+	    if ($("input#change_password").val() != $("input#change_password2").val()) {
+	    	alert('Passwords do not match');
+		return false;
+	    }
+	    blockThis("body", $("#modal-signup"),nothing(), false, true);
+	    blockThis("body", $("#modal-change-password"),nothing(), false, true);
+	    return false;
+      });
 	
+      $("#btn_submit_password").click(function() {
+	    if ($("input#change_password").val() != $("input#change_password2").val()) {
+	    	alert('Passwords do not match');
+		return false;
+	    }
+
+	    if ($("input#change_password").val().length < 4) {
+	    	alert('Password is too short');
+		return false;
+	    }
+      });
+
       $("div#submitform form.fullform input.defaultvalue").bind('click', function() {
 	    $(this).val('');
 	    $(this).removeClass('defaultvalue');
