@@ -14,3 +14,7 @@ Fix redirects with real domain
 Add Location selection
 
 Create Footer
+
+Create HTTPS for login/change password
+#Google Analytics
+Make db queries save to find all db queries

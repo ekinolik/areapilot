@@ -730,6 +730,7 @@ class HTML {
       $html .= '	<title>'.$title.'</title>'."\n";
       $html .= $csslinks."\n";
       $html .= $jslinks."\n";
+      $html .= HTML::google_analytics();
       $html .= '</head>'."\n";
       $html .= '<body>'."\n";
       $html .= '	<div id="container">'."\n";
@@ -755,6 +756,25 @@ class HTML {
       $map = '<div id="map_canvas">'.$img.'</div>'."\n";
 
       return $map;
+   }
+
+   public function google_analytics() {
+      if (PRODUCTION === FALSE) return '';
+
+      $s = '	';
+      $html  = $s.'<script type="text/javascript">'."\n";;
+      $html .= $s.'	var _gaq = _gaq || [];'."\n";;
+      $html .= $s.'	_gaq.push([\'_setAccount\', \'UA-22030249-1\']);'."\n";
+      $html .= $s.'	_gaq.push([\'_setDomainName\', \'.areapilot.com\']);'."\n";
+      $html .= $s.'	_gaq.push([\'_trackPageview\']);'."\n";
+      $html .= $s.'	(function() {'."\n";
+      $html .= $s.'		var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;'."\n";
+      $html .= $s.'		ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';'."\n";
+      $html .= $s.'		var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);'."\n";
+      $html .= $s.'	})();'."\n";
+      $html .= $s.'</script>'."\n";
+
+      return $html;
    }
 
 }

@@ -1,5 +1,7 @@
 <?php
 
+define('PRODUCTION', FALSE);
+
 define('PROTOCOL', 'http://');
 define('DOMAIN', 'wh.direnetworks.com');
 define('IMG_DOMAIN', 'images.direnetwors.com');
