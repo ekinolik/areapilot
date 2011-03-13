@@ -28,6 +28,9 @@ if ( isset($_POST['title'])) {
    if ( $venue->create() === FALSE) {
       return FALSE;
    }
+
+   header('Location: '.ROOT_URL.$venue->uri_title);
+   exit;
 }
 
 ?>
