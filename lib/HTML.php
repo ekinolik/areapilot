@@ -296,7 +296,11 @@ class HTML {
       $html .= $s.'		<li><a href="/'.$category.'date-'.$first_donm.'-'.$last_donm.'" class="'.$nm.'" id="time-nextmonth">Next Month</a></li>'."\n";
       $html .= $s.'	</ul>'."\n";
       $html .= HTML::sub_datemenu(DATE_START, $category);
-      $html .= $s.'	<a href="#" id="rangeselect">Select Date Range</a>'."\n";
+      $html .= $s.'	<form name="selectdate" method="post" action="#">'."\n";
+      $html .= $s.'		<input type="hidden" name="rangestart" id="rangestart" />'."\n";
+      $html .= $s.'		<input type="hidden" name="rangeend" id="rangeend" />'."\n";
+      $html .= $s.'		<a href="#" id="rangeselect">Select Date Range</a>'."\n";
+      $html .= $s.'	</form>'."\n";
       $html .= $s.'</div><!-- end #timeline -->'."\n";
 
       return $html;
