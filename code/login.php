@@ -1,5 +1,10 @@
 <?php
 
+if (LOGGED_IN === TRUE) {
+   header('Location: '.ROOT_URL);
+   exit;
+}
+
 if (isset($_POST['username'])) {
    if ( ! defined('ACCOUNTCLASS')) require(LIB_DIR.'Account.php');
 
