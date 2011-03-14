@@ -377,7 +377,7 @@ ul#timeoptions li a.current:hover {
 	font-weight: bold;
 }
 
-#timeline a#rangeselect {
+#timeline p a#rangeselect {
 	color: #de702b;
 	font-family: "DejaWebBold";
 	font-size: 1.2em;
@@ -389,7 +389,7 @@ ul#timeoptions li a.current:hover {
 	text-decoration: none;
 }
 
-#timeline a#rangeselect:hover {
+#timeline p a#rangeselect:hover {
 	color: #333;
 }
 

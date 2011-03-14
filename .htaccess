@@ -3,9 +3,9 @@ php_flag display_errors on
 RewriteEngine on
 
 #Location
-RewriteCond %{HTTP_HOST} !^wh.direnetworks.com$ [NC]
-RewriteCond %{HTTP_HOST} ^(www.)?([a-z0-9-]+).wh.direnetworks.com$ [NC]
-RewriteRule ^(.*) http://wh.direnetworks.com [L,co=test:%2:.wh.direnetworks.com:7200:/,R=302]
+RewriteCond %{HTTP_HOST} !^www.areapilot.com$ [NC]
+RewriteCond %{HTTP_HOST} ^(www.)?([a-z0-9-]+).areapilot.com$ [NC]
+RewriteRule ^(.*) http://www.areapilot.com [L,co=test:%2:.areapilot.com:7200:/,R=302]
 
 #Login
 RewriteCond %{REQUEST_URI} ^/login(/|/index.html)?$

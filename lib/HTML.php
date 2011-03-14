@@ -11,14 +11,15 @@ class HTML {
       $uri_title   = htmlspecialchars($event['uri_title']);
       $title       = htmlspecialchars($event['title']);
       $description = htmlspecialchars(substr($event['description'], 0, 400));
-      $time        = htmlspecialchars(time_convert_24_to_12(substr($event['time'], 11)));
+      //$time        = htmlspecialchars(time_convert_24_to_12(substr($event['time'], 11)));
+      $time = htmlspecialchars(date("l g:i A (F d, Y)", strtotime($event['time'])));
       $area        = htmlspecialchars($event['area']);
       $city        = htmlspecialchars(ucwords($event['city']));
       $username    = htmlspecialchars($event['username']);
       $attendance  = htmlspecialchars($event['attendance']);
 
-      $time = sprintf("%011s", $time);
-      $time = strtolower(substr($time, 0, strrpos($time, ':')).substr($time, 8));
+      //$time = sprintf("%011s", $time);
+      //$time = strtolower(substr($time, 0, strrpos($time, ':')).substr($time, 8));
 
       if ($attendance > 1)          $attendance .= ' People Attending';
       else if ($attendance === '1') $attendance .= ' Person Attending';
@@ -31,7 +32,7 @@ class HTML {
       $html .= $s.'	<div class="description"><p>'.$description.'</p>'."\n";
       $html .= $s.'	</div><!-- end .description -->'."\n";
       $html .= $s.'	<ul class="actionlinks">'."\n";
-      $html .= $s.'		<li><a href="vote.php?id='.$id.'&t=e&a=a&r=h" name="'.$id.'" class="attendthis">Attend This Event</a></li>'."\n";
+      $html .= $s.'		<li><a href="vote.php?'.urlencode('id='.$id.'&t=e&a=a&r=h').'" name="'.$id.'" class="attendthis">Attend This Event</a></li>'."\n";
       $html .= $s.'		<li><a href="#" class="attending">'.$attendance.'</a></li>'."\n";
       $html .= $s.'		<li><a href="'.ROOT_URL.$uri_title.'" class="commentsnum"><!--___COMMENT_COUNT___--></a></li>'."\n";
       $html .= $s.'	</ul>'."\n";
@@ -70,7 +71,7 @@ class HTML {
       $html  = $s.'<div class="likebox">'."\n";
       $html .= $s.'	<span class="numlikes" id="numlikes_'.$id.'">'.$rating.'</span>'."\n";
       $html .= $s.'	<span class="xtra">'.$liketext.'</span>'."\n";
-      $html .= $s.'	<a href="vote.php?id='.$id.'&t=e&a=l&r=h" name="'.$id.'" class="likeit">I Like It</a>'."\n";
+      $html .= $s.'	<a href="vote.php?'.urlencode('id='.$id.'&t=e&a=l&r=h').'" name="'.$id.'" class="likeit">I Like It</a>'."\n";
       $html .= $s.'</div><!-- end .likebox -->'."\n";
 
       return $html;
@@ -166,19 +167,24 @@ class HTML {
       else if (strlen(CATEGORY_TITLE) > 1) $category = ' in "'.CATEGORY_TITLE.'"';
       else $category = '';
 
-      $html  = '<div id="sidecol">'."\n";
-      $html .= '	<div class="sidebox" id="popincategory">'."\n";
-      $html .= '		<h2>Popular '.$category.'</h2>'."\n";
-      $html .= '		<div class="minievents">'."\n";
+      $s = '				';
+      $html  = $s.'<div id="sidecol">'."\n";
+      $html .= $s.'	<div class="sidebox" id="popincategory">'."\n";
+      $html .= $s.'		<h2>Popular '.$category.'</h2>'."\n";
+      $html .= $s.'		<div class="minievents">'."\n";
 
       /* Create entries for the sidecol */
       for ($i = 0, $iz = count($list); $i < $iz; ++$i) {
-	 $html .= '			<a href="'.$list[$i]['uri_title'].'" class="minievent clearfix"><span class="numlikes">'.$list[$i]['rating'].'</span><span class="title">'.$list[$i]['title'].'</span></a>'."\n";
+	 $url    = urlencode($list[$i]['uri_title']);
+	 $rating = htmlspecialchars($list[$i]['rating']);
+	 $title  = htmlspecialchars($list[$i]['title']);
+
+	 $html .= $s.'			<a href="'.$url.'" class="minievent clearfix"><span class="numlikes">'.$rating.'</span><span class="title">'.$title.'</span></a>'."\n";
       }
 
-      $html .= '		</div>'."\n";
-      $html .= '	</div><!-- end #popincategory -->'."\n";
-      $html .= '</div><!-- end #sidecol -->'."\n";
+      $html .= $s.'		</div>'."\n";
+      $html .= $s.'	</div><!-- end #popincategory -->'."\n";
+      $html .= $s.'</div><!-- end #sidecol -->'."\n";
 
       return $html;
    }
@@ -233,7 +239,8 @@ class HTML {
       $html = $s.'<ul class="submenu">'."\n";
       for ($i = 0; $i < $child_count; ++$i) {
 	 $link_cat = HTML::url_friendly_category($menu[$i]['title']);
-	 $html .= $s.'	<li><a href="'.ROOT_URL.$link_cat.'">'.$menu[$i]['title'].'</a></li>'."\n";
+	 $title = htmlspecialchars($menu[$i]['title']);
+	 $html .= $s.'	<li><a href="'.ROOT_URL.$link_cat.'">'.$title.'</a></li>'."\n";
       }
       $html .= $s.'</ul>'."\n";
 
@@ -241,22 +248,22 @@ class HTML {
    }
 
    public function url_friendly_category($category) {
-      return strtolower(str_replace(' ', '_', $category));
+      return urlencode(strtolower(str_replace(' ', '_', $category)));
    }
 
    public function datemenu($category='') {
       $s = '			';
 
       /* FIXME: This should be improved for better optimization */
-      $current_dow = get_current_day_of_week(CURRENT_TIME);
-      $first_dow = get_first_day_of_week(CURRENT_TIME);
-      $last_dow  = get_last_day_of_week(CURRENT_TIME);
-      $first_donw = get_first_day_of_week(CURRENT_TIME, 1); //$last_dow + 1;
-      $last_donw  = get_last_day_of_week(CURRENT_TIME, 1); //$last_dow + 7;
-      $first_dom = get_first_day_of_month($current_dow);
-      $last_dom  = get_last_day_of_month($first_dom);
-      $first_donm = get_first_day_of_month($current_dow, 1);
-      $last_donm  = get_last_day_of_month($first_donm);
+      $current_dow = urlencode(get_current_day_of_week(CURRENT_TIME));
+      $first_dow = urlencode(get_first_day_of_week(CURRENT_TIME));
+      $last_dow  = urlencode(get_last_day_of_week(CURRENT_TIME));
+      $first_donw = urlencode(get_first_day_of_week(CURRENT_TIME, 1)); //$last_dow + 1;
+      $last_donw  = urlencode(get_last_day_of_week(CURRENT_TIME, 1)); //$last_dow + 7;
+      $first_dom = urlencode(get_first_day_of_month($current_dow));
+      $last_dom  = urlencode(get_last_day_of_month($first_dom));
+      $first_donm = urlencode(get_first_day_of_month($current_dow, 1));
+      $last_donm  = urlencode(get_last_day_of_month($first_donm));
 
       if (strlen($category) > 1) $category .= '/';
 
@@ -295,10 +302,12 @@ class HTML {
       $html .= $s.'		<li><a href="/'.$category.'date-'.$first_donm.'-'.$last_donm.'" class="'.$nm.'" id="time-nextmonth">Next Month</a></li>'."\n";
       $html .= $s.'	</ul>'."\n";
       $html .= HTML::sub_datemenu(DATE_START, $category);
-      $html .= $s.'	<form name="selectdate" method="post" action="#">'."\n";
-      $html .= $s.'		<input type="hidden" name="rangestart" id="rangestart" />'."\n";
-      $html .= $s.'		<input type="hidden" name="rangeend" id="rangeend" />'."\n";
+      $html .= $s.'	<form method="post" action="#">'."\n";
+      $html .= $s.'		<p>'."\n";
+      $html .= $s.'			<input type="hidden" name="rangestart" id="rangestart" />'."\n";
+      $html .= $s.'			<input type="hidden" name="rangeend" id="rangeend" />'."\n";
       $html .= $s.'		<a href="#" id="rangeselect">Select Date Range</a>'."\n";
+      $html .= $s.'		</p>'."\n";
       $html .= $s.'	</form>'."\n";
       $html .= $s.'</div><!-- end #timeline -->'."\n";
 
@@ -316,10 +325,10 @@ class HTML {
 
       $current_date = get_current_day_of_week(CURRENT_TIME);
 
-      $ts = get_start_of_day($week_start);
-      $first_dow = get_first_day_of_week($ts);
-      $last_dow = get_last_day_of_week($ts);
-      $ts = get_timestamp_from_datestamp($first_dow);
+      $ts = urlencode(get_start_of_day($week_start));
+      $first_dow = urlencode(get_first_day_of_week($ts));
+      $last_dow = urlencode(get_last_day_of_week($ts));
+      $ts = urlencode(get_timestamp_from_datestamp($first_dow));
 
       $html  = $s.'<ul id="suboptions">'."\n";
       $html .= $s.'	<li><a href="/'.$category.'date-'.$first_dow.'-'.$last_dow.'" class="current">Any Day</a></li>'."\n";
@@ -352,7 +361,7 @@ class HTML {
 	 if ($current_date > $date) {
 	    $html .= $s.'<li class="selectdate '.$class.'"><span>'.$dow.'&nbsp;&nbsp;('.$month_day.')</span></li>'."\n";
 	 } else {
-	    $html .= $s.'<li class="selectdate '.$class.'"><a href="'.$category.'/date-'.$date.'">'.$dow.'&nbsp;&nbsp;('.$month_day.')</a></li>'."\n";
+	    $html .= $s.'<li class="selectdate '.$class.'"><a href="'.$category.'/date-'.urlencode($date).'">'.$dow.'&nbsp;&nbsp;('.$month_day.')</a></li>'."\n";
 	 }
       }
 
@@ -440,7 +449,7 @@ class HTML {
 	 if (strlen($event['category'][$i]['title']) < 1) continue;
 	 if (strlen($categories) > 0) $categories .= ', ';
 
-	 $ct = &$event['category'][$i]['title'];
+	 $ct = HTML::url_friendly_category($event['category'][$i]['title']);
 	 $categories .= '<a href="/'.strtolower(str_replace(' ', '_', $ct)).'">';
 	 $categories .= $ct;
 	 $categories .= '</a>';
@@ -520,17 +529,17 @@ class HTML {
 
       $html  = $s.'<div class="pagination">'."\n";
       $html .= $s.'	<ul class="clearfix">'."\n";
-      if (PAGE !== 1) $html .= $s.'		<li><a href="'.$cat.$date.'/page'.(PAGE-1).'">&laquo; prev</a></li>'."\n";
+      if (PAGE !== 1) $html .= $s.'		<li><a href="'.$cat.urlencode($date.'/page'.(PAGE-1)).'">&laquo; prev</a></li>'."\n";
 
       for ($i = $start; $i <= $end; ++$i) {
 	 if ($i == PAGE)
 	    $html .= $s.'		<li><span class="current">'.$i.'</span></li>'."\n";
 	 else
-	    $html.= $s.'		<li><a href="'.$cat.$date.'/page'.$i.'">'.$i.'</a></li>'."\n";
+	    $html.= $s.'		<li><a href="'.$cat.urlencode($date.'/page'.$i).'">'.$i.'</a></li>'."\n";
       }
 
       if (PAGE < $total) 
-	 $html .= $s.'		<li><a href="'.$cat.$date.'/page'.(PAGE + 1).'">next &raquo;</a></li>'."\n";
+	 $html .= $s.'		<li><a href="'.$cat.urlencode($date.'/page'.(PAGE + 1)).'">next &raquo;</a></li>'."\n";
 
       $html .= $s.'	</ul>'."\n";
       $html .= $s.'</div>'."\n";
@@ -543,7 +552,7 @@ class HTML {
       $html  = $s.'<div id="modal-login" class="modal">'."\n";
       $html .= $s.'	<h2 class="title">Log in</h2>'."\n";
       $html .= HTML::login_form('modalform', '');
-      $html .= $s.'<div><!-- end #modal-login -->'."\n";
+      $html .= $s.'</div><!-- end #modal-login -->'."\n";
 
       return $html;
    }
@@ -569,8 +578,8 @@ class HTML {
    }
 
    public function login_form($class='', $error='') {
-      $s = '			';
-      $html = $s.'<form name="login-form" class="modalform" id="login-form" action="/login" method="post">'."\n";
+      $s = '				';
+      $html = $s.'<form class="modalform" id="login-form" action="/login" method="post">'."\n";
       $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<ol>'."\n";
       $html .= $s.'			<li><label for="login-username">Username :</label><input type="text" id="login-username" name="username" class="textfield" /></li>'."\n";
@@ -586,15 +595,15 @@ class HTML {
    }
 
    public function signup_form($class='', $error='') {
-      $s = '			';
-      $html  = $s.'<form name="signup-form" class="'.$class.'" id="signup-form" action="/signup" method="post">'."\n";
+      $s = '				';
+      $html  = $s.'<form class="'.$class.'" id="signup-form" action="/signup" method="post">'."\n";
       $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span>'."\n";
       $html .= $s.'		<ol>'."\n";
       $html .= $s.'			<li><label for="signup-username">Desired Username :</label><input type="text" id="signup-username" name="username" class="textfield" /></li>'."\n";
       $html .= $s.'			<li><label for="signup-email">Email address :</label><input type="text" id="signup-email" name="email" class="textfield" /></li>'."\n";
-      $html .= $s.'			<li><label for="signup-password">Password :</label><input type="password" id="signup-password" name="password" class="textfield" />'."\n";
-      $html .= $s.'			<li><label for="signup-password2">Confirm Password :</label><input type="password" id="signup-password2" name="password2" class="textfield" />'."\n";
+      $html .= $s.'			<li><label for="signup-password">Password :</label><input type="password" id="signup-password" name="password" class="textfield" /></li>'."\n";
+      $html .= $s.'			<li><label for="signup-password2">Confirm Password :</label><input type="password" id="signup-password2" name="password2" class="textfield" /></li>'."\n";
       $html .= $s.'			<li><label for="signup-first-name">First Name :</label><input type="text" id="signup-first-name" name="first_name" class="textfield" /></li>'."\n";
       $html .= $s.'			<li><label for="signup-last-name">Last Name :</label><input type="text" id="signup-last-name" name="last_name" class="textfield" /></li>'."\n";
       $html .= $s.'		</ol>'."\n";
@@ -606,13 +615,13 @@ class HTML {
    }
 
    public function change_password_form($class='', $error='') {
-      $s = '			';
-      $html  = $s.'<form name="change_password_form" class="'.$class.'" id="change_password_form" action="/change_password" method="post">'."\n";
-      $html .= $s.'	<fieldset'."\n";
+      $s = '				';
+      $html  = $s.'<form class="'.$class.'" id="change_password_form" action="/change_password" method="post">'."\n";
+      $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span>'."\n";
       $html .= $s.'		<ol>'."\n";
-      $html .= $s.'			<li><label for="change_password">New Password :</label><input type="password" id="change_password" name="password" class="textfield" />'."\n";
-      $html .= $s.'			<li><label for="change_password2">Confirm Password :</label><input type="password" id="change_password2" name="password2" class="textfield" />'."\n";
+      $html .= $s.'			<li><label for="change_password">New Password :</label><input type="password" id="change_password" name="password" class="textfield" /></li>'."\n";
+      $html .= $s.'			<li><label for="change_password2">Confirm Password :</label><input type="password" id="change_password2" name="password2" class="textfield" /></li>'."\n";
       $html .= $s.'		</ol>'."\n";
       $html .= $s.'		<button type="submit" class="btn-submit ib" id="btn_submit_password">Change Password</button>'."\n";
       $html .= $s.'	</fieldset>'."\n";
@@ -752,7 +761,7 @@ class HTML {
       $address .= htmlspecialchars($event['state']).' ';
       $address .= htmlspecialchars($event['zip']);
 
-      $img = '<img src="http://maps.google.com/maps/api/staticmap?center='.urlencode($address).'&zoom=14&size=300x200&format=JPEG&sensor=false&markers=color:blue'.urlencode('|'.$address).'" alt="'.$address.'" />';
+      $img = '<img src="'.urlencode('http://maps.google.com/maps/api/staticmap?center='.$address.'&zoom=14&size=300x200&format=JPEG&sensor=false&markers=color:blue|'.$address).'" alt="'.$address.'" />';
       $map = '<div id="map_canvas">'.$img.'</div>'."\n";
 
       return $map;
