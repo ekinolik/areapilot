@@ -580,7 +580,7 @@ class HTML {
 
    public function login_form($class='', $error='') {
       $s = '				';
-      $html = $s.'<form class="modalform" id="login-form" action="/login" method="post">'."\n";
+      $html = $s.'<form class="modalform" id="login-form" action="'.SROOT_URL.'login" method="post">'."\n";
       $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<ol>'."\n";
       $html .= $s.'			<li><label for="login-username">Username :</label><input type="text" id="login-username" name="username" class="textfield" /></li>'."\n";
@@ -617,7 +617,7 @@ class HTML {
 
    public function change_password_form($class='', $error='') {
       $s = '				';
-      $html  = $s.'<form class="'.$class.'" id="change_password_form" action="/change_password" method="post">'."\n";
+      $html  = $s.'<form class="'.$class.'" id="change_password_form" action="'.SROOT_URL.'change_password" method="post">'."\n";
       $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span>'."\n";
       $html .= $s.'		<ol>'."\n";

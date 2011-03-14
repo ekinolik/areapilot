@@ -3,10 +3,12 @@
 define('PRODUCTION', FALSE);
 
 define('PROTOCOL', 'http://');
+define('SPROTOCOL', 'https://');
 define('DOMAIN', 'wh.direnetworks.com');
 define('IMG_DOMAIN', 'images.direnetwors.com');
 define('COOKIE_DOMAIN', 'wh.direnetworks.com');
 define('ROOT_URL', PROTOCOL.DOMAIN.'/');
+define('SROOT_URL', SPROTOCOL.DOMAIN.'/');
 define('IMG_URL', PROTOCOL.IMG_DOMAIN.'/');
 define('ROOT_DIR', '/var/www/html/wh.direnetworks.com/');
 define('IMG_DIR', '/var/www/html/images.direnetworks.com/');
