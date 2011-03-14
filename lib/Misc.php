@@ -168,8 +168,8 @@ function set_date_range($start_date, $end_date=FALSE) {
       define('TIME_END', mktime(0, 0, 0, $end_month, $end_day, $end_year) + 86399);
    } else {
       /* Set end date to current time + 7 days */
-      define('DATE_END', date("Ymd", CURRENT_TIME + (86400 * 7)));
-      define('TIME_END', date('Ymd', mktime(24, 59, 59, substr(DATE_END,4,2), substr(DATE_END,6,2), substr(DATE_END, 0, 4))));
+      define('DATE_END', date("Ymd", CURRENT_TIME + (86400 * 6)));
+      define('TIME_END', mktime(24, 59, 59, substr(DATE_END,4,2), substr(DATE_END,6,2), substr(DATE_END, 0, 4)));
    }
 
    return TRUE;
