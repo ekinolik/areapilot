@@ -11,14 +11,15 @@ class HTML {
       $uri_title   = htmlspecialchars($event['uri_title']);
       $title       = htmlspecialchars($event['title']);
       $description = htmlspecialchars(substr($event['description'], 0, 400));
-      $time        = htmlspecialchars(time_convert_24_to_12(substr($event['time'], 11)));
+      //$time        = htmlspecialchars(time_convert_24_to_12(substr($event['time'], 11)));
+      $time = htmlspecialchars(date("l g:i A (F d, Y)", strtotime($event['time'])));
       $area        = htmlspecialchars($event['area']);
       $city        = htmlspecialchars(ucwords($event['city']));
       $username    = htmlspecialchars($event['username']);
       $attendance  = htmlspecialchars($event['attendance']);
 
-      $time = sprintf("%011s", $time);
-      $time = strtolower(substr($time, 0, strrpos($time, ':')).substr($time, 8));
+      //$time = sprintf("%011s", $time);
+      //$time = strtolower(substr($time, 0, strrpos($time, ':')).substr($time, 8));
 
       if ($attendance > 1)          $attendance .= ' People Attending';
       else if ($attendance === '1') $attendance .= ' Person Attending';
