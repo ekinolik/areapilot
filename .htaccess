@@ -38,12 +38,12 @@ RewriteRule ^([0-9][0-9][0-9][0-9][0-9][0-9])/([A-Za-z0-9_]+)$ /event.php?title=
 #Category no page
 RewriteCond %{REQUEST_URI} !\.
 RewriteCond %{REQUEST_URI} !^/?$
-RewriteRule ^/?([A-Za-z_&]+)?(/date-([0-9]+)-?([0-9]+)?)?/?(/index.html)?$ /index.php?category=$1&page=&date1=$3&date2=$4 [L]
+RewriteRule ^/?([A-Za-z_0-9%&]+)?(/date-([0-9]+)-?([0-9]+)?)?/?(/index.html)?$ /index.php?category=$1&page=&date1=$3&date2=$4 [L]
 
 #Category with page and possibly date range
 RewriteCond %{REQUEST_URI} !(\.jpg|\.jpeg|\.ttf|\.css|\.js|\.png|\.gif)$
 RewriteCond %{REQUEST_URI} page[0-9]+/?(index.html)?$
-RewriteRule ^/?([A-Za-z0-9_&]+)/(date-([0-9]+)-?([0-9]+)?)?/?page([0-9]+)/?(/index.html)?$ /index.php?category=$1&page=$5&date1=$3&date2=$4 [L]
+RewriteRule ^/?([A-Za-z0-9%_&]+)/(date-([0-9]+)-?([0-9]+)?)?/?page([0-9]+)/?(/index.html)?$ /index.php?category=$1&page=$5&date1=$3&date2=$4 [L]
 
 RewriteCond %{REQUEST_URI} !\.
 RewriteCond %{REQUEST_URI} page[0-9]+/?(index.html)?$
