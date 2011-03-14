@@ -32,7 +32,7 @@ class HTML {
       $html .= $s.'	<div class="description"><p>'.$description.'</p>'."\n";
       $html .= $s.'	</div><!-- end .description -->'."\n";
       $html .= $s.'	<ul class="actionlinks">'."\n";
-      $html .= $s.'		<li><a href="'.urlencode('vote.php?id='.$id.'&t=e&a=a&r=h').'" name="'.$id.'" class="attendthis">Attend This Event</a></li>'."\n";
+      $html .= $s.'		<li><a href="vote.php?'.urlencode('id='.$id.'&t=e&a=a&r=h').'" name="'.$id.'" class="attendthis">Attend This Event</a></li>'."\n";
       $html .= $s.'		<li><a href="#" class="attending">'.$attendance.'</a></li>'."\n";
       $html .= $s.'		<li><a href="'.ROOT_URL.$uri_title.'" class="commentsnum"><!--___COMMENT_COUNT___--></a></li>'."\n";
       $html .= $s.'	</ul>'."\n";
@@ -71,7 +71,7 @@ class HTML {
       $html  = $s.'<div class="likebox">'."\n";
       $html .= $s.'	<span class="numlikes" id="numlikes_'.$id.'">'.$rating.'</span>'."\n";
       $html .= $s.'	<span class="xtra">'.$liketext.'</span>'."\n";
-      $html .= $s.'	<a href="'.urlencode('vote.php?id='.$id.'&t=e&a=l&r=h').'" name="'.$id.'" class="likeit">I Like It</a>'."\n";
+      $html .= $s.'	<a href="vote.php?'.urlencode('id='.$id.'&t=e&a=l&r=h').'" name="'.$id.'" class="likeit">I Like It</a>'."\n";
       $html .= $s.'</div><!-- end .likebox -->'."\n";
 
       return $html;
@@ -359,7 +359,7 @@ class HTML {
       while ((list($date, $dow) = each($week)) !== FALSE) {
 	 $month_day = substr($date, 4, 2).'/'.substr($date, 6, 2);
 	 if ($current_date > $date) {
-	    $html .= $s.'<li class="selectdate '.$class.'"><span>'.urlencode($dow).'&nbsp;&nbsp;('.$month_day.')</span></li>'."\n";
+	    $html .= $s.'<li class="selectdate '.$class.'"><span>'.$dow.'&nbsp;&nbsp;('.$month_day.')</span></li>'."\n";
 	 } else {
 	    $html .= $s.'<li class="selectdate '.$class.'"><a href="'.$category.'/date-'.urlencode($date).'">'.$dow.'&nbsp;&nbsp;('.$month_day.')</a></li>'."\n";
 	 }
@@ -692,7 +692,7 @@ class HTML {
       if ( ! is_array($CSS)) $CSS = array($CSS);
       for ($i = 0, $iz = count($CSS), $csslinks = ''; $i < $iz; ++$i) {
 	 if (strlen(trim($CSS[$i])) < 1) continue;
-	 $cssfile = urlencode($CSS[$i]);
+	 $cssfile = $CSS[$i];
 	 if (substr($cssfile, 0, 5) !== 'http:' && substr($cssfile, 0, 6) !== 'https:')
 	    $cssfile = '/css/'.$cssfile;
 	 $csslinks .= $s.'<link rel="stylesheet" type="text/css" href="'.$cssfile.'" />'."\n";
@@ -709,7 +709,7 @@ class HTML {
 	 $jsfile = $JS[$i];
 	 if (substr($jsfile, 0, 5) !== 'http:' && substr($jsfile, 0, 6) !== 'https:')
 	    $jsfile = '/js/'.$jsfile;
-	 $jslinks .= $s.'<script type="text/javascript" src="'.urlencode($jsfile).'"></script>'."\n";
+	 $jslinks .= $s.'<script type="text/javascript" src="'.$jsfile.'"></script>'."\n";
       }
 
       return $jslinks;
