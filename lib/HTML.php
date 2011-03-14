@@ -248,7 +248,8 @@ class HTML {
    }
 
    public function url_friendly_category($category) {
-      return urlencode(strtolower(str_replace(' ', '_', $category)));
+      /* We have to urlencode twice due to mod_rewrite */
+      return urlencode(urlencode(strtolower(str_replace(' ', '_', $category))));
    }
 
    public function datemenu($category='') {
@@ -759,9 +760,9 @@ class HTML {
       $address  = htmlspecialchars($event['address']).', ';
       $address .= htmlspecialchars($event['city']).', ';
       $address .= htmlspecialchars($event['state']).' ';
-      $address .= htmlspecialchars($event['zip']);
+      $address .= urlencode(htmlspecialchars($event['zip']));
 
-      $img = '<img src="'.urlencode('http://maps.google.com/maps/api/staticmap?center='.$address.'&zoom=14&size=300x200&format=JPEG&sensor=false&markers=color:blue|'.$address).'" alt="'.$address.'" />';
+      $img = '<img src="http://maps.google.com/maps/api/staticmap?center='.$address.'&zoom=14&size=300x200&format=JPEG&sensor=false&markers=color:blue|'.$address.'" alt="'.$address.'" />';
       $map = '<div id="map_canvas">'.$img.'</div>'."\n";
 
       return $map;

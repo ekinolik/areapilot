@@ -29,6 +29,7 @@ if ( ($db_class->connect_to_db(DB_NAME, DB_USER, DB_PASS, DB_HOST)) === FALSE) {
 
 $current_category = FALSE;
 if (isset($_GET['category'])) {
+   echo $_GET['category'];
    $current_category = Category::get_by_title($_GET['category'], $db_class);
 }
 
