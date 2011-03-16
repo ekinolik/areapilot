@@ -3,10 +3,12 @@
 define('PRODUCTION', TRUE);
 
 define('PROTOCOL', 'http://');
+define('SPROTOCOL', 'https://');
 define('DOMAIN', 'www.areapilot.com');
 define('IMG_DOMAIN', 'images.areapilot.com');
 define('COOKIE_DOMAIN', '.areapilot.com');
 define('ROOT_URL', PROTOCOL.DOMAIN.'/');
+define('SROOT_URL', SPROTOCOL.DOMAIN.'/');
 define('IMG_URL', PROTOCOL.IMG_DOMAIN.'/');
 define('ROOT_DIR', '/var/www/html/areapilot.com/');
 define('IMG_DIR', '/var/www/html/images.areapilot.com/');
