@@ -67,7 +67,7 @@ class HTML {
 
       $rating = htmlspecialchars($event['rating']);
       $id     = htmlspecialchars($event['id']);
-      $s = '							';
+      $s = '								';
       $html  = $s.'<div class="likebox">'."\n";
       $html .= $s.'	<span class="numlikes" id="numlikes_'.$id.'">'.$rating.'</span>'."\n";
       $html .= $s.'	<span class="xtra">'.$liketext.'</span>'."\n";
@@ -140,20 +140,26 @@ class HTML {
       return $html;
    }
 
-   public function event($title, $eventdetails, $venuedetails, $map, $commentlist) {
+   public function event($title, $eventdetails, $venuedetails, $toplist, $map, $commentlist) {
       $s = '			';
 
       $html  = HTML::body_header($title);
       $html .= $s.'			<div id="eventdetailswrapper">'."\n";
       $html .= $eventdetails;
-      $html .= $s.'			<br />'."\n";
+      $html .= $s.'				<br />'."\n";
       $html .= $venuedetails;
-      $html .= $s.'			<br />'."\n";
-      $html .= $s.'			<br />'."\n";
-      $html .= $s.'			<br />'."\n";
-      $html .= $s.'			</div>'."\n";
+      $html .= $s.'				<br />'."\n";
+      $html .= $s.'				<br />'."\n";
+      $html .= $s.'				<br />'."\n";
+      $html .= $s.'			</div> <!-- end #eventdetailswrapper -->'."\n";
+      $html .= $s.'			<div id="sidecol">'."\n";
+      $html .= $toplist;
+      $html .= $s.'				<br />'."\n";
+      $html .= $s.'				<br />'."\n";
       $html .= $map;
-      $html .= $s.'			<div class="clearfix"></div>'."\n";
+      $html .= $s.'				<div class="clearfix"></div>'."\n";
+      $html .= $s.'				<br />'."\n";
+      $html .= $s.'			</div> <!-- end #sidecol -->'."\n";
       $html .= $commentlist;
       $html .= HTML:: body_footer();
 
@@ -163,13 +169,21 @@ class HTML {
    public function sidecol($list) {
       $s = '				';
 
+      $html  = $s.'<div id="sidecol">'."\n";
+      $html .= HTML::create_toplist($list);
+      $html .= $s.'</div><!-- end #sidecol -->'."\n";
+
+      return $html;
+   }
+
+   public function toplist($list, $category_name=FALSE) {
       if (strlen(CATEGORY_PARENT_TITLE) > 1) $category = ' in "'.CATEGORY_PARENT_TITLE.'"';
       else if (strlen(CATEGORY_TITLE) > 1) $category = ' in "'.CATEGORY_TITLE.'"';
+      else if ($category_name !== FALSE && strlen($category_name) > 1) $category = ' in "'.$category_name.'"';
       else $category = '';
 
-      $s = '				';
-      $html  = $s.'<div id="sidecol">'."\n";
-      $html .= $s.'	<div class="sidebox" id="popincategory">'."\n";
+      $s = '						';
+      $html  = $s.'	<div class="sidebox" id="popincategory">'."\n";
       $html .= $s.'		<h2>Popular '.$category.'</h2>'."\n";
       $html .= $s.'		<div class="minievents">'."\n";
 
@@ -184,7 +198,6 @@ class HTML {
 
       $html .= $s.'		</div>'."\n";
       $html .= $s.'	</div><!-- end #popincategory -->'."\n";
-      $html .= $s.'</div><!-- end #sidecol -->'."\n";
 
       return $html;
    }
@@ -405,7 +418,7 @@ class HTML {
       $html .= $s.'	<br />'."\n";
       $html .= $s.'	<br />'."\n";
       $html .= $commentform;
-      $html .= $s.'</div>'."\n";
+      $html .= $s.'</div> <!-- end #comment_container -->'."\n";
 
       return $html;
    }
@@ -456,11 +469,11 @@ class HTML {
 	 $categories .= '</a>';
       }
 
-      $s = '						';
+      $s = '							';
       $html  = $s.'<div id="event_details">'."\n";
-      $html .= $s.'	<h3 class="subtitle" id="time">'.$time.'</h3>';
-      $html .= $s.'	<h3 class="subtitle" id="address">'.$address.'</h3>';
-      $html .= $s.'	<h3 class="subtitle" id="citystatezip">'.$city.', '.$state.' '.$zip.'</h3><br />';
+      $html .= $s.'	<h3 class="subtitle" id="time">'.$time.'</h3>'."\n";
+      $html .= $s.'	<h3 class="subtitle" id="address">'.$address.'</h3>'."\n";
+      $html .= $s.'	<h3 class="subtitle" id="citystatezip">'.$city.', '.$state.' '.$zip.'</h3><br />'."\n";
       $html .= $likebox;
       $html .= $s.'	<span id="description">'.$description.'</span><br />'."\n";
       $html .= $s.'	<br />'."\n";

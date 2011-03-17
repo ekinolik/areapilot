@@ -12,6 +12,7 @@ if (($top_events = $venue->get_top()) === FALSE) return FALSE;
 if ($venue->get_categories() === FALSE) 
    return FALSE;
 $venue->events[0]['category'] = $venue->category;
+$top_event = $venue->get_top($venue->category[0]['id']);
 
 $comment = new Chat($db_class, $error_class);
 $comment->event_id = $venue->event_id;

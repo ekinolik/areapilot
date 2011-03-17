@@ -251,14 +251,24 @@ class Event extends Location {
       return TRUE;
    }
 
-   public function get_top() {
+   public function get_top($category=FALSE) {
+      /* We allow category to be passed in in case CATEGORY constants could
+       * not be set.  This happens on the event page because there was no
+       * category in the URL.
+       * We may also want to get a top list of categories from a category we
+       * currently aren't in */
+
       if ($this->sanity_check() === FALSE) return FALSE;
 
       $rating_query = $this->create_rating_query();
 
       //$date_clause = $this->create_date_clause(CURRENT_TIME, CURRENT_TIME + 86400);
       $date_clause = $this->create_date_clause($this->start_time, $this->end_time);
-      $category_clause = $this->create_category_clause(CATEGORY_ID);
+
+      if ($category === FALSE || verify_int($category) === FALSE)
+	 $category_clause = $this->create_category_clause(CATEGORY_ID);
+      else
+	 $category_clause = $this->create_category_clause($category);
 
       $sql = 'SELECT e."id", u."username", e."time", e."title", e."uri_title", ed."description",
 	        c."name" as city, a."name" as area, r."rating", cat."title" as category
