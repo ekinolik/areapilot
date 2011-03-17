@@ -530,9 +530,9 @@ class HTML {
       if (DATE_GIVEN === FALSE) {
 	 $date = '';
       } else if (DATE_START !== DATE_END) {
-	 $date = 'date-'.DATE_START.'-'.DATE_END.'/';
+	 $date = urlencode('date-'.DATE_START.'-'.DATE_END).'/';
       } else {
-	 $date = 'date-'.DATE_START.'/';
+	 $date = urlencode('date-'.DATE_START).'/';
       }
 
       $mid_page_h = ceil(MAX_PAGES / 2);
@@ -561,17 +561,17 @@ class HTML {
 
       $html  = $s.'<div class="pagination">'."\n";
       $html .= $s.'	<ul class="clearfix">'."\n";
-      if (PAGE !== 1) $html .= $s.'		<li><a href="'.ROOT_URL.$cat.urlencode($date).'page'.urlencode(PAGE-1).'">&laquo; prev</a></li>'."\n";
+      if (PAGE !== 1) $html .= $s.'		<li><a href="'.ROOT_URL.$cat.$date.'page'.urlencode(PAGE-1).'">&laquo; prev</a></li>'."\n";
 
       for ($i = $start; $i <= $end; ++$i) {
 	 if ($i == PAGE)
 	    $html .= $s.'		<li><span class="current">'.$i.'</span></li>'."\n";
 	 else
-	    $html.= $s.'		<li><a href="'.ROOT_URL.$cat.urlencode($date).'page'.urlencode($i).'">'.$i.'</a></li>'."\n";
+	    $html.= $s.'		<li><a href="'.ROOT_URL.$cat.$date.'page'.urlencode($i).'">'.$i.'</a></li>'."\n";
       }
 
       if (PAGE < $total) 
-	 $html .= $s.'		<li><a href="'.ROOT_URL.$cat.urlencode($date).'page'.urlencode(PAGE + 1).'">next &raquo;</a></li>'."\n";
+	 $html .= $s.'		<li><a href="'.ROOT_URL.$cat.$date.'page'.urlencode(PAGE + 1).'">next &raquo;</a></li>'."\n";
 
       $html .= $s.'	</ul>'."\n";
       $html .= $s.'</div>'."\n";
