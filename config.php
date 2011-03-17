@@ -1,17 +1,11 @@
 <?php
 
-define('PRODUCTION', TRUE);
+define('CONFIG', 1);
+if ( ! defined('CONFIG_SETTINGS'))	require('config_settings.php');
 
-define('PROTOCOL', 'http://');
-define('SPROTOCOL', 'https://');
-define('DOMAIN', 'www.areapilot.com');
-define('IMG_DOMAIN', 'images.areapilot.com');
-define('COOKIE_DOMAIN', '.areapilot.com');
 define('ROOT_URL', PROTOCOL.DOMAIN.'/');
 define('SROOT_URL', SPROTOCOL.DOMAIN.'/');
 define('IMG_URL', PROTOCOL.IMG_DOMAIN.'/');
-define('ROOT_DIR', '/var/www/html/areapilot.com/');
-define('IMG_DIR', '/var/www/html/images.areapilot.com/');
 define('LIB_DIR', ROOT_DIR.'lib/');
 define('UPLOAD_IMAGE_DIR', ROOT_DIR.'uploaded_images/');
 define('UPLOAD_IMAGE_URL', ROOT_URL.'uploaded_images/');
@@ -21,18 +15,6 @@ define('UPLOAD_FORM_DIR', ROOT_DIR.'forms/');
 define('UPLOAD_FORM_URL', ROOT_URL.'forms/');
 $CURRENT_DIR = ROOT_DIR;
 
-define('MAIL_RELAY', 'mail.direnetworks.com');
-define('MAIL_HOSTNAME', 'areapilot.com');
-define('CONTACT_EMAIL', 'eric@direnetworks.com');
-define('CONTACT_NAME', 'eric');
-
-define('SESS_RAND', 'RQwB=(Sy03');
-
-define('DB_HOST', 'direpgsql.direnetworks.com');
-define('DB_NAME', 'areapilot');
-define('DB_USER', 'areapilot');
-define('DB_PASS', 'o^uA]_e9&f-`**r,~;/%zof1Yv6B{a$6');
-define('DB_TYPE', 'pgsql');
 define('SESS_DB_HOST', DB_HOST);
 define('SESS_DB_NAME', DB_NAME);
 define('SESS_DB_USER', DB_USER);
@@ -67,8 +49,6 @@ define('MAX_PAGES', 5);
 define('GC_MAXLIFETIME', 14);
 /* Probability of a page running the garbage collection ( 1 out of N ) */
 define('GC_PROBABILITY', 100);
-
-define('ERROR_DEBUG', 0);
 
 $TITLE = 'Area Pilot';
 $JS = array('tp/jquery-1.4.2.min.js', 'tp/blockUI.js', 'tp/jquery.cookie.js', 'tp/rounded.js', 'ap_basics.js');
