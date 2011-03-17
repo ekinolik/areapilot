@@ -170,7 +170,7 @@ class HTML {
       $s = '				';
 
       $html  = $s.'<div id="sidecol">'."\n";
-      $html .= HTML::create_toplist($list);
+      $html .= HTML::toplist($list);
       $html .= $s.'</div><!-- end #sidecol -->'."\n";
 
       return $html;
