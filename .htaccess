@@ -2,6 +2,10 @@ php_flag display_errors on
 
 RewriteEngine on
 
+#ignore git
+RewriteCond %{REQUEST_URI} /.git
+RewriteRule ^.*$ http://www.areapilot.com [L]
+
 #Location
 RewriteCond %{HTTP_HOST} !^www.areapilot.com$ [NC]
 RewriteCond %{HTTP_HOST} ^(www.)?([a-z0-9-]+).areapilot.com$ [NC]
