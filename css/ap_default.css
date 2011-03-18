@@ -296,7 +296,7 @@ ul#loggedin li a:hover {
 	width: 940px !important;
 }
 
-#maincol h2#title {
+#maincol h2.title {
 	border-bottom: 1px solid #91b0b3;
 	font-size: 1.8em;
 	margin: 1.1em 2em 0 0.8em;
@@ -865,6 +865,10 @@ form.fullform input#time.textfield {
 form.fullform select#category.textfield,
 form.fullform input#venuephone.textfield {
 	width: 15em !important;
+}
+
+input.input_error {
+	background-color: salmon !important;
 }
 
 .defaultvalue {

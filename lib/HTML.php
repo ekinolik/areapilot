@@ -98,7 +98,7 @@ class HTML {
       $html  = $s.'<div id="inner" class="clearfix">'."\n";
       $html .= $s.'	<div id="maincol" class="onlycol">'."\n";
       $html .= $s.'		<div id="posts">'."\n";
-      $html .= $s.'			<h2 id="title">'.$title.'</h2>'."\n";
+      $html .= $s.'			<h2 class="title">'.$title.'</h2>'."\n";
 
       return $html;
    }
