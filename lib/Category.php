@@ -184,17 +184,17 @@ class Category extends Event {
 	 $category_title = &$this->category_title;
       }
 
+      $category_title = trim($category_title);
+      if (strlen($category_title) < 1) {
+	 return FALSE;
+      }
+
       if ($db_class === FALSE) {
 	 if ($this->sanity_check() === FALSE) return FALSE;
 	 $category_table = &$this->category_table;
 	 $db_class = &$this->dbc;
       } else {
 	 $category_table = 'category';
-      }
-
-      $category_title = trim($category_title);
-      if (strlen($category_title) < 1) {
-	 return FALSE;
       }
 
       $category_title = strtolower(str_replace('_', ' ', $category_title));
