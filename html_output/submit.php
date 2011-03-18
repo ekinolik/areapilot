@@ -16,7 +16,7 @@ for ($i = 0, $iz = count($category->category); $i < $iz; ++$i) {
    $cat_opts .= '</optgroup>'."\n";
 }
 
-$header = HTML::body_header('Submit an Event');
+$header = HTML::body_header('Post an Event');
 $footer = HTML::body_footer();
 $form = HTML::submit_form($cat_opts, $error_class);
 

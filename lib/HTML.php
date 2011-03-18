@@ -751,7 +751,7 @@ class HTML {
       $s = '			';
       if ($logged_in === TRUE) {
 	 $status  = $s.'<ul id="loggedin">'."\n";
-	 $status .= $s.'	<li id="btn-submit"><a href="/submit">Submit</a></li>'."\n";
+	 $status .= $s.'	<li id="btn-submit"><a href="/post_event">Post Event</a></li>'."\n";
 	 $status .= $s.'	<li id="btn-profile"><a href="/profile">Profile</a></li>'."\n";
 	 $status .= $s.'	<li id="btn-logout"><a href="/logout">Logout</a></li>'."\n";
 	 $status .= $s.'</ul>';
