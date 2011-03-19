@@ -14,6 +14,7 @@ class Event extends Location {
 
    public $event_id;
    public $title;
+   public $uri_title;
    public $date;
    public $time;
    public $timestamp;
@@ -155,8 +156,8 @@ class Event extends Location {
 
    protected function create_uri_title() {
       $date = date("mdy", $this->timestamp);
-      $safe_title = strtolower(str_replace(' ', '_', trim($this->title)));
-      $safe_title = preg_replace("/[^A-Za-z0-9_]/i", '', $safe_title);
+      $safe_title = preg_replace("/[^a-z0-9i ]/i", '', strtolower(trim($this->title)));
+      $safe_title = preg_replace("/_+/", '_', $safe_title);
 
       $this->uri_title = $date.'/'.$safe_title;
 
@@ -678,10 +679,12 @@ class Event extends Location {
    }
 
    private function verify_uri_title() {
-      /* URI must be at least 7 + MIN_TITLE_LEN characters long, 
+      /* URI must be at least 7 + MIN_TITLE_LEN characters long,
+       * and no more than 7 + MAX_URI_TITLE_LEN
        * 6 for the date, 1 for the slash */
 
-      if (strlen(trim($this->uri_title)) < (7 + MIN_TITLE_LEN)) {
+      $t_len = strlen(trim($this->uri_title));
+      if ($t_len < (7 + MIN_TITLE_LEN) || $t_len > (7 + MAX_URI_TITLE_LEN)) {
 	 $this->ec->create_error(27, 'Invalid url title', $this->ecp);
 	 return FALSE;
       }
