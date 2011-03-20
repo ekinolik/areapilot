@@ -27,7 +27,7 @@ class HTML {
 
       $event_url = 'http://'.$_SERVER['HTTP_HOST'].'/'.$event['uri_title'];
       $fb_like = HTML::FB_like($event_url);
-      $tweet   = HTML::Tweet($event_url, $event['title'], $event['venue'], $event['time']);
+      $tweet   = HTML::Tweet($event_url, $event['title'], '', $event['time']);
 
       $html  = $s.'<div class="entry clearfix" id="entry_'.$count.'">'."\n";
       $html .= HTML::likebox($event);
