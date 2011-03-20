@@ -131,7 +131,7 @@ jQuery(function($) {
 
 	    return true;
       }
-	    
+
       function submitComment(queryString) {
 	    $.ajax({
                type: "POST",

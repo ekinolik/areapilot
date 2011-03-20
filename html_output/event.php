@@ -1,6 +1,8 @@
 <?php
 
 $top_list = HTML::toplist($top_event, $venue->events[0]['category']['0']['title']);
+$fb_like = HTML::FB_like('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+
 
 $eventdetails = HTML::eventdetails($venue->events[0]);
 $venuedetails = '';

@@ -944,3 +944,9 @@ span.errormsg {
 div#profile_details a#change_password {
 	font-size: 14px;
 }
+
+div.likes {
+	width: 16px;
+	line-height: 16px;
+	height: 16px;
+}
