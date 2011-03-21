@@ -25,9 +25,8 @@ class HTML {
       else if ($attendance === '1') $attendance .= ' Person Attending';
       else                          $attendance =  ' 0 People Attending';
 
-      $event_url = 'http://'.$_SERVER['HTTP_HOST'].'/'.$event['uri_title'];
-      $fb_like = HTML::FB_like($event_url);
-      $tweet   = HTML::Tweet($event_url, $event['title'], '', $event['time']);
+      $fb_like = HTML::FB_like('/'.$event['uri_title'], $event);
+      $tweet   = HTML::Tweet('/'.$event['uri_title'], $event);
 
       $html  = $s.'<div class="entry clearfix" id="entry_'.$count.'">'."\n";
       $html .= HTML::likebox($event);
@@ -467,10 +466,9 @@ class HTML {
    }
 
    public function eventdetails($event) {
-      $event_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
       $likebox = HTML::likebox($event);
-      $fb_like = HTML::FB_like($event_url);
-      $tweet   = HTML::Tweet($event_url, $event['title']);
+      $fb_like = HTML::FB_like($_SERVER['REQUEST_URI'], $event);
+      $tweet   = HTML::Tweet($_SERVER['REQUEST_URI'], $event);
 
       $id          = htmlspecialchars($event['id']);
       //$title       = htmlspecialchars($event['title']);
@@ -631,7 +629,8 @@ class HTML {
       $html .= $s.'		<ol>'."\n";
       $html .= $s.'			<li><label for="login-username">Username :</label><input type="text" id="login-username" name="username" class="textfield" /></li>'."\n";
       $html .= $s.'			<li><label for="login-password">Password :</label><input type="password" id="login-password" name="password" class="textfield" />'."\n";
-      $html .= $s.'				<span class="formnote"><a href="#">forgot password?</a></span>'."\n";
+      $html .= $s.'				<span class="formnote fml"><a href="/signup" id="link-signup">Create an Account</a></span>'."\n";
+      $html .= $s.'				<span class="formnote fmr"><a href="#">forgot password?</a></span>'."\n";
       $html .= $s.'			</li>'."\n";
       $html .= $s.'		</ol>'."\n";
       $html .= $s.'		<button type="submit" class="btn-submit ib" id="btn-loginsubmit">Log In</button>'."\n";
@@ -833,24 +832,24 @@ class HTML {
       return $html;
    }
 
-   public function FB_like($url, $ref = FALSE) {
+   public function FB_like($uri, $event) {
       $s = '					';
-      $url = urlencode($url);
-
-      if (verify_int($ref) === TRUE) $ref = $ref;
-      else $ref = 'unknown';
+      $url = urlencode('http://'.$_SERVER['HTTP_HOST'].$uri);
+      $ref = urlencode($event['id']);
 
       $html = $s.'<iframe src="http://www.facebook.com/plugins/like.php?href='.$url.'&amp;layout=button_count&amp;show_faces=false&amp;width=90&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=21&amp;ref='.$ref.'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true" id="iframe_'.$ref.'"></iframe>'."\n";
       return $html;
    }
 
-   public function Tweet($url, $title, $venue, $time) {
+   public function Tweet($uri, $event) {
       $s = '					';
-      $url = urlencode($url);
-      $date = $time;
-      $text = urlencode($title.' on '.$date.' @ '.$venue);
+      $url = urlencode('http://'.$_SERVER['HTTP_HOST'].$uri);
+      $date = $event['time'];
+      $venue = ''; //FIXME
+      $text = urlencode($event['title'].' on '.$date.' @ '.$venue);
+      $id = htmlspecialchars($event['id']);
       
-      $html  = $s.'<a href="http://twitter.com/share?url='.$url.'&text='.$text.'&count=horizontal" target="_blank" title="Share this event on Twitter">'."\n";
+      $html  = $s.'<a id="tweet_'.$id.'" class="tweetit" href="http://twitter.com/share?url='.$url.'&text='.$text.'&count=horizontal" target="_blank" title="Share this event on Twitter">'."\n";
       $html .= '<img src="/images/icons/tweetn.png" alt="Tweet" />'."\n";
       $html .= '</a>'."\n";
 

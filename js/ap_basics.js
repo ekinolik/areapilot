@@ -30,6 +30,13 @@ $(document).ready(function() {
 	 return false;
       });
 
+      $("a.tweetit").bind('click', function() {
+	 var tag_id = $(this).attr('id');
+	 var id = tag_id.substr(tag_id.indexOf('_')+1);
+	 vote(id, 'l', 'e');
+	 return true;
+      });
+
       $("a.attending").click(function() {
 	    return false;
       });
@@ -70,7 +77,7 @@ $(document).ready(function() {
 	    return false;
       });
 
-      $("#btn-signup").click(function() {
+      $("#btn-signup, span.formnote a#link-signup").click(function() {
 	    blockThis("body", $("#modal-signup"),nothing(), false, true);
 	    return false;
       });
@@ -123,11 +130,11 @@ function vote(id, a, t) {
 }
 
 function readRating(json) {
-   if (json.error.length > 0) {
+   if (json.error.error.length > 0) {
       if (json.error.errno == 4) {
 	 blockThis("body",$("#modal-login"),nothing(),false,true);
       } else {
-	 alert(json.error);
+	 alert(json.error.error);
       }
       return false;
    }
