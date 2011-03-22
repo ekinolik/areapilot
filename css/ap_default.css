@@ -86,26 +86,6 @@ light orange/brow (visited links) :
 /* ! Fonts   */
 /* ========= */
 
-@font-face {
-	font-family: 'DejaWebRegular';
-	src: url('/fonts/DejaWeb.eot');
-	src: local('DejaWeb Regular'), local('DejaWeb'), url('/fonts/DejaWeb.ttf') format('truetype');
-}
-
-@font-face {
-	font-family: 'DejaWebBold';
-	font-weight: bold;
-	src: url('/fonts/DejaWeb-Bold.eot');
-	src: local('DejaWeb Bold'), local('DejaWeb-Bold'), url('/fonts/DejaWeb-Bold.ttf') format('truetype');
-}
-
-@font-face {
-	font-family: 'DejaWebItalic';
-	font-style: italic, oblique;
-	src: url('/fonts/DejaWeb-Italic.eot');
-	src: local('DejaWeb Italic'), local('DejaWeb-Italic'), url('/fonts/DejaWeb-Italic.ttf') format('truetype');
-}
-
 
 /* ========== */
 /* ! Basics   */
@@ -114,7 +94,7 @@ light orange/brow (visited links) :
 body {
 	background: #3b2a1c;
 	color: #3f4445;
-	font-family: "DejaWebRegular", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 62.5%;
 	text-align: center;
 }
@@ -183,7 +163,7 @@ ul#categories li {
 ul#categories li a {
 	color: #3f4445;
 	display: block;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 1.3em;
 	font-weight: bold;
 	margin: 0.4em 0.2em;
@@ -256,7 +236,7 @@ ul#loggedout li a,
 ul#loggedin li a {
 	color: #91b0b3;
 	display: block;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 1.4em;
 	font-weight: bold;
 	height: 1.6em;
@@ -373,13 +353,13 @@ ul#timeoptions li a.current,
 ul#timeoptions li a.current:hover {
 	background: #91b0b3;
 	color: #fff;
-	font-family: "DejaWebBold";
 	font-weight: bold;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 }
 
 #timeline p a#rangeselect {
 	color: #de702b;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 1.2em;
 	font-weight: bold;
 	padding: 1em 1.2em;
@@ -423,7 +403,7 @@ ul#suboptions li a.current,
 ul#suboptions li a.current:hover {
 	background: #91b0b3;
 	color: #fff;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-weight: bold;
 }
 
@@ -471,7 +451,7 @@ div.entry h3 {
 }
 
 div.entry h3 a {
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 1.8em;
 	font-weight: bold;
 	text-decoration: none;
@@ -538,7 +518,7 @@ div#event_details div.likebox {
 
 div.likebox span.numlikes {
 	display: block;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 24px;
 	font-weight: bold;
 	padding: 5px 0 0 0;
@@ -594,7 +574,7 @@ div.minievents a.minievent span.numlikes {
 	color: #3f4445;
 	display: block;
 	float: left;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 16px;
 	font-weight: bold;
 	height: 35px;
@@ -632,7 +612,7 @@ div.pagination ul li {
 div.pagination ul li a {
 	border: 1px solid #de702b;
 	display: block;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 1.2em;
 	font-weight: bold;
 	padding: 0.4em 0.5em;
@@ -647,7 +627,7 @@ div.pagination ul li a:hover {
 div.pagination ul li span {
 	color: #333;
 	display: block;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 1.2em;
 	font-weight: bold;
 	padding: 0.4em 0.5em;
@@ -658,7 +638,7 @@ div.pagination ul li span.current {
 	border: 1px solid #de702b;
 	color: #fff;
 	display: block;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 1.2em;
 	font-weight: bold;
 	padding: 0.4em 0.5em;
@@ -694,7 +674,7 @@ form.modalform ol li input.textfield {
 	background: #91b0b3;
 	border: 1px inset #bbb;
 	color: #3b2a1c;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 1.6em;
 	font-weight: bold;
 	display: block;
@@ -784,7 +764,7 @@ form.fullform ol li input.textfield {
 	background: #91b0b3;
 	border: 1px inset #bbb;
 	color: #3b2a1c;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 1.6em;
 	font-weight: bold;
 	padding: 0.2em;
@@ -807,7 +787,7 @@ form.fullform ol li textarea.textfield {
 	background: #91b0b3;
 	border: 1px inset #bbb;
 	color: #3b2a1c;
-	font-family: "DejaWebBold";
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
 	font-size: 1.6em;
 	font-weight: bold;
 	padding: 0.2em;
