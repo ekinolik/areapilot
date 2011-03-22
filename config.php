@@ -5,6 +5,10 @@ if ( ! defined('CONFIG_SETTINGS'))	require('config_settings.php');
 
 define('ROOT_URL', PROTOCOL.DOMAIN.'/');
 define('SROOT_URL', SPROTOCOL.DOMAIN.'/');
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') 
+   define('CURRENT_ROOT', SROOT_URL);
+else
+   define('CURRENT_ROOT', ROOT_URL);
 define('IMG_URL', PROTOCOL.IMG_DOMAIN.'/');
 define('LIB_DIR', ROOT_DIR.'lib/');
 define('UPLOAD_IMAGE_DIR', ROOT_DIR.'uploaded_images/');
@@ -53,7 +57,7 @@ define('GC_MAXLIFETIME', 14);
 define('GC_PROBABILITY', 100);
 
 $TITLE = 'Area Pilot';
-$JS = array('tp/jquery-1.5.1.min.js', 'tp/blockUI.js', 'tp/jquery.cookie.js', 'tp/rounded.js', 'ap_basics.js');
+$JS = array('https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js', 'tp/blockUI.js', 'tp/jquery.cookie.min.js', 'tp/rounded.js', 'ap_basics.js');
 $CSS = array('ap_default.css');
 
 /* Shouldn't modify below here */

@@ -7,6 +7,7 @@ DD_roundies.addRule("#categories ul.submenu a","0 0 0 0",true);
 DD_roundies.addRule("#timeline, #categories li.hasmenu a","8px 8px 0 0",true);
 DD_roundies.addRule("#inner","12px",true);
 DD_roundies.addRule(".likebox, a.minievent span.numlikes","8px",true);
+DD_roundies.addRule('div#signup input, div#signup textarea','5px',true);
 
 $(document).ready(function() {
 

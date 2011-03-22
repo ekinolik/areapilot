@@ -11,7 +11,6 @@ $OUTPUT = $CURRENT_DIR.'html_output/logout.php';
 define('NOLOCOK', 1);
 
 array_push($JS, '');
-//array_push($JS, 'basics.js');
 array_push($CSS, '');
 
 require($CURRENT_DIR.'code/init.php');
