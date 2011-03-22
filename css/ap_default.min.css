@@ -298,7 +298,7 @@ ul#suboptions li span,ul#suboptions li a {
 font-size:1em;
 display:block;
 text-decoration:none;
-padding:.6em 1.2em;
+padding:.6em 1em;
 }
 
 ul#suboptions li a.current,ul#suboptions li a.current:hover {
