@@ -5,6 +5,7 @@ if (LOGGED_IN === TRUE) {
    exit;
 }
 
+$success = FALSE;
 if (isset($_POST['username']) && isset($_POST['email'])) {
    if ( ! defined('ACCOUNTCLASS')) require(LIB_DIR.'Account.php');
 
@@ -17,9 +18,8 @@ if (isset($_POST['username']) && isset($_POST['email'])) {
       return FALSE;
    }
 
-   header('Location: '.$_SERVER['HTTP_REFERER']);
+   $success = TRUE;
     
-   $blah;
 }
 
 ?>
