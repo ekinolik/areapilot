@@ -9,7 +9,7 @@ function verify_int($number) {
 }
 
 function verify_email($address) {
-      return ereg("[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]+", $address);
+      return ereg("[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+", $address);
 }
 
 function verify_date($date, $format='mm/dd/yyyy') {

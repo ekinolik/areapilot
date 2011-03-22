@@ -39,6 +39,7 @@ define('MAX_DESCRIPTION_LEN', 5000);
 define('MIN_VENUENAME_LEN', 1);
 define('MAX_VENUENAME_LEN', 100);
 define('MAX_COMMENT_LEN', 2000);
+define('RESET_PASSWORD_CODE_LEN', 16);
 
 define('EVENT_LIST_COUNT', 5);
 define('EVENT_TOP_LIST_COUNT', 5);

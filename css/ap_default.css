@@ -948,6 +948,12 @@ span.errormsg {
 	margin-left: 20px;
 }
 
+span.message {
+	font-weight: bold;
+	font-size: 14px;
+	margin-left: 20px;
+}
+
 div#profile_details a#change_password {
 	font-size: 14px;
 }

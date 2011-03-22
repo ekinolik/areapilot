@@ -37,7 +37,7 @@ class HTML {
       $html .= $s.'	<div class="description"><p>'.$description.'</p>'."\n";
       $html .= $s.'	</div><!-- end .description -->'."\n";
       $html .= $s.'	<ul class="actionlinks">'."\n";
-      $html .= $s.'		<li><a href="vote.php?'.urlencode('id='.$id.'&t=e&a=a&r=h').'" name="'.$id.'" class="attendthis">Attend This Event</a></li>'."\n";
+      $html .= $s.'		<li><a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a=a&r=h').'" name="'.$id.'" class="attendthis">Attend This Event</a></li>'."\n";
       $html .= $s.'		<li><a href="#" class="attending">'.$attendance.'</a></li>'."\n";
       $html .= $s.'		<li><a href="'.ROOT_URL.$uri_title.'" class="commentsnum"><!--___COMMENT_COUNT___--></a></li>'."\n";
       $html .= $s.'	</ul>'."\n";
@@ -77,7 +77,7 @@ class HTML {
       $html  = $s.'<div class="likebox">'."\n";
       $html .= $s.'	<span class="numlikes" id="numlikes_'.$id.'">'.$rating.'</span>'."\n";
       $html .= $s.'	<span class="xtra">'.$liketext.'</span>'."\n";
-      $html .= $s.'	<a href="vote.php?'.urlencode('id='.$id.'&t=e&a=l&r=h').'" name="'.$id.'" class="likeit">I Like It</a>'."\n";
+      $html .= $s.'	<a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a=l&r=h').'" name="'.$id.'" class="likeit">I Like It</a>'."\n";
       $html .= $s.'</div><!-- end .likebox -->'."\n";
 
       return $html;
@@ -118,9 +118,10 @@ class HTML {
       return $html;
    }
 
-   public function profile($details) {
+   public function profile($details, $error) {
       $s = '   ';
       $html  = $s.'<div id="profilewrapper">'."\n";
+      $html .= $s.'	<span class="errormsg">'.$error.'</span><br />'."\n";
       $html .= $details;
       $html .= $s.'</div>'."\n";
 
@@ -139,7 +140,7 @@ class HTML {
       $html .= $s.'	<h3 class="subtitle" id="email">'.$email.'</h3>'."\n";
       $html .= $s.'	<h3 class="subtitle" id="first">'.$first.' '.$last.'</h3>'."\n";
       $html .= $s.'     <br />'."\n";
-      $html .= $s.'	<h3 class="subtitle"><a href="/change_password" id="change_my_password">Change My Password</a></h3>'."\n";
+      $html .= $s.'	<h3 class="subtitle"><a href="'.SROOT_URL.'/change_password" id="change_my_password">Change My Password</a></h3>'."\n";
       $html .= $s.'     <br />'."\n";
       $html .= $s.'</div>'."\n";
 
@@ -199,7 +200,7 @@ class HTML {
 	 $rating = htmlspecialchars($list[$i]['rating']);
 	 $title  = htmlspecialchars($list[$i]['title']);
 
-	 $html .= $s.'			<a href="'.$url.'" class="minievent clearfix"><span class="numlikes">'.$rating.'</span><span class="title">'.$title.'</span></a>'."\n";
+	 $html .= $s.'			<a href="'.ROOT_URL.$url.'" class="minievent clearfix"><span class="numlikes">'.$rating.'</span><span class="title">'.$title.'</span></a>'."\n";
       }
 
       $html .= $s.'		</div>'."\n";
@@ -332,10 +333,10 @@ class HTML {
 
       $html  = $s.'<div id="timeline" class="clearfix">'."\n";
       $html .= $s.'	<ul id="timeoptions">'."\n";
-      $html .= $s.'		<li><a href="/'.$category.'date-'.$first_dow.'-'.$last_dow.'" class="'.$tw.'" id="time-thisweek">This Week</a></li>'."\n";
-      $html .= $s.'		<li><a href="/'.$category.'date-'.$first_donw.'-'.$last_donw.'" class="'.$nw.'" id="time-nextweek">Next Week</a></li>'."\n";
-      $html .= $s.'		<li><a href="/'.$category.'date-'.$first_dom.'-'.$last_dom.'" class="'.$tm.'" id="time-thismonth">This Month</a></li>'."\n";
-      $html .= $s.'		<li><a href="/'.$category.'date-'.$first_donm.'-'.$last_donm.'" class="'.$nm.'" id="time-nextmonth">Next Month</a></li>'."\n";
+      $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$first_dow.'-'.$last_dow.'" class="'.$tw.'" id="time-thisweek">This Week</a></li>'."\n";
+      $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$first_donw.'-'.$last_donw.'" class="'.$nw.'" id="time-nextweek">Next Week</a></li>'."\n";
+      $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$first_dom.'-'.$last_dom.'" class="'.$tm.'" id="time-thismonth">This Month</a></li>'."\n";
+      $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$first_donm.'-'.$last_donm.'" class="'.$nm.'" id="time-nextmonth">Next Month</a></li>'."\n";
       $html .= $s.'	</ul>'."\n";
       $html .= HTML::sub_datemenu(DATE_START, $category);
       $html .= $s.'	<form method="post" action="#">'."\n";
@@ -367,7 +368,7 @@ class HTML {
       $ts = urlencode(get_timestamp_from_datestamp($first_dow));
 
       $html  = $s.'<ul id="suboptions">'."\n";
-      $html .= $s.'	<li><a href="/'.$category.'date-'.$first_dow.'-'.$last_dow.'" class="current">Any Day</a></li>'."\n";
+      $html .= $s.'	<li><a href="'.ROOT_URL.$category.'date-'.$first_dow.'-'.$last_dow.'" class="current">Any Day</a></li>'."\n";
       $html .= $s.'	<li><a href="#" class="" id="prevdates">&lt;&lt;</a></li>'."\n";
 
 
@@ -397,7 +398,7 @@ class HTML {
 	 if ($current_date > $date) {
 	    $html .= $s.'<li class="selectdate '.$class.'"><span>'.$dow.'&nbsp;&nbsp;('.$month_day.')</span></li>'."\n";
 	 } else {
-	    $html .= $s.'<li class="selectdate '.$class.'"><a href="'.$category.'/date-'.urlencode($date).'">'.$dow.'&nbsp;&nbsp;('.$month_day.')</a></li>'."\n";
+	    $html .= $s.'<li class="selectdate '.$class.'"><a href="'.ROOT_URL.$category.'/date-'.urlencode($date).'">'.$dow.'&nbsp;&nbsp;('.$month_day.')</a></li>'."\n";
 	 }
       }
 
@@ -489,7 +490,7 @@ class HTML {
 	 if (strlen($categories) > 0) $categories .= ', ';
 
 	 $ct = HTML::url_friendly_category($event['category'][$i]['title']);
-	 $categories .= '<a href="/'.strtolower(str_replace(' ', '_', $ct)).'">';
+	 $categories .= '<a href="'.ROOT_URL.strtolower(str_replace(' ', '_', $ct)).'">';
 	 $categories .= $ct;
 	 $categories .= '</a>';
       }
@@ -622,6 +623,26 @@ class HTML {
       return $html;
    }
 
+   public function modal_forgot_password() {
+      $s = '			';
+      $html  = $s.'<div id="modal-forgot-password" class="modal">'."\n";
+      $html .= $s.'	<h2 class="title">Reset My Password</h2>'."\n";
+      $html .= HTML::forgot_password_form('modalform', '');
+      $html .= $s.'</div><!-- end #modal-forgot-password -->'."\n";
+
+      return $html;
+   }
+
+   public function modal_message() {
+      $s = '			';
+      $html  = $s.'<div id="modal-message" class="modal">'."\n";
+      $html .= $s.'	<h2 class="title">Important Message</h2>'."\n";
+      $html .= $s.'	<span class="modal-message"></span>'."\n";
+      $html .= $s.'</div><!-- end #modal-message -->'."\n";
+
+      return $html;
+   }
+
    public function login_form($class='', $error='') {
       $s = '				';
       $html = $s.'<form class="modalform" id="login-form" action="'.SROOT_URL.'login" method="post">'."\n";
@@ -629,8 +650,8 @@ class HTML {
       $html .= $s.'		<ol>'."\n";
       $html .= $s.'			<li><label for="login-username">Username :</label><input type="text" id="login-username" name="username" class="textfield" /></li>'."\n";
       $html .= $s.'			<li><label for="login-password">Password :</label><input type="password" id="login-password" name="password" class="textfield" />'."\n";
-      $html .= $s.'				<span class="formnote fml"><a href="/signup" id="link-signup">Create an Account</a></span>'."\n";
-      $html .= $s.'				<span class="formnote fmr"><a href="#">forgot password?</a></span>'."\n";
+      $html .= $s.'				<span class="formnote fml"><a href="'.SROOT_URL.'signup" id="link-signup">Create an Account</a></span>'."\n";
+      $html .= $s.'				<span class="formnote fmr"><a href="'.SROOT_URL.'forgot_password" id="forgot_my_password">forgot password?</a></span>'."\n";
       $html .= $s.'			</li>'."\n";
       $html .= $s.'		</ol>'."\n";
       $html .= $s.'		<button type="submit" class="btn-submit ib" id="btn-loginsubmit">Log In</button>'."\n";
@@ -670,6 +691,23 @@ class HTML {
       $html .= $s.'			<li><label for="change_password2">Confirm Password :</label><input type="password" id="change_password2" name="password2" class="textfield" /></li>'."\n";
       $html .= $s.'		</ol>'."\n";
       $html .= $s.'		<button type="submit" class="btn-submit ib" id="btn_submit_password">Change Password</button>'."\n";
+      $html .= $s.'	</fieldset>'."\n";
+      $html .= $s.'</form>'."\n";
+
+      return $html;
+   }
+
+   public function forgot_password_form($class='', $error='') {
+      $s = '				';
+      $html = $s.'<form class="modalform" id="forgot-password-form" action="'.SROOT_URL.'forgot_password" method="post">'."\n";
+      $html .= $s.'	<fieldset>'."\n";
+      $html .= $s.'		<span class="errormsg">'.$error.'</span><br />'."\n";
+      $html .= $s.'		<ol>'."\n";
+      $html .= $s.'			<li><label for="login-username">Username :</label><input type="text" id="forgot-username" name="username" class="textfield" /></li>'."\n";
+      $html .= $s.'			<li><label for="login-email">Email :</label><input type="text" id="forgot-email" name="email" class="textfield" />'."\n";
+      $html .= $s.'			</li>'."\n";
+      $html .= $s.'		</ol>'."\n";
+      $html .= $s.'		<button type="submit" class="btn-submit ib" id="btn-resetpassword">Reset Password</button>'."\n";
       $html .= $s.'	</fieldset>'."\n";
       $html .= $s.'</form>'."\n";
 
@@ -765,14 +803,14 @@ class HTML {
       $s = '			';
       if ($logged_in === TRUE) {
 	 $status  = $s.'<ul id="loggedin">'."\n";
-	 $status .= $s.'	<li id="btn-submit"><a href="/post_event">Post Event</a></li>'."\n";
-	 $status .= $s.'	<li id="btn-profile"><a href="/profile">Profile</a></li>'."\n";
-	 $status .= $s.'	<li id="btn-logout"><a href="/logout">Logout</a></li>'."\n";
+	 $status .= $s.'	<li id="btn-submit"><a href="'.ROOT_URL.'post_event">Post Event</a></li>'."\n";
+	 $status .= $s.'	<li id="btn-profile"><a href="'.SROOT_URL.'profile">Profile</a></li>'."\n";
+	 $status .= $s.'	<li id="btn-logout"><a href="'.ROOT_URL.'logout">Logout</a></li>'."\n";
 	 $status .= $s.'</ul>';
       } else {
 	 $status  = $s.'<ul id="loggedout">'."\n";
-	 $status .= $s.'	<li id="btn-login"><a href="/login">Login</a></li>'."\n";
-	 $status .= $s.'	<li id="btn-signup"><a href="/signup">Sign up</a></li>'."\n";
+	 $status .= $s.'	<li id="btn-login"><a href="'.SROOT_URL.'login">Login</a></li>'."\n";
+	 $status .= $s.'	<li id="btn-signup"><a href="'.SROOT_URL.'signup">Sign up</a></li>'."\n";
 	 $status .= $s.'</ul>';
       }
 
@@ -790,7 +828,7 @@ class HTML {
       $html .= '<body>'."\n";
       $html .= '	<div id="container">'."\n";
       $html .= '		<div id="header">'."\n";
-      $html .= '			<h1 id="logo"><a href="/">AreaPilot.com : Find popular events in your area</a></h1>'."\n";
+      $html .= '			<h1 id="logo"><a href="'.ROOT_URL.'">AreaPilot.com : Find popular events in your area</a></h1>'."\n";
       $html .= $menu."\n";
       $html .= $status."\n";
       $html .= '		</div><!-- end #header -->'."\n";
@@ -852,6 +890,16 @@ class HTML {
       $html  = $s.'<a id="tweet_'.$id.'" class="tweetit" href="http://twitter.com/share?url='.$url.'&text='.$text.'&count=horizontal" target="_blank" title="Share this event on Twitter">'."\n";
       $html .= '<img src="/images/icons/tweetn.png" alt="Tweet" />'."\n";
       $html .= '</a>'."\n";
+
+      return $html;
+   }
+
+   public function message($msg) {
+      $html  = '<span class="message">'."\n";
+      $html .= '	<br />'."\n";
+      $html .= '	'.$msg."\n";
+      $html .= '	<br />'."\n";
+      $html .= '</span>'."\n";
 
       return $html;
    }

@@ -5,26 +5,21 @@ if (LOGGED_IN === TRUE) {
    exit;
 }
 
-if (isset($_POST['username'])) {
+if (isset($_POST['username']) && isset($_POST['email'])) {
    if ( ! defined('ACCOUNTCLASS')) require(LIB_DIR.'Account.php');
 
    $account = new Account($db_class, $error_class);
 
    $account->username = $_POST['username'];
-   $account->password = $_POST['password'];
+   $account->email    = $_POST['email'];
 
-   if ($account->login() === FALSE) {
+   if ($account->forgot_password() == FALSE) {
       return FALSE;
    }
 
-   $session->user_id = $account->id;
-   if ($session->create() === FALSE) {
-      return FALSE;
-   }
-
-   setcookie('rp', '', time()+(60*60*24*GC_MAXLIFETIME), '/', COOKIE_DOMAIN);
    header('Location: '.$_SERVER['HTTP_REFERER']);
-   exit;
+    
+   $blah;
 }
 
 ?>

@@ -73,6 +73,8 @@ $(document).ready(function() {
       });
 
       $("#btn-login a").click(function() {
+	    $("#login-username").val('');
+	    $("#login-password").val('');
 	    blockThis("body",$("#modal-login"),nothing(),false,true);
 	    return false;
       });
@@ -83,12 +85,17 @@ $(document).ready(function() {
       });
 
       $("a#change_my_password").click(function() {
-	    if ($("input#change_password").val() != $("input#change_password2").val()) {
-	    	alert('Passwords do not match');
-		return false;
-	    }
+	    $("input#change_password").val('');
+	    $("input#change_password2").val('');
 	    blockThis("body", $("#modal-signup"),nothing(), false, true);
 	    blockThis("body", $("#modal-change-password"),nothing(), false, true);
+	    return false;
+      });
+
+      $("a#forgot_my_password").click(function() {
+	    $("#forgot-username").val('');
+	    $("#forgot-email").val('');
+	    blockThis("body",$("#modal-forgot-password"),nothing(),false,true);
 	    return false;
       });
 	

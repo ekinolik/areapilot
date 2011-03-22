@@ -23,7 +23,9 @@ if (isset($_POST['password'])) {
       return FALSE;
    }
 
+   setcookie('rp', '', time()+(60*60*24*GC_MAXLIFETIME), '/', COOKIE_DOMAIN);
    header('Location: '.$_SERVER['HTTP_REFERER']);
+   exit;
 }
 
 ?>

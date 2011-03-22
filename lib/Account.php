@@ -2,6 +2,7 @@
 
 define('ACCOUNTCLASS', 1);
 if ( ! defined('MISC'))		include(LIB_DIR.'Misc.php');
+if ( ! defined('mailfunctions'))	include(LIB_DIR.'mailfunctions.php');
 
 class Account {
 
@@ -76,7 +77,7 @@ class Account {
 
       $this->username = $this->dbc->escape($this->username);
 
-      $sql = 'SELECT "id", "email", "username"
+      $sql = 'SELECT "id", "email", "username", "reset_code"
 	 FROM "'.$this->user_table.'"
 	 WHERE lower("username") = lower(\''.$this->username.'\') 
 	 AND "password" = '.$this->enc_password.' AND "active" = \'t\' 
@@ -91,6 +92,15 @@ class Account {
       $this->id       = $this->dbc->rows['id'];
       $this->username = $this->dbc->rows['username'];
       $this->email    = $this->dbc->rows['email'];
+
+      if (strlen($this->dbc->rows['reset_code']) > 0) {
+	 $update['reset_code'] = 0;
+	 $where['id'] = $this->dbc->escape($this->id);
+	 if ($this->dbc->update_db($this->user_table, $update, $where) === FALSE) {
+	    $this->ec->create_error(24, 'Unable to remove reset code', $this->ecp);
+	    return FALSE;
+	 }
+      }
 
       return TRUE;
    }
@@ -274,6 +284,144 @@ class Account {
       return TRUE;
    }
 
+   private function add_reset_code($code) {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      if (strlen($code) != 32) {
+	 $this->ec->create_error(18, 'Invalid reset code length', $this->ecp);
+	 return FALSE;
+      }
+
+      if (verify_int($this->id) === FALSE) {
+	 $this->ec->create_error(19, 'Invalid user id', $this->ecp);
+	 return FALSE;
+      }
+
+      $update['reset_code'] = $this->dbc->escape($code);
+      $where['id'] = $this->dbc->escape($this->id);
+      if ($this->dbc->update_db($this->user_table, $update, $where)  === FALSE) {
+	 $this->ec->create_error(20, 'Could not update table with reset code', $this->ecp);
+	 return FALSE;
+      }
+
+      return TRUE;
+   }
+
+   public function forgot_password() {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      if ($this->get_by_username_email() === FALSE) {
+	 $this->ec->create_error(16, 'Invalid username or email', $this->ecp);
+	 return FALSE;
+      }
+
+      $pass_code = md5(create_random_string(RESET_PASSWORD_CODE_LEN, 48, 122));
+
+      if ($this->add_reset_code($pass_code) === FALSE) {
+	 return FALSE;
+      }
+
+      $subject = 'AreaPilot - Password reset confirmation';
+      $headers = create_smtp_headers($subject, 'noreply@areapilot.com', $this->username, 'AreaPilot', $this->first_name.' '.$this->last_name);
+      $data = 'Someone is trying to reset the password to your account on AreaPilot.com'."\n";
+      $data .= 'If this was you, please follow the link below (or cut and paste it into your web browser) to continue resetting your password'."\n";
+      $data .= SROOT_URL.'reset_password/'.$pass_code."\n\n\n";
+      $data .= 'Email: '.$this->email."\n";
+      $data .= 'IP: '.$_SERVER['REMOTE_ADDR']."\n";
+
+      $data = $headers . $data;
+
+      if (send_smtp_relay(MAIL_HOSTNAME, 'noreply@areapilot.com', $this->email, $data, MAIL_RELAY) === FALSE) {
+	 $this->ec->create_error(17, 'There was an error sending an email to your address.  Please try again.', $this->ecp);
+	 return FALSE;
+      }
+
+      return TRUE;
+   }
+
+   public function reset_password($reset_code) {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      if ($this->get_by_reset_code($reset_code) === FALSE) {
+	 return FALSE;
+      }
+
+      $this->password = md5(create_random_string(RESET_PASSWORD_CODE_LEN, 48, 122));
+      $this->encrypt_password($this->username);
+
+      $update['password']   = '__SQL_FUNCTION__'.$this->enc_password;
+      $update['reset_code'] = 0;
+      $where['id'] = $this->dbc->escape($this->id);
+      if ($this->dbc->update_db($this->user_table, $update, $where) === FALSE) {
+	 $this->ec->create_error(23, 'Could not update password', $this->ecp);
+	 return FALSE;
+      }
+
+      return TRUE;
+   }
+
+   private function get_by_reset_code($reset_code) {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      if (strlen($reset_code) != 32) {
+	 $this->ec->create_error(21, 'Invalid reset code', $this->ec->ecp);
+	 return FALSE;
+      }
+
+      $reset_code = $this->dbc->escape($reset_code);
+      $sql = 'SELECT u."id", u."username", u."email", 
+	        p."first_name", p."last_name", p."area_id"
+	       FROM "'.$this->user_table.'" as u
+	       LEFT OUTER JOIN "'.$this->profile_table.'" as p 
+		ON (u."id" = p."user_id")
+	       WHERE u."reset_code" = \''.$reset_code.'\' 
+	       LIMIT 1';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_row();
+      if ($this->dbc->row_count < 1) {
+	 $this->ec->create_error(22, 'Invalid reset code', $this->ecp);
+	 return FALSE;
+      }
+
+      $this->populate_self_from_array($this->dbc->rows);
+      return TRUE;
+   }
+
+   public function get_by_username_email() {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      if ($this->verify_username() === FALSE) return FALSE;
+      if ($this->verify_email() === FALSE) return FALSE;
+
+      $username = $this->dbc->escape($this->username);
+      $email    = $this->dbc->escape($this->email);
+      $sql = 'SELECT u."id", u."username", u."email", 
+	        p."first_name", p."last_name", p."area_id"
+	       FROM "'.$this->user_table.'" as u
+	       LEFT OUTER JOIN "'.$this->profile_table.'" as p 
+		ON (u."id" = p."user_id")
+	       WHERE u."username" = \''.$username.'\' 
+	        AND u."email" = \''.$email.'\'
+	       LIMIT 1';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_row();
+      if ($this->dbc->row_count < 1) return FALSE;
+
+      $this->populate_self_from_array($this->dbc->rows);
+      return TRUE;
+   }
+
+   private function populate_self_from_array($arr) {
+      if ( ! is_array($arr)) return FALSE;
+
+      if (isset($arr['id']))         $this->id = $arr['id'];
+      if (isset($arr['username']))   $this->username = $arr['username'];
+      if (isset($arr['email']))      $this->email = $arr['email'];
+      if (isset($arr['first_name'])) $this->first_name = $arr['first_name'];
+      if (isset($arr['last_name']))  $this->first_name = $arr['last_name'];
+
+      return TRUE;
+   }
 
 
    /* 
