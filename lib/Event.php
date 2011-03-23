@@ -223,7 +223,8 @@ class Event extends Location {
 
       $offset = $this->create_offset(PAGE);
       $sql = 'SELECT e."id", u."username", e."time", e."title", e."uri_title", ed."description",
-	       c."name" as city, a."name" as area, r."rating", cat."title" as category
+	        c."name" as city, a."name" as area, r."rating", cat."title" as category,
+	        v."name" as venue
 	       '.$this->event_query().'
 	       ORDER BY r."rating" DESC, ed."date_added" DESC
 	       LIMIT '.EVENT_LIST_COUNT.' 

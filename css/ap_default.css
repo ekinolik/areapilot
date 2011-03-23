@@ -463,6 +463,14 @@ div.entry h3 a:hover {
 
 div.entry h4 {
 	font-size: 1.1em;
+	line-height: 1em;
+}
+
+div.entry h4.metatop {
+	margin-top: 0.4em;
+}
+
+div.entry h4.metabottom {
 	margin-bottom: 0.8em;
 }
 

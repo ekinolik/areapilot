@@ -17,6 +17,11 @@ class HTML {
       $city        = htmlspecialchars(ucwords($event['city']));
       $username    = htmlspecialchars($event['username']);
       $attendance  = htmlspecialchars($event['attendance']);
+      $category    = htmlspecialchars($event['category']);
+      $venue       = htmlspecialchars($event['venue']);
+
+      $cat_uri     = HTML::url_friendly_category($event['category']);
+      $cat_link = ROOT_URL.$cat_uri;
 
       //$time = sprintf("%011s", $time);
       //$time = strtolower(substr($time, 0, strrpos($time, ':')).substr($time, 8));
@@ -33,7 +38,8 @@ class HTML {
       $html .= $s.'	<h3><a href="'.ROOT_URL.$uri_title.'">'.$title.'</a></h3>'."\n";
       $html .= $s.$tweet."\n";
       $html .= $s.$fb_like."\n";
-      $html .= $s.'	<h4><span>Location : </span>'.$city.' &nbsp;<span>&#124;</span>&nbsp; <span>Time : </span>'.$time.'</h4>'."\n";
+      $html .= $s.'	<h4 class="metatop">'.$venue.' <span>&#124;</span> <span>Posted in : </span>&lt;<a href="'.$cat_link.'">'.$category.'</a>&gt;</h4>'."\n";
+      $html .= $s.'	<h4 class="metabottom"><span>Location : </span>'.$city.' &nbsp;<span>&#124;</span>&nbsp; <span>Time : </span>'.$time.'</h4>'."\n";
       $html .= $s.'	<div class="description"><p>'.$description.'</p>'."\n";
       $html .= $s.'	</div><!-- end .description -->'."\n";
       $html .= $s.'	<ul class="actionlinks">'."\n";
@@ -478,7 +484,7 @@ class HTML {
       $area        = htmlspecialchars($event['area']);
       $username    = htmlspecialchars($event['username']);
 
-      $event_name  = htmlspecialchars($event['venuename']);
+      $venue       = htmlspecialchars($event['venuename']);
       $address     = htmlspecialchars($event['address']);
       $city        = htmlspecialchars(ucwords($event['city']));
       $state       = htmlspecialchars(strtoupper($event['state']));
@@ -498,6 +504,7 @@ class HTML {
       $s = '							';
       $html  = $s.'<div id="event_details">'."\n";
       $html .= $s.'	<h3 class="subtitle" id="time">'.$time.'</h3>'."\n";
+      $html .= $s.'	<h3 class="subtitle" id="venue">'.$venue.'</h3>'."\n";
       $html .= $s.'	<h3 class="subtitle" id="address">'.$address.'</h3>'."\n";
       $html .= $s.'	<h3 class="subtitle" id="citystatezip">'.$city.', '.$state.' '.$zip.'</h3><br />'."\n";
       $html .= $likebox;
