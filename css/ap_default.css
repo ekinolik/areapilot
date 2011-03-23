@@ -457,6 +457,10 @@ div.entry h3 a {
 	text-decoration: none;
 }
 
+div.entry h3 a.entrycat {
+	font-size: 1.2em !important;
+}
+
 div.entry h3 a:hover {
 	text-decoration: underline;
 }
@@ -476,6 +480,10 @@ div.entry h4.metabottom {
 
 div.entry h4 span {
 	font-weight: normal;
+}
+
+div.entry h4 a {
+	text-decoration: none;
 }
 
 div.entry ul.actionlinks {
