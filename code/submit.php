@@ -1,4 +1,8 @@
 <?php
+if (LOGGED_IN !== TRUE) {
+   header('Location: '.ROOT_URL);
+   exit;
+}
 
 if ( ! defined('VENUECLASS')) require(LIB_DIR.'Venue.php');
 if ( ! defined('CATEGORYCLASS')) require(LIB_DIR.'Category.php');
@@ -6,6 +10,10 @@ if ( ! defined('CATEGORYCLASS')) require(LIB_DIR.'Category.php');
 $category = new Category($db_class, $error_class);
 $category->get_all_categories(TRUE);
 $category->create_md();
+
+if (is_spam_bot($_POST, array('ns'=>'', 'ns2'=>'ap'))) {
+   return FALSE;
+}
 
 if ( isset($_POST['title'])) {
    $venue = new Venue($db_class, $error_class);

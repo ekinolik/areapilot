@@ -5,6 +5,10 @@ if (LOGGED_IN !== TRUE) {
    exit;
 }
 
+if (is_spam_bot($_POST, array('ns'=>'', 'ns2'=>'ap'))) {
+   return FALSE;
+}
+
 if (isset($_POST['password'])) {
    if ( ! defined('ACCOUNTCLASS')) require(LIB_DIR.'Account.php');
 

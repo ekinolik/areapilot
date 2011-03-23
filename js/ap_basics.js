@@ -10,6 +10,7 @@ DD_roundies.addRule(".likebox, a.minievent span.numlikes","8px",true);
 DD_roundies.addRule('div#signup input, div#signup textarea','5px',true);
 
 $(document).ready(function() {
+      $("input.nospam").addClass('nobots');
 
       // For main category dropdown menus
       $("#categories li.hasmenu a").bind("mouseover", function() {

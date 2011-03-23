@@ -951,3 +951,7 @@ div.likes {
 	line-height: 16px;
 	height: 16px;
 }
+
+.nobots {
+	display: none;
+}

@@ -326,4 +326,11 @@ function pbkdf2($pass, $salt, $c, $key_length) {
    return substr($key, 0, $key_length);
 }
 
+function is_spam_bot(&$req, $array) {
+   while ((list($key, $value) = each($array)) !== FALSE) {
+      if ( ! isset($req[$key]) || $req[$key] !== $value) return TRUE;
+   }
+
+   return FALSE;
+}
 ?>

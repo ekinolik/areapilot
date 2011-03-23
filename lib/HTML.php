@@ -653,6 +653,8 @@ class HTML {
    public function login_form($class='', $error='') {
       $s = '				';
       $html = $s.'<form class="modalform" id="login-form" action="'.SROOT_URL.'login" method="post">'."\n";
+      $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
+      $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<ol>'."\n";
       $html .= $s.'			<li><label for="login-username">Username :</label><input type="text" id="login-username" name="username" class="textfield" /></li>'."\n";
@@ -671,6 +673,8 @@ class HTML {
    public function signup_form($class='', $error='') {
       $s = '				';
       $html  = $s.'<form class="'.$class.'" id="signup-form" action="/signup" method="post">'."\n";
+      $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
+      $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span>'."\n";
       $html .= $s.'		<ol>'."\n";
@@ -691,6 +695,8 @@ class HTML {
    public function change_password_form($class='', $error='') {
       $s = '				';
       $html  = $s.'<form class="'.$class.'" id="change_password_form" action="'.SROOT_URL.'change_password" method="post">'."\n";
+      $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
+      $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span>'."\n";
       $html .= $s.'		<ol>'."\n";
@@ -707,6 +713,8 @@ class HTML {
    public function forgot_password_form($class='', $error='') {
       $s = '				';
       $html = $s.'<form class="modalform" id="forgot-password-form" action="'.SROOT_URL.'forgot_password" method="post">'."\n";
+      $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
+      $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span><br />'."\n";
       $html .= $s.'		<ol>'."\n";
@@ -724,7 +732,9 @@ class HTML {
    public function submit_form($cat_opts, $error='') {
       $s = '   ';
       $html  = $s.'<div id="submitform" class="submitform">'."\n";
-      $html .= $s.'   <form method="post" action="submit.php" class="fullform">'."\n";
+      $html .= $s.'   <form method="post" action="/post_event" class="fullform">'."\n";
+      $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
+      $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'   <fieldset>'."\n";
       $html .= $s.'      <span class="errormsg">'.$error.'</span><br />'."\n";
       $html .= $s.'      <ol>'."\n";
