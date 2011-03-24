@@ -173,6 +173,7 @@ class HTML {
       $html .= $s.'				<div class="clearfix"></div>'."\n";
       $html .= $s.'				<br />'."\n";
       $html .= $s.'			</div> <!-- end #sidecol -->'."\n";
+      $html .= $s.'			<div class="clearfix"></div>'."\n";
       $html .= $commentlist;
       $html .= HTML:: body_footer();
 
