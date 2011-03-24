@@ -776,6 +776,10 @@ div.submitform form.fullform ol li label {
 	width: 150px;
 }
 
+div.submitform form.fullform ol li span.formmsg {
+	margin-left: 130px;
+}
+
 form.fullform ol li input.textfield {
 	background: #91b0b3;
 	border: 1px inset #bbb;
