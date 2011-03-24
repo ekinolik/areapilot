@@ -310,7 +310,7 @@ class HTML {
 
       if (strlen($category) > 1) $category .= '/';
 
-      if (DATE_START >= $first_dow && DATE_START <= $last_dow) {
+      if (DATE_START >= $current_dow && DATE_START <= $last_dow && DATE_END == $last_dow) {
 	 $tw = 'current';
 	 $nw = '';
 	 $tm = '';
@@ -320,7 +320,7 @@ class HTML {
 	 $nw = 'current';
 	 $tm = '';
 	 $nm = '';
-      } else if (DATE_START >= $first_dom && DATE_START <= $last_dom) {
+      } else if (DATE_START >= $current_dow && DATE_START <= $last_dom && DATE_END == $last_dom) {
 	 $tw = '';
 	 $nw = '';
 	 $tm = 'current';
@@ -339,9 +339,9 @@ class HTML {
 
       $html  = $s.'<div id="timeline" class="clearfix">'."\n";
       $html .= $s.'	<ul id="timeoptions">'."\n";
-      $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$first_dow.'-'.$last_dow.'" class="'.$tw.'" id="time-thisweek">This Week</a></li>'."\n";
+      $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$current_dow.'-'.$last_dow.'" class="'.$tw.'" id="time-thisweek">This Week</a></li>'."\n";
       $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$first_donw.'-'.$last_donw.'" class="'.$nw.'" id="time-nextweek">Next Week</a></li>'."\n";
-      $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$first_dom.'-'.$last_dom.'" class="'.$tm.'" id="time-thismonth">This Month</a></li>'."\n";
+      $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$current_dow.'-'.$last_dom.'" class="'.$tm.'" id="time-thismonth">This Month</a></li>'."\n";
       $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$first_donm.'-'.$last_donm.'" class="'.$nm.'" id="time-nextmonth">Next Month</a></li>'."\n";
       $html .= $s.'	</ul>'."\n";
       $html .= HTML::sub_datemenu(DATE_START, $category);
@@ -373,8 +373,16 @@ class HTML {
       $last_dow = urlencode(get_last_day_of_week($ts));
       $ts = urlencode(get_timestamp_from_datestamp($first_dow));
 
+      if ($first_dow < $current_date)
+	 $first_dow = $current_date;
+
+      if ($first_dow == DATE_START && $last_dow == DATE_END)
+	 $class = 'current';
+      else
+	 $class = '';
+
       $html  = $s.'<ul id="suboptions">'."\n";
-      $html .= $s.'	<li><a href="'.ROOT_URL.$category.'date-'.$first_dow.'-'.$last_dow.'" class="current">Any Day</a></li>'."\n";
+      $html .= $s.'	<li><a href="'.ROOT_URL.$category.'date-'.$first_dow.'-'.$last_dow.'" class="'.$class.'">Any Day</a></li>'."\n";
       $html .= $s.'	<li><a href="#" class="" id="prevdates">&lt;&lt;</a></li>'."\n";
 
 
@@ -400,11 +408,20 @@ class HTML {
       $s = '					';
       $html = '';
       while ((list($date, $dow) = each($week)) !== FALSE) {
+
+	 /* Highlight the selected date */
+	 if ($date == DATE_START && $date == DATE_END) 
+	    $aclass = ' current ';
+	 else
+	    $aclass = ' ';
+
 	 $month_day = substr($date, 4, 2).'/'.substr($date, 6, 2);
 	 if ($current_date > $date) {
+	    /* If this date is in the past, no link */
 	    $html .= $s.'<li class="selectdate '.$class.'"><span>'.$dow.'&nbsp;&nbsp;('.$month_day.')</span></li>'."\n";
 	 } else {
-	    $html .= $s.'<li class="selectdate '.$class.'"><a href="'.ROOT_URL.$category.'/date-'.urlencode($date).'">'.$dow.'&nbsp;&nbsp;('.$month_day.')</a></li>'."\n";
+	    /* If this date is not in the past, link */
+	    $html .= $s.'<li class="selectdate '.$class.'"><a href="'.ROOT_URL.$category.'date-'.urlencode($date).'" class="'.$aclass.'">'.$dow.'&nbsp;&nbsp;('.$month_day.')</a></li>'."\n";
 	 }
       }
 
