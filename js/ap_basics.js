@@ -170,7 +170,7 @@ function blockThis(element, text, callback, roundit, overlayClose) {
 		css: {
 			width: 'auto',
 			position: 'fixed',
-			'top': '5px'
+			'top': '25px'
 		},
 		overlayCSS: {
 			background:'#333',
@@ -182,11 +182,17 @@ function blockThis(element, text, callback, roundit, overlayClose) {
 		}
 	});
 	if(overlayClose == true) {
+		 $(".modal a#close_button").click(function() {
+			$.unblockUI;
+			$(element).unblock();
+			return false;
+	        });
 		$('.blockOverlay').click(function() {
 			$.unblockUI;
 			$(element).unblock();
 		});
 	}
+
 };
 
 // generic unBlockUI function

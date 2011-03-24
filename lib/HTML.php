@@ -620,6 +620,7 @@ class HTML {
    public function modal_login() {
       $s = '			';
       $html  = $s.'<div id="modal-login" class="modal">'."\n";
+      $html .= $s.'	<a href="#" id="close_button"><img src="/images/icons/ico-close-button.png" alt="asdf" class="close_modal" /></a>'."\n";
       $html .= $s.'	<h2 class="title">Log in</h2>'."\n";
       $html .= HTML::login_form('modalform', '');
       $html .= $s.'</div><!-- end #modal-login -->'."\n";
@@ -630,6 +631,7 @@ class HTML {
    public function modal_signup() {
       $s = '			';
       $html  = $s.'<div id="modal-signup" class="modal">'."\n";
+      $html .= $s.'	<a href="#" id="close_button"><img src="/images/icons/ico-close-button.png" alt="asdf" class="close_modal" /></a>'."\n";
       $html .= $s.'	<h2 class="title">Create a New Account</h2>'."\n";
       $html .= HTML::signup_form('modalform', '');
       $html .= $s.'</div><!-- end #modal-signup -->'."\n";
@@ -640,6 +642,7 @@ class HTML {
    public function modal_change_password() {
       $s = '			';
       $html  = $s.'<div id="modal-change-password" class="modal">'."\n";
+      $html .= $s.'	<a href="#" id="close_button"><img src="/images/icons/ico-close-button.png" alt="asdf" class="close_modal" /></a>'."\n";
       $html .= $s.'	<h2 class="title">Change My Password</h2>'."\n";
       $html .= HTML::change_password_form('modalform', '');
       $html .= $s.'</div><!-- end #modal-change-password -->'."\n";
@@ -650,6 +653,7 @@ class HTML {
    public function modal_forgot_password() {
       $s = '			';
       $html  = $s.'<div id="modal-forgot-password" class="modal">'."\n";
+      $html .= $s.'	<a href="#" id="close_button"><img src="/images/icons/ico-close-button.png" alt="asdf" class="close_modal" /></a>'."\n";
       $html .= $s.'	<h2 class="title">Reset My Password</h2>'."\n";
       $html .= HTML::forgot_password_form('modalform', '');
       $html .= $s.'</div><!-- end #modal-forgot-password -->'."\n";
@@ -660,6 +664,7 @@ class HTML {
    public function modal_message() {
       $s = '			';
       $html  = $s.'<div id="modal-message" class="modal">'."\n";
+      $html .= $s.'	<a href="#" id="close_button"><img src="/images/icons/ico-close-button.png" alt="asdf" class="close_modal" /></a>'."\n";
       $html .= $s.'	<h2 class="title">Important Message</h2>'."\n";
       $html .= $s.'	<span class="modal-message"></span>'."\n";
       $html .= $s.'</div><!-- end #modal-message -->'."\n";
