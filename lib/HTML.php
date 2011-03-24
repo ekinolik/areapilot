@@ -471,7 +471,7 @@ class HTML {
 
    public function commentform($error, $id) {
       $s = '							';
-      $html  = $s.'<form method="post" action="/comment.php" class="comment parent">'."\n";
+      $html  = $s.'<form method="post" action="'.SROOT_URL.'comment.php" class="comment parent">'."\n";
       $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span><br />'."\n";
       $html .= $s.'		<ol>'."\n";
@@ -688,19 +688,33 @@ class HTML {
    }
 
    public function signup_form($class='', $error='') {
+      /* Set the default values in case the users first try was an error */
+      if (isset($_POST['username'])) $username = $_POST['username'];
+      else $username = '';
+      if (isset($_POST['password'])) $password = $_POST['password'];
+      else $password = '';
+      if (isset($_POST['password2'])) $password2 = $_POST['password2'];
+      else $password2 = '';
+      if (isset($_POST['email'])) $email = $_POST['email'];
+      else $email = '';
+      if (isset($_POST['first_name'])) $first_name = $_POST['first_name'];
+      else $first_name = '';
+      if (isset($_POST['last_name'])) $last_name = $_POST['last_name'];
+      else $last_name = '';
+
       $s = '				';
-      $html  = $s.'<form class="'.$class.'" id="signup-form" action="/signup" method="post">'."\n";
+      $html  = $s.'<form class="'.$class.'" id="signup-form" action="'.SROOT_URL.'signup" method="post">'."\n";
       $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
       $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'	<fieldset>'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span>'."\n";
       $html .= $s.'		<ol>'."\n";
-      $html .= $s.'			<li><label for="signup-username">Desired Username :</label><input type="text" id="signup-username" name="username" class="textfield" /></li>'."\n";
-      $html .= $s.'			<li><label for="signup-email">Email address :</label><input type="text" id="signup-email" name="email" class="textfield" /></li>'."\n";
-      $html .= $s.'			<li><label for="signup-password">Password :</label><input type="password" id="signup-password" name="password" class="textfield" /></li>'."\n";
-      $html .= $s.'			<li><label for="signup-password2">Confirm Password :</label><input type="password" id="signup-password2" name="password2" class="textfield" /></li>'."\n";
-      $html .= $s.'			<li><label for="signup-first-name">First Name :</label><input type="text" id="signup-first-name" name="first_name" class="textfield" /></li>'."\n";
-      $html .= $s.'			<li><label for="signup-last-name">Last Name :</label><input type="text" id="signup-last-name" name="last_name" class="textfield" /></li>'."\n";
+      $html .= $s.'			<li><label for="signup-username">Desired Username :</label><input type="text" id="signup-username" name="username" class="textfield" value="'.$username.'"/></li>'."\n";
+      $html .= $s.'			<li><label for="signup-email">Email address :</label><input type="text" id="signup-email" name="email" class="textfield" value="'.$email.'"/></li>'."\n";
+      $html .= $s.'			<li><label for="signup-password">Password :</label><input type="password" id="signup-password" name="password" class="textfield" value="'.$password.'"/></li>'."\n";
+      $html .= $s.'			<li><label for="signup-password2">Confirm Password :</label><input type="password" id="signup-password2" name="password2" class="textfield" value="'.$password2.'"/></li>'."\n";
+      $html .= $s.'			<li><label for="signup-first-name">First Name :</label><input type="text" id="signup-first-name" name="first_name" class="textfield" value="'.$first_name.'"/></li>'."\n";
+      $html .= $s.'			<li><label for="signup-last-name">Last Name :</label><input type="text" id="signup-last-name" name="last_name" class="textfield" value="'.$last_name.'"/></li>'."\n";
       $html .= $s.'		</ol>'."\n";
       $html .= $s.'		<button type="submit" class="btn-submit ib" id="btn-signupsubmit">Register</button>'."\n";
       $html .= $s.'	</fieldset>'."\n";
@@ -747,52 +761,90 @@ class HTML {
    }
 
    public function submit_form($cat_opts, $error='') {
+      /* Set defaults in case the users first try an error */
+      /* Fuck ternary operators (they dont fit either, i tried ;( ) */
+      if (isset($_POST['title'])) $title = $_POST['title']; 
+      else $title = '';
+      if (isset($_POST['date'])) $date = $_POST['date']; 
+      else $date = 'MM/DD/YYYY';
+      if (isset($_POST['time'])) $time = $_POST['time']; 
+      else $time = 'HH:MM';
+      if (isset($_POST['meridian'])) $meridian = $_POST['meridian']; 
+      else $meridian = '';
+      if (isset($_POST['address'])) $address = $_POST['address']; 
+      else $address = '';
+      if (isset($_POST['zip'])) $zip = $_POST['zip']; 
+      else $zip = '';
+      if (isset($_POST['url'])) $url = $_POST['url']; 
+      else $url = '';
+      if (isset($_POST['description'])) $description = $_POST['description']; 
+      else $description = '';
+      if (isset($_POST['category'])) $category = $_POST['category']; 
+      else $category = '';
+      if (isset($_POST['venue'])) $venue = $_POST['venue']; 
+      else $venue = '';
+      if (isset($_POST['venuephone'])) $venuephone = $_POST['venuephone']; 
+      else $venuephone = '';
+
+
+      /* Select the default category */
+      $cat_opts = str_replace('value="'.$category.'"', 'value="'.$category.'" selected', $cat_opts);
+
+      /* Select the default meridian */
+      if ($meridian === 'am') {
+	 $pm_sel = '';
+	 $am_sel = ' selected ';
+      } else {
+	 $pm_sel = ' selected ';
+	 $am_sel = '';
+      }
+      
       $s = '   ';
       $html  = $s.'<div id="submitform" class="submitform">'."\n";
-      $html .= $s.'   <form method="post" action="/post_event" class="fullform">'."\n";
+      $html .= $s.'   <form method="post" action="'.SROOT_URL.'post_event" class="fullform">'."\n";
       $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
       $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'   <fieldset>'."\n";
       $html .= $s.'      <span class="errormsg">'.$error.'</span><br />'."\n";
       $html .= $s.'      <ol>'."\n";
       $html .= $s.'         <li><label for="title">Title :</label>'."\n";
-      $html .= $s.'            <input type="text" name="title" id="title" class="textfield"/>'."\n";
+      $html .= $s.'            <input type="text" name="title" id="title" class="textfield" value="'.$title.'"/>'."\n";
       $html .= $s.'         </li>'."\n";
-      $html .= $s.'<!--'."\n";
-      $html .= $s.'         <li><label for="tags">Tags :</label>'."\n";
-      $html .= $s.'            <input type="text" name="tags" id="tags" class="textfield"/>'."\n";
-      $html .= $s.'         </li>'."\n";
-      $html .= $s.'-->'."\n";
+      //$html .= $s.'<!--'."\n";
+      //$html .= $s.'         <li><label for="tags">Tags :</label>'."\n";
+      //$html .= $s.'            <input type="text" name="tags" id="tags" class="textfield"/>'."\n";
+      //$html .= $s.'         </li>'."\n";
+      //$html .= $s.'-->'."\n";
       $html .= $s.'         <li><label for="date">Date :</label>'."\n";
-      $html .= $s.'            <input type="text" name="date" id="date" class="textfield defaultvalue" value="MM/DD/YYYY"/>'."\n";
+      $html .= $s.'            <input type="text" name="date" id="date" class="textfield defaultvalue" value="'.$date.'"/>'."\n";
       $html .= $s.'         </li>'."\n";
       $html .= $s.'         <li><label for="time">Time :</label>'."\n";
-      $html .= $s.'            <input type="text" name="time" id="time" class="textfield time defaultvalue" value="HH:MM"/>'."\n";
+      $html .= $s.'            <input type="text" name="time" id="time" class="textfield time defaultvalue" value="'.$time.'""/>'."\n";
       $html .= $s.'            <select name="meridian" id="meridian">'."\n";
-      $html .= $s.'               <option value="pm">PM</option>'."\n";
-      $html .= $s.'               <option value="am">AM</option>'."\n";
+      $html .= $s.'               <option value="pm" '.$pm_sel.'>PM</option>'."\n";
+      $html .= $s.'               <option value="am" '.$am_sel.'>AM</option>'."\n";
       $html .= $s.'            </select>'."\n";
       $html .= $s.'         </li>'."\n";
       $html .= $s.'         <li><label for="category">Category :</label>'."\n";
       $html .= $s.'            <select name="category" id="category" class="textfield">'.$cat_opts.'</select>'."\n";
       $html .= $s.'         </li>'."\n";
       $html .= $s.'         <li><label for="venue">Venue Name :</label>'."\n";
-      $html .= $s.'            <input type="text" name="venue" id="venue" class="textfield"/>'."\n";
+      $html .= $s.'            <input type="text" name="venue" id="venue" class="textfield" value="'.$venue.'"/>'."\n";
       $html .= $s.'         </li>'."\n";
       $html .= $s.'         <li><label for="address">Street Address :</label>'."\n";
-      $html .= $s.'            <input type="text" name="address" id="address" class="textfield" title="This is for the street address.  You do not need to include a city or state"/>'."\n";
+      $html .= $s.'            <input type="text" name="address" id="address" class="textfield" title="This is for the street address.  You do not need to include a city or state" value="'.$address.'"/>'."\n";
       $html .= $s.'         </li>'."\n";
       $html .= $s.'         <li><label for="zip">Zip :</label>'."\n";
-      $html .= $s.'            <input type="text" name="zip" id="zip" class="textfield"/>'."\n";
+      $html .= $s.'            <input type="text" name="zip" id="zip" class="textfield" value="'.$zip.'"/>'."\n";
       $html .= $s.'         </li>'."\n";
       $html .= $s.'         <li><label for="venue">Venue Phone :</label>'."\n";
-      $html .= $s.'            <input type="text" name="venuephone" id="venuephone" class="textfield"/>'."\n";
+      $html .= $s.'            <input type="text" name="venuephone" id="venuephone" class="textfield" value="'.$venuephone.'"/>'."\n";
       $html .= $s.'         </li>'."\n";
       $html .= $s.'         <li><label for="url">Link URL :</label>'."\n";
-      $html .= $s.'            <input type="text" name="url" id="url" class="textfield"/>'."\n";
+      $html .= $s.'            <input type="text" name="url" id="url" class="textfield" value="'.$url.'"/>'."\n";
       $html .= $s.'         </li>'."\n";
       $html .= $s.'         <li><label for="description">Description :</label>'."\n";
-      $html .= $s.'            <textarea name="description" id="description" rows="5" cols="20" class="textfield"></textarea>'."\n";
+      $html .= $s.'            <textarea name="description" id="description" rows="5" cols="20" class="textfield">'.$description.'</textarea>'."\n";
       $html .= $s.'         </li>'."\n";
       $html .= $s.'         <li class="submit_line">'."\n";
       $html .= $s.'            <button type="submit" class="submitter">Create</button>'."\n";
