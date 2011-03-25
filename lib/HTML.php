@@ -908,12 +908,23 @@ class HTML {
 	 $status .= $s.'</ul>';
       }
 
+      if (strlen(CATEGORY_TITLE) > 0) $cat = ','.CATEGORY_TITLE;
+      else $cat = '';
+      if (strlen(CATEGORY_PARENT_TITLE) > 0) $catp = ','.CATEGORY_PARENT_TITLE;
+      else $catp = '';
+      /* FIXME: Need to add area info */
+
+      $meta_d = 'AreaPilot is a social effort to find out what\'s happening in your local area and vote for the ones you like.  Be your own promoter and post events for others to attend.';
+      $meta_k = 'Post events,Search events,Find events,Whats happening,Promoter,Local,Advertise,Tonight,Something to do,Listings'.$cat.$catp;
+
       $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"'."\n";
       $html .= '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'."\n";
       $html .= ''."\n";
       $html .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">'."\n";
       $html .= '<head>'."\n";
       $html .= '	<meta http-equiv="content-type" content="text/html; charset=utf-8" />'."\n";
+      $html .= '	<meta name="description" content="'.$meta_d.'" />'."\n";
+      $html .= '	<meta name="keywords" content="'.$meta_k.'" />'."\n";
       $html .= '	<title>'.$title.'</title>'."\n";
       $html .= $csslinks."\n";
       $html .= $jslinks."\n";
