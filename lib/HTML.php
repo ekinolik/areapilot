@@ -35,18 +35,20 @@ class HTML {
 
       $html  = $s.'<div class="entry clearfix" id="entry_'.$count.'">'."\n";
       $html .= HTML::likebox($event);
-      $html .= $s.'	<h3><a href="'.ROOT_URL.$uri_title.'">'.$title.'</a></h3>'."\n";
+      $html .= $s.'	<div class="summary">'."\n";
+      $html .= $s.'		<h3><a href="'.ROOT_URL.$uri_title.'">'.$title.'</a></h3>'."\n";
       $html .= $s.$tweet."\n";
       $html .= $s.$fb_like."\n";
-      $html .= $s.'	<h4 class="metatop">'.$venue.' <span>&#124;</span> <span>Posted in : </span>&lt;<a href="'.$cat_link.'">'.$category.'</a>&gt;</h4>'."\n";
-      $html .= $s.'	<h4 class="metabottom"><span>Location : </span>'.$city.' &nbsp;<span>&#124;</span>&nbsp; <span>Time : </span>'.$time.'</h4>'."\n";
-      $html .= $s.'	<div class="description"><p>'.$description.'</p>'."\n";
-      $html .= $s.'	</div><!-- end .description -->'."\n";
-      $html .= $s.'	<ul class="actionlinks">'."\n";
-      $html .= $s.'		<li><a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a=a&r=h').'" name="'.$id.'" class="attendthis">Attend This Event</a></li>'."\n";
-      $html .= $s.'		<li><a href="#" class="attending">'.$attendance.'</a></li>'."\n";
-      $html .= $s.'		<li><a href="'.ROOT_URL.$uri_title.'" class="commentsnum"><!--___COMMENT_COUNT___--></a></li>'."\n";
-      $html .= $s.'	</ul>'."\n";
+      $html .= $s.'		<h4 class="metatop">'.$venue.' <span>&#124;</span> <span>Posted in : </span>&lt;<a href="'.$cat_link.'">'.$category.'</a>&gt;</h4>'."\n";
+      $html .= $s.'		<h4 class="metabottom"><span>Location : </span>'.$city.' &nbsp;<span>&#124;</span>&nbsp; <span>Time : </span>'.$time.'</h4>'."\n";
+      $html .= $s.'		<div class="description"><p>'.$description.'</p>'."\n";
+      $html .= $s.'		</div><!-- end .description -->'."\n";
+      $html .= $s.'		<ul class="actionlinks">'."\n";
+      $html .= $s.'			<li><a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a=a&r=h').'" name="'.$id.'" class="attendthis">Attend This Event</a></li>'."\n";
+      $html .= $s.'			<li><a href="#" class="attending">'.$attendance.'</a></li>'."\n";
+      $html .= $s.'			<li><a href="'.ROOT_URL.$uri_title.'" class="commentsnum"><!--___COMMENT_COUNT___--></a></li>'."\n";
+      $html .= $s.'		</ul>'."\n";
+      $html .= $s.'	</div>'."\n";
       $html .= $s.'</div><!-- end .entry -->'."\n";
 
       return $html;

@@ -448,7 +448,7 @@ div.entry div * {
 }
 
 div.entry div.description {
-	font-size: 1.2em;
+	font-size: 1.1em;
 	line-height: 1.3em;
 }
 
@@ -458,7 +458,7 @@ div.entry h3 {
 
 div.entry h3 a {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, "Liberation Sans", sans-serif;
-	font-size: 1.8em;
+	font-size: 1.4em;
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -498,7 +498,7 @@ div.entry ul.actionlinks {
 
 div.entry ul.actionlinks li {
 	float: left;
-	font-size: 1.2em;
+	font-size: 1.1em;
 	border-right: 1px solid #91b0b3;
 	padding: 0 0.8em;
 }
@@ -608,7 +608,7 @@ div.minievents a.minievent span.numlikes {
 }
 
 div.minievents a.minievent span.title {
-	font-size: 1.4em;
+	font-size: 1.3em;
 	line-height: 1.3em;
 }
 
