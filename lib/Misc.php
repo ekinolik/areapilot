@@ -168,7 +168,7 @@ function set_date_range($start_date, $end_date=FALSE) {
       define('TIME_END', mktime(0, 0, 0, $end_month, $end_day, $end_year) + 86399);
    } else {
       if (verify_int($start_date) && $start_date > 0) {
-	 define('DATE_END', date("Ymd", TIME_START + 86400));
+	 define('DATE_END', date("Ymd", TIME_START));
       } else {
 	 define('DATE_END', get_last_day_of_week(CURRENT_TIME));
       }
