@@ -168,11 +168,11 @@ function set_date_range($start_date, $end_date=FALSE) {
       define('TIME_END', mktime(0, 0, 0, $end_month, $end_day, $end_year) + 86399);
    } else {
       if (verify_int($start_date) && $start_date > 0) {
-	 define('DATE_END', date("Ymd", CURRENT_TIME));
+	 define('DATE_END', date("Ymd", TIME_START + 86400));
       } else {
 	 define('DATE_END', get_last_day_of_week(CURRENT_TIME));
       }
-      define('TIME_END', mktime(24, 59, 59, substr(DATE_END,4,2), substr(DATE_END,6,2), substr(DATE_END, 0, 4)));
+      define('TIME_END', mktime(23, 59, 59, substr(DATE_END,4,2), substr(DATE_END,6,2), substr(DATE_END, 0, 4)));
    }
 
    return TRUE;
