@@ -727,7 +727,6 @@ form.modalform button.btn-submit {
 	border: 2px solid #7b573a;
 	clear: both;
 	color: #fff;
-	display: block;
 	font-size: 1.6em;
 	margin: 1.3em auto 0.6em;
 	padding: 0.3em 1.1em;
@@ -747,6 +746,15 @@ form.modalform button.btn-submit:hover {
 form.modalform button.btn-submit:active {
 	background: #000;
 	border-color: #666;
+}
+
+form.modalform fieldset,
+form.fullform fieldset {
+	text-align: center;
+}
+
+div#submitform form.fullform fieldset {
+	text-align: left;
 }
 
 form.fullform {
@@ -845,7 +853,6 @@ form.fullform button.btn-submit {
 	border: 2px solid #7b573a;
 	clear: both;
 	color: #fff;
-	display: block;
 	font-size: 1.6em;
 	margin: 1.3em auto 0.6em;
 	padding: 0.3em 1.1em;

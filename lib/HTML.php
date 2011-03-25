@@ -855,6 +855,7 @@ class HTML {
       $html .= $s.'            <textarea name="description" id="description" rows="5" cols="20" class="textfield">'.$description.'</textarea>'."\n";
       $html .= $s.'         </li>'."\n";
       $html .= $s.'         <li class="submit_line">'."\n";
+      $html .= $s.'            <label>&nbsp; </label>'."\n";
       $html .= $s.'            <button type="submit" class="submitter">Create</button>'."\n";
       $html .= $s.'         </li>'."\n";
       $html .= $s.'         </ol>'."\n";
