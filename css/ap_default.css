@@ -610,6 +610,7 @@ div.minievents a.minievent span.numlikes {
 div.minievents a.minievent span.title {
 	font-size: 1.3em;
 	line-height: 1.3em;
+	font-weight: bold;
 }
 
 

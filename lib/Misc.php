@@ -336,4 +336,19 @@ function is_spam_bot(&$req, $array) {
 
    return FALSE;
 }
+
+function add_elipsis($str, $max_len) {
+   /* This finds the last space in a string before $max_len and replaces
+    * everything after it with elipsis */
+
+   $max_elipsis_len = $max_len - 3;
+   if (strlen($str) === $max_len) {
+      $pos = strrpos($str, ' ');
+      if ($pos === FALSE || $pos > $max_elipsis_len) 
+	 $pos = $max_elipsis_len;
+      $str = substr($str, 0, $pos).'...';
+   }
+
+   return $str;
+}
 ?>

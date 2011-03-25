@@ -10,8 +10,6 @@ class HTML {
       $id          = htmlspecialchars($event['id']);
       $uri_title   = htmlspecialchars($event['uri_title']);
       $title       = htmlspecialchars($event['title']);
-      $description = htmlspecialchars(substr($event['description'], 0, 400));
-      //$time        = htmlspecialchars(time_convert_24_to_12(substr($event['time'], 11)));
       $time = htmlspecialchars(date("l g:i A (F d, Y)", strtotime($event['time'])));
       $area        = htmlspecialchars($event['area']);
       $city        = htmlspecialchars(ucwords($event['city']));
@@ -20,11 +18,11 @@ class HTML {
       $category    = htmlspecialchars($event['category']);
       $venue       = htmlspecialchars($event['venue']);
 
+      $description = substr($event['description'], 0, 400);
+      $description = htmlspecialchars(add_elipsis($description, 400));
+
       $cat_uri     = HTML::url_friendly_category($event['category']);
       $cat_link = ROOT_URL.$cat_uri;
-
-      //$time = sprintf("%011s", $time);
-      //$time = strtolower(substr($time, 0, strrpos($time, ':')).substr($time, 8));
 
       if ($attendance > 1)          $attendance .= ' People Attending';
       else if ($attendance === '1') $attendance .= ' Person Attending';
