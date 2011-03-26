@@ -8,7 +8,7 @@ class HTML {
       $s = '						';
 
       $id          = htmlspecialchars($event['id']);
-      $uri_title   = htmlspecialchars($event['uri_title']);
+      $uri_title   = $event['uri_title'];
       $title       = htmlspecialchars($event['title']);
       $time = htmlspecialchars(date("l g:i A (F d, Y)", strtotime($event['time'])));
       $area        = htmlspecialchars($event['area']);
@@ -203,7 +203,7 @@ class HTML {
 
       /* Create entries for the sidecol */
       for ($i = 0, $iz = count($list); $i < $iz; ++$i) {
-	 $url    = urlencode($list[$i]['uri_title']);
+	 $url    = $list[$i]['uri_title'];
 	 $rating = htmlspecialchars($list[$i]['rating']);
 	 $title  = htmlspecialchars($list[$i]['title']);
 
