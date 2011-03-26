@@ -56,7 +56,7 @@ define('GC_MAXLIFETIME', 14);
 /* Probability of a page running the garbage collection ( 1 out of N ) */
 define('GC_PROBABILITY', 100);
 
-$TITLE = 'Area Pilot';
+$TITLE = 'AreaPilot';
 $JS = array('https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js', 'tp/blockUI.js', 'tp/jquery.cookie.min.js', 'tp/jquery.corner.js', 'ap_basics.js');
 $CSS = array('ap_default.min.css');
 
