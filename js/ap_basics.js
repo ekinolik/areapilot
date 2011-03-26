@@ -1,19 +1,22 @@
-/* DD Roundies Code */
-DD_roundies.addRule(".blockElement,.blockMsg","10px",true);
-DD_roundies.addRule("#header, #subhead, .likeit","0 0 8px 8px",true);
-DD_roundies.addRule("#categories a, button.btn-submit","8px",true);
-DD_roundies.addRule("#loggedout a:hover, #loggedin a:hover","8px",true);
-DD_roundies.addRule("#categories ul.submenu a","0 0 0 0",true);
-DD_roundies.addRule("#timeline, #categories li.hasmenu a","8px 8px 0 0",true);
-DD_roundies.addRule("#inner","12px",true);
-DD_roundies.addRule(".likebox, a.minievent span.numlikes","8px",true);
-DD_roundies.addRule('div#signup input, div#signup textarea','5px',true);
-
 $(document).ready(function() {
       $("input.nospam").addClass('nobots');
 
+      /* Rounded Corners */
+      $(".blockElement, .blockMsg").corner("10px");
+      $("#header, #subhead, .likeit").corner("br bl 8px");
+      $("button.btn-submit").corner("8px");
+      $("#loggedout a, #loggedin a").corner("8px");
+      $("#timeline").corner("tl tr 8px");
+      $("#inner").corner("12px");
+      $(".likebox, a.minievent span.numlikes, div.entry div.likebox span.numlikes").corner("8px");
+      $("div#signup input, div#signup textarea").corner("5px");
+      $("#categories > li > a").corner("tl tr 8px");
+      $("#categories ul.submenu").corner("tr br bl 8px");
+      $("#categories ul.submenu li:first-child a").corner("tr 8px");
+      $("#categories ul.submenu li:last-child a").corner("br bl 8px");
+
       // For main category dropdown menus
-      $("#categories li.hasmenu a").bind("mouseover", function() {
+      $("#categories > li.hasmenu > a, #categories li.hasmenu ul.submenu").bind("mouseover", function() {
          $("ul", $(this).parents("li.hasmenu")).show();
          $(this).parents("li.hasmenu").children("a").addClass("hovered");
       }).bind("mouseout",function() {
@@ -46,12 +49,12 @@ $(document).ready(function() {
 
       $("a#futuredates").bind('click', function() {
 	    $("li.selectdate.show").filter(':not(:animated)').animate({
-	       height: 'toggle',
+	       height: 'toggle'
 	    }, 400, function() {
 	       $(this).addClass('hidden');
 	       $(this).removeClass('show');
 	       $(this).next().next().next().next().next().next().next().animate({
-		  height: 'toggle',
+		  height: 'toggle'
 	       }, 400, function() {
 		  $(this).addClass('show');
 		  $(this).removeClass('hidden');
@@ -61,12 +64,12 @@ $(document).ready(function() {
       
       $("a#prevdates").bind('click', function() {
 	    $("li.selectdate.show").filter(':not(:animated)').animate({
-	       height: 'toggle',
+	       height: 'toggle'
 	    }, 400, function() {
 	       $(this).addClass('hidden');
 	       $(this).removeClass('show');
 	       $(this).prev().prev().prev().prev().prev().prev().prev().animate({
-		  height: 'toggle',
+		  height: 'toggle'
 	       }, 400, function() {
 		  $(this).addClass('show');
 		  $(this).removeClass('hidden');

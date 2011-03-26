@@ -333,6 +333,7 @@ div.modal h2.title {
 	padding: 0 15px;
 	position: relative;
 	width: 700px;
+	z-index: -1;
 }
 
 ul#timeoptions {
