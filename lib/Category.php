@@ -197,7 +197,7 @@ class Category extends Event {
 	 $category_table = 'category';
       }
 
-      $category_title = strtolower(str_replace('_', ' ', $category_title));
+      $category_title = strtolower(str_replace(array('_', '-'), ' ', $category_title));
       $sql = 'SELECT c."id", c."title", c."parent", c."active", c."sequence", 
 	        p."title" as parent_title 
 	       FROM "'.$category_table.'" as c

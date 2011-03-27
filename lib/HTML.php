@@ -292,7 +292,7 @@ class HTML {
 
    public function url_friendly_category($category) {
       /* We have to urlencode twice due to mod_rewrite */
-      return urlencode(urlencode(strtolower(str_replace(' ', '_', $category))));
+      return urlencode(urlencode(strtolower(str_replace(' ', '-', $category))));
    }
 
    public function datemenu($dates_with_events, $category='') {
@@ -520,7 +520,7 @@ class HTML {
 	 if (strlen($categories) > 0) $categories .= ', ';
 
 	 $ct = HTML::url_friendly_category($event['category'][$i]['title']);
-	 $categories .= '<a href="'.ROOT_URL.strtolower(str_replace(' ', '_', $ct)).'">';
+	 $categories .= '<a href="'.ROOT_URL.strtolower(str_replace(' ', '-', $ct)).'">';
 	 $categories .= $ct;
 	 $categories .= '</a>';
       }

@@ -161,7 +161,7 @@ class Event extends Location {
    protected function create_uri_title() {
       $date = date("mdy", $this->timestamp);
       $safe_title = preg_replace("/[^a-z0-9i ]/i", '', strtolower(trim($this->title)));
-      $safe_title = preg_replace("/ +/", '_', $safe_title);
+      $safe_title = preg_replace("/ +/", '-', $safe_title);
 
       $this->uri_title = $date.'/'.$safe_title;
 
