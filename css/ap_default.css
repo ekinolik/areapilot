@@ -142,7 +142,7 @@ a:visited {
 #header {
 	background: #3f4445;
 	position: relative;
-	z-index: 5000;
+	z-index: 500;
 }
 
 #header h1#logo a {
@@ -155,7 +155,7 @@ a:visited {
 
 #header #subhead {
 	background: #91b0b3 url(../images/sep_header.png) left top repeat-x;
-	z-index: 3000;
+	z-index: 300;
 }
 
 ul#categories {
@@ -165,7 +165,7 @@ ul#categories {
 ul#categories li {
 	float: left;
 	position: relative;
-	z-index: 2000;
+	z-index: 200;
 }
 
 ul#categories li a {
@@ -203,7 +203,7 @@ ul#categories ul.submenu {
 	position: absolute;
 	top: 3.1em;
 	width: 130px;
-	z-index: 1000;
+	z-index: 100;
 }
 
 ul#categories ul.submenu li {
@@ -335,7 +335,6 @@ div.modal h2.title {
 	padding: 0 15px;
 	position: relative;
 	width: 700px;
-	/* z-index: -1; */
 }
 
 ul#timeoptions {
