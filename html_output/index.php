@@ -1,6 +1,6 @@
 <?php
 
-$datemenu = HTML::datemenu(HTML::url_friendly_category(CATEGORY_TITLE));
+$datemenu = HTML::datemenu($event->dates_with_events, HTML::url_friendly_category(CATEGORY_TITLE));
 
 $entries = '';
 for ($i = 0, $iz = count($event->events); $i < $iz; ++$i) {

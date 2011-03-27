@@ -42,6 +42,8 @@ class Event extends Location {
    public $event_category_table;
    public $rating_table;
 
+   public $dates_with_events;
+
    // FIXME: Move these to their own class
    private $user_table;
 
@@ -79,6 +81,8 @@ class Event extends Location {
       $this->comment_id  = NULL;
       $this->start_time  = NULL;
       $this->end_time    = NULL;
+
+      $this->dates_with_events = array();
 
       $this->total = 0;
 
@@ -214,6 +218,27 @@ class Event extends Location {
 	       WHERE '.$category_clause.' AND '.$date_clause.' ';
 
       return $sql;
+   }
+
+   public function get_dates_with_events() {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      $date_clause = $this->create_date_clause($this->start_time, $this->end_time);
+
+      $sql = 'SELECT TO_CHAR("time", \'YYYYMMDD\') as date, count(1) as count
+	       FROM "'.$this->event_table.'" as e
+	       WHERE '.$date_clause.'
+	       GROUP BY "date"';
+
+      $this->dbc->query($sql);
+      $this->dbc->fetch_array();
+      $results = &$this->dbc->rows;
+
+      for ( $i = 0, $iz = count($results); $i < $iz; ++$i) {
+	 $this->dates_with_events[$results[$i]['date']] = $results[$i]['count'];
+      }
+
+      return TRUE;
    }
 
    public function get_events() {

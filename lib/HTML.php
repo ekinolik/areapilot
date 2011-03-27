@@ -295,7 +295,7 @@ class HTML {
       return urlencode(urlencode(strtolower(str_replace(' ', '_', $category))));
    }
 
-   public function datemenu($category='') {
+   public function datemenu($dates_with_events, $category='') {
       $s = '			';
 
       /* FIXME: This should be improved for better optimization */
@@ -345,7 +345,7 @@ class HTML {
       $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$current_dow.'-'.$last_dom.'" class="'.$tm.'" id="time-thismonth">This Month</a></li>'."\n";
       $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$first_donm.'-'.$last_donm.'" class="'.$nm.'" id="time-nextmonth">Next Month</a></li>'."\n";
       $html .= $s.'	</ul>'."\n";
-      $html .= HTML::sub_datemenu(DATE_START, $category);
+      $html .= HTML::sub_datemenu(DATE_START, $category, $dates_with_events);
       $html .= $s.'	<form method="post" action="#">'."\n";
       $html .= $s.'		<p>'."\n";
       $html .= $s.'			<input type="hidden" name="rangestart" id="rangestart" />'."\n";
@@ -358,7 +358,7 @@ class HTML {
       return $html;
    }
 
-   public function sub_datemenu($week_start, $category) {
+   public function sub_datemenu($week_start, $category, $dates_with_events) {
       $s = '				';
 
       if (strlen($category) > 1) $category .= '/';
@@ -394,7 +394,7 @@ class HTML {
 	 }
 
 	 if ($h === 0) $class = 'show'; else $class = 'hidden';
-	 $html .= HTML::create_dates($week, $current_date, $category, $class);
+	 $html .= HTML::create_dates($week, $current_date, $category, $dates_with_events, $class);
 	 unset($week);
       }
 
@@ -405,7 +405,7 @@ class HTML {
       return $html;
    }
 
-   public function create_dates($week, $current_date, $category, $class = ' ') {
+   public function create_dates($week, $current_date, $category, $dates_with_events, $class = ' ') {
       $s = '					';
       $html = '';
       while ((list($date, $dow) = each($week)) !== FALSE) {
@@ -416,13 +416,19 @@ class HTML {
 	 else
 	    $aclass = ' ';
 
+	 if (isset($dates_with_events[$date])) {
+	    $nofollow = '';
+	 } else {
+	    $nofollow = ' rel="nofollow" ';
+	 }
+
 	 $month_day = substr($date, 4, 2).'/'.substr($date, 6, 2);
 	 if ($current_date > $date) {
 	    /* If this date is in the past, no link */
 	    $html .= $s.'<li class="selectdate '.$class.'"><span>'.$dow.'&nbsp;&nbsp;('.$month_day.')</span></li>'."\n";
 	 } else {
 	    /* If this date is not in the past, link */
-	    $html .= $s.'<li class="selectdate '.$class.'"><a href="'.ROOT_URL.$category.'date-'.urlencode($date).'" class="'.$aclass.'">'.$dow.'&nbsp;&nbsp;('.$month_day.')</a></li>'."\n";
+	    $html .= $s.'<li class="selectdate '.$class.'"><a href="'.ROOT_URL.$category.'date-'.urlencode($date).'" class="'.$aclass.'" '.$nofollow.'>'.$dow.'&nbsp;&nbsp;('.$month_day.')</a></li>'."\n";
 	 }
       }
 
