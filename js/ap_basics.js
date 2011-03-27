@@ -185,7 +185,7 @@ function blockThis(element, text, callback, roundit, overlayClose) {
 		}
 	});
 	if(overlayClose == true) {
-		 $(".modal a#close_button").click(function() {
+		 $(".modal a.close_button").click(function() {
 			$.unblockUI;
 			$(element).unblock();
 			return false;
