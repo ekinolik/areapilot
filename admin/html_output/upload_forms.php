@@ -7,7 +7,7 @@ for ($i = 0, $iz = count($page_c->pages); $i < $iz; ++$i) {
    $directory = &$page_c->pages[$i]['directory'];
    $title = &$page_c->pages[$i]['name'];
    $desc  = &$page_c->pages[$i]['text'];
-   $url = str_replace(ROOT_DIR, ROOT_URL, $directory).$filename;
+   $url = str_replace(ADMIN_DIR, ADMIN_URL, $directory).$filename;
 
    $html .= '<div>';
    $html .= '  <span class="formcaption" id="formcaption_'.$id.'">'."\n";

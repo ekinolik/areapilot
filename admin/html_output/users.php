@@ -32,8 +32,8 @@ for ($i = 0, $iz = count($users->users); $i < $iz; ++$i) {
    $html .= '  <td class="name"><a href="#" title="'.$id.'">'.htmlspecialchars($users->users[$i]['username']).'</a>'.$p.'</td>'."\n";
    $html .= '  <td class="name">'.htmlspecialchars($users->users[$i]['email']).'</td>'."\n";
    $html .= '  <td class="active"><img src="'.$img.'" border="0" /></td>'."\n";
-   $html .= '  <td class="status"><a href="'.ROOT_URL.'admin/update_user.php?id='.$id.'&status='.$status.'">'.$status_msg.'</a></td>'."\n";
-   $html .= '  <td class="delete"><a href="'.ROOT_URL.'admin/update_user.php?id='.$id.'&status=d">Delete</a></td>'."\n";
+   $html .= '  <td class="status"><a href="'.ADMIN_URL.'admin/update_user.php?id='.$id.'&status='.$status.'">'.$status_msg.'</a></td>'."\n";
+   $html .= '  <td class="delete"><a href="'.ADMIN_URL.'admin/update_user.php?id='.$id.'&status=d">Delete</a></td>'."\n";
    $html .= '</tr>'."\n";
 }
 

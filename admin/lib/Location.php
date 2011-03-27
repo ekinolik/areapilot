@@ -1,6 +1,9 @@
 <?php
 
 define('LOCATION', 1);
+/* year this is ugly */
+define('LOCATIONCLASS', 1);
+define('CATEGORYCLASS', 1);
 
 class Location {
 
@@ -712,6 +715,46 @@ class Location {
       $this->state_abbr = $this->dbc->rows['abbr'];
 
       return $this->dbc->rows['city_id'];
+   }
+
+   public function get_cities_from_area($area_name) {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      $area_name = $this->dbc->escape($area_name);
+      $sql = 'SELECT c."name" as city, a."name" as area
+	       FROM "'.$this->area_table.'" as a
+	       LEFT OUTER JOIN "'.$this->zip_area_table.'" as za 
+	       ON (za."area_id" = a."id")
+	       LEFT OUTER JOIN "'.$this->zip_city_table.'" as zc
+	       ON ( zc."zip_id" = za."zip_id" )
+	       LEFT OUTER JOIN "'.$this->city_table.'" as c
+	       ON (c."id" = zc."city_id")
+	       WHERE a.name = lower(\''.$area_name.'\') ';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_array();
+
+      return $this->dbc->rows;
+   }
+
+   public function get_area_for_city($city_name) {
+      if ($this->sanity_check() === FALSE) return FALSE;
+
+      $city_name = $this->dbc->escape($city_name);
+      $sql = 'SELECT c."name" as city, a."name" as area, s."name" as state
+	       FROM "'.$this->city_table.'" as c
+	       LEFT OUTER JOIN "'.$this->zip_city_table.'" as zc 
+	       ON (zc."city_id" = c."id")
+	       LEFT OUTER JOIN "'.$this->zip_area_table.'" as za
+	       ON ( zc."zip_id" = za."zip_id" )
+	       LEFT OUTER JOIN "'.$this->area_table.'" as a
+	       ON (a."id" = za."area_id")
+	       LEFT OUTER JOIN "'.$this->state_table.'" as s
+	       ON (s."id" = c."state_id")
+	       WHERE c.name = lower(\''.$city_name.'\') ';
+      $this->dbc->query($sql);
+      $this->dbc->fetch_array();
+
+      return $this->dbc->rows;
    }
 
    public function get_zip_from_area() {

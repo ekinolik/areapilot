@@ -7,7 +7,7 @@ if (LOGGED_IN === FALSE || $user_c->my_admin === FALSE) {
    return FALSE;
 }
 
-if ( ! defined('LOCATION')) require(LIB_DIR.'Location.php');
+if ( ! defined('LOCATION')) require('lib/Location.php');
 if ( ! defined('MISC')) require(LIB_DIR.'Misc.php');
 
 if (verify_int($_POST['hood_id']) === FALSE) {

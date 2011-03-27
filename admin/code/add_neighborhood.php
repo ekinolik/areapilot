@@ -1,11 +1,11 @@
 <?php
 
 if (LOGGED_IN === FALSE || $user_c->my_admin === FALSE) {
-   header('Location: '.ROOT_URL.'errorpage.php');
+   header('Location: '.ADMIN_URL.'errorpage.php');
    exit;
 }
 
-if ( ! defined('LOCATION')) require(LIB_DIR.'Location.php');
+if ( ! defined('LOCATION')) require('lib/Location.php');
 if ( ! defined('MISC')) require(LIB_DIR.'Misc.php');
 
 $loc = new Location($db_class, $error_class);

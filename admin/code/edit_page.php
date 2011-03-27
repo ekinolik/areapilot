@@ -1,7 +1,7 @@
 <?php
 
 if (LOGGED_IN === FALSE || $user_c->my_admin === FALSE) {
-   header('Location: '.ROOT_URL.'errorpage.php');
+   header('Location: '.ADMIN_URL.'errorpage.php');
    exit;
 }
 
