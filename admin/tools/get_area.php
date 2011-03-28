@@ -5,7 +5,7 @@
 chdir('../');
 if ( ! defined('config')) require('config.php');
 require('../code/init.php');
-chdir('temp/');
+chdir('tools/');
 
 if ( ! defined('LOCATION')) require('../lib/Location.php');
 
