@@ -39,8 +39,14 @@ unset($current_category);
  * Process date range
  */
 
-if (isset($_GET['date1'])) $start_date = $_GET['date1']; else $start_date = FALSE;
-if (isset($_GET['date2'])) $end_date = $_GET['date2']; else $end_date = FALSE;
+if (isset($_GET['date1']) && strlen($_GET['date1']) > 0) 
+   $start_date = $_GET['date1']; 
+else 
+   $start_date = FALSE;
+if (isset($_GET['date2']) && strlen($_GET['date2']) > 0) 
+   $end_date = $_GET['date2']; 
+else 
+   $end_date = FALSE;
 
 if ($start_date === FALSE && $end_date === FALSE) 
    define('DATE_GIVEN', FALSE);
