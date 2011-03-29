@@ -952,10 +952,11 @@ class HTML {
    public function map($event) {
       $s = '						';
       
-      $address  = htmlspecialchars($event['address']).', ';
-      $address .= htmlspecialchars($event['city']).', ';
-      $address .= htmlspecialchars($event['state']).' ';
-      $address .= urlencode(htmlspecialchars($event['zip']));
+      $address  = $event['address'].', ';
+      $address .= $event['city'].', ';
+      $address .= $event['state'].' ';
+      $address .= $event['zip'];
+      $address = urlencode($address);
 
       $img = '<img src="http://maps.google.com/maps/api/staticmap?center='.$address.'&zoom=14&size=300x200&format=JPEG&sensor=false&markers=color:blue|'.$address.'" alt="'.$address.'" />';
       $map = '<div id="map_canvas">'.$img.'</div>'."\n";
