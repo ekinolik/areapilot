@@ -486,6 +486,12 @@ div.entry h4.metabottom {
 	margin-bottom: 0.8em;
 }
 
+div.entry h4.metabottom span.timeunderline {
+   font-weight: bold;
+   color: #2B1F13;
+   text-decoration: underline;
+}
+
 div.entry h4 span {
 	font-weight: normal;
 }

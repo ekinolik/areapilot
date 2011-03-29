@@ -37,8 +37,8 @@ class HTML {
       $html .= $s.'		<h3><a href="'.ROOT_URL.$uri_title.'">'.$title.'</a></h3>'."\n";
       $html .= $s.$tweet."\n";
       $html .= $s.$fb_like."\n";
-      $html .= $s.'		<h4 class="metatop">'.$venue.' <span>&#124;</span> <span>Posted in : </span>&lt;<a href="'.$cat_link.'">'.$category.'</a>&gt;</h4>'."\n";
-      $html .= $s.'		<h4 class="metabottom"><span>Location : </span>'.$city.' &nbsp;<span>&#124;</span>&nbsp; <span>Time : </span>'.$time.'</h4>'."\n";
+      $html .= $s.'		<h4 class="metatop">'.$venue.' <span>&#124;</span> <span>Location : </span>'.$city.'</h4>'."\n";
+      $html .= $s.'		<h4 class="metabottom"><span class="timeunderline">'.$time.'</span>&nbsp;<span>&#124; </span><span>Posted in : </span>&lt;<a href="'.$cat_link.'">'.$category.'</a>&gt;</h4>'."\n";
       $html .= $s.'		<div class="description"><p>'.$description.'</p>'."\n";
       $html .= $s.'		</div><!-- end .description -->'."\n";
       $html .= $s.'		<ul class="actionlinks">'."\n";
