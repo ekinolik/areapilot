@@ -46,5 +46,4 @@ $(document).ready(function() {
 	    }
       });
 
-      $("div#ui-datepicker-div").toggle();
 });
