@@ -17,6 +17,7 @@ define('UPLOAD_IMAGE_TMP_DIR', UPLOAD_IMAGE_DIR.'tmp/');
 define('UPLOAD_IMAGE_TMP_URL', UPLOAD_IMAGE_URL.'tmp/');
 define('UPLOAD_FORM_DIR', ROOT_DIR.'forms/');
 define('UPLOAD_FORM_URL', ROOT_URL.'forms/');
+define('DOC_DIR', ROOT_DIR.'docs/');
 $CURRENT_DIR = ROOT_DIR;
 
 define('SESS_DB_HOST', DB_HOST);

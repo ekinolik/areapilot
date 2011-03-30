@@ -8,6 +8,7 @@ $(document).ready(function() {
       $("#loggedout a, #loggedin a").corner("8px");
       $("#timeline").corner("tl tr 8px");
       $("#inner").corner("12px");
+      $("#page_footer").corner("tl tr 12px");
       $(".likebox, a.minievent span.numlikes, div.entry div.likebox span.numlikes").corner("8px");
       $("div#signup input, div#signup textarea").corner("5px");
       $("#categories > li > a").corner("tl tr 8px");

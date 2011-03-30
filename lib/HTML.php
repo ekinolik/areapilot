@@ -124,6 +124,35 @@ class HTML {
       return $html;
    }
 
+   public function page_footer() {
+      $s = '			';
+      $html  = $s.'<br />'."\n";
+      $html .= $s.'<div id="page_footer">'."\n";
+      $html .= $s.'	<ul>'."\n";
+      $html .= $s.'		<li><a href="'.ROOT_URL.'about/">What is AreaPilot</a></li>'."\n";
+      $html .= $s.'	</ul>'."\n";
+      $html .= $s.'	<ul>'."\n";
+      $html .= $s.'		<li><a href="'.ROOT_URL.'help/">Help</a></li>'."\n";
+      $html .= $s.'	</ul>'."\n";
+      $html .= $s.'	<ul>'."\n";
+      $html .= $s.'		<li><a href="'.ROOT_URL.'feedback/">Feedback</a></li>'."\n";
+      $html .= $s.'	</ul>'."\n";
+      $html .= $s.'	<br />'."\n";
+      $html .= $s.'	<br />'."\n";
+      $html .= $s.'	<span class="copyright">AreaPilot &copy; Dire Networks, Inc.</span>'."\n";
+      $html .= $s.'</div>'."\n";
+
+      return $html;
+   }
+
+   public function document($doc) {
+      $s = '		';
+      $html  = $s.'<div id="doc_container">'."\n";
+      $html .= $doc;
+      $html .= $s.'</div>'."\n";
+
+      return $html;
+   }
    public function profile($details, $error) {
       $s = '   ';
       $html  = $s.'<div id="profilewrapper">'."\n";

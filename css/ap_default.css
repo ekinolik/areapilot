@@ -266,13 +266,21 @@ ul#loggedin li a:hover {
 /* =============== */
 
 #main {
-	margin: 6em 0 3em;
+	margin: 6em 0 0;
 	z-index: 1;
 }
 
 #inner {
 	background: #fff url(../images/bg_maingrad.png) left top repeat-x;
 	padding: 0 0 0 1em;
+}
+
+#page_footer {
+	background: #fff url(../images/bg_maingrad.png) left top repeat-x;
+	padding: 0 0 0 1em;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
 }
 
 #maincol {
@@ -988,4 +996,47 @@ div.likes {
 
 .nobots {
 	display: none;
+}
+
+#page_footer ul {
+	float: left;
+	width: 33%;
+	padding: 10px 0;
+}
+
+#page_footer ul li {
+	font-size: 14px;
+}
+
+#page_footer ul li a {
+	text-decoration: none;
+}
+
+#page_footer span.copyright {
+	font-size: 10px;
+}
+
+#doc_container {
+	font-size: 16px;
+	padding: 15px 30px;
+	width: 75%;
+	line-height: 1.5em;
+}
+
+ol#faq {
+	padding-left: 30px;
+	list-style-type: decimal;
+}
+
+ol#subfaq {
+	padding-left: 30px;
+	list-style-type: lower-alpha;
+}
+
+ol#subfaq li a {
+	text-decoration: none;
+}
+
+a#faq_answer {
+	font-weight: bold;
 }
