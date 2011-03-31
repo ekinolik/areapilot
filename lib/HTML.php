@@ -28,15 +28,15 @@ class HTML {
       else if ($attendance === '1') $attendance .= ' Person Attending';
       else                          $attendance =  ' 0 People Attending';
 
-      $fb_like = HTML::FB_like('/'.$event['uri_title'], $event);
-      $tweet   = HTML::Tweet('/'.$event['uri_title'], $event);
+      //$fb_like = HTML::FB_like($event['uri_title'], $event);
+      //$tweet   = HTML::Tweet('/'.$event['uri_title'], $event);
 
       $html  = $s.'<div class="entry clearfix" id="entry_'.$count.'">'."\n";
       $html .= HTML::likebox($event);
       $html .= $s.'	<div class="summary">'."\n";
       $html .= $s.'		<h3><a href="'.ROOT_URL.$uri_title.'">'.$title.'</a></h3>'."\n";
-      $html .= $s.$tweet."\n";
-      $html .= $s.$fb_like."\n";
+      //$html .= $s.$tweet."\n";
+      //$html .= $s.$fb_like."\n";
       $html .= $s.'		<h4 class="metatop">'.$venue.' <span>&#124;</span> <span>Location : </span>'.$city.'</h4>'."\n";
       $html .= $s.'		<h4 class="metabottom"><span class="timeunderline">'.$time.'</span>&nbsp;<span>&#124; </span><span>Posted in : </span>&lt;<a href="'.$cat_link.'">'.$category.'</a>&gt;</h4>'."\n";
       $html .= $s.'		<div class="description"><p>'.$description.'</p>'."\n";
@@ -91,7 +91,8 @@ class HTML {
 
    public function pagelist($title, $entries, $sidecol, $pagination) {
       $s = '			';
-      $html  = $s.'<div id="inner" class="clearfix">'."\n";
+      $html  = $s.'<div id="fb-root"></div>'."\n";
+      $html .= $s.'<div id="inner" class="clearfix">'."\n";
       $html .= $s.'	<div id="maincol">'."\n";
       $html .= $s.'		<div id="posts">'."\n";
       $html .= $s.'			<h2 id="listing_title">'.$title.'</h2>'."\n";
@@ -186,6 +187,7 @@ class HTML {
       $s = '			';
 
       $html  = HTML::body_header($title);
+      $html .= $s.'			<div id="fb-root"></div>'."\n";
       $html .= $s.'			<div id="eventdetailswrapper">'."\n";
       $html .= $eventdetails;
       $html .= $s.'				<br />'."\n";
@@ -327,6 +329,9 @@ class HTML {
    public function datemenu($dates_with_events, $category='') {
       $s = '			';
 
+      $fb_like = HTML::FB_like(ROOT_URL, array('id'=>0));
+      $tweet   = HTML::Tweet(ROOT_URL, '');
+
       /* FIXME: This should be improved for better optimization */
       $current_dow = urlencode(get_current_day_of_week(CURRENT_TIME));
       $first_dow = urlencode(get_first_day_of_week(CURRENT_TIME));
@@ -367,7 +372,7 @@ class HTML {
 	 $nm = '';
       }
 
-      $html  = $s.'<div id="timeline" class="clearfix">'."\n";
+      $html  = $s.'<div id="timeline" class="clearfix" style="float: left;">'."\n";
       $html .= $s.'	<ul id="timeoptions">'."\n";
       $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$current_dow.'-'.$last_dow.'" class="'.$tw.'" id="time-thisweek">This Week</a></li>'."\n";
       $html .= $s.'		<li><a href="'.ROOT_URL.$category.'date-'.$first_donw.'-'.$last_donw.'" class="'.$nw.'" id="time-nextweek">Next Week</a></li>'."\n";
@@ -383,6 +388,12 @@ class HTML {
       $html .= $s.'		</p>'."\n";
       $html .= $s.'	</form>'."\n";
       $html .= $s.'</div><!-- end #timeline -->'."\n";
+      $html .= $s.'<div class="shares">'."\n";
+      $html .= $s.$tweet;
+      $html .= $s.'<br />';
+      $html .= $s.$fb_like;
+      $html .= $s.'</div>'."\n";
+      $html .= $s.'<div class="clearfix"></div>'."\n";
 
       return $html;
    }
@@ -948,7 +959,7 @@ class HTML {
       return $jslinks;
    }
 
-   public function header($title, $csslinks, $jslinks, $menu, $logged_in=FALSE) {
+   public function header($title, $csslinks, $jslinks, $menu, $logged_in=FALSE, $fb_meta) {
       $s = '			';
       if ($logged_in === TRUE) {
 	 $status  = $s.'<ul id="loggedin">'."\n";
@@ -972,10 +983,12 @@ class HTML {
       $meta_d = 'AreaPilot is your online hub for local events. Find out what’s happening around you and vote for the stuff you like. Become your own promoter and post your own events.';
       $meta_k = 'Post events,Search events,Find events,Whats happening,Promoter,Local,Advertise,Tonight,Something to do,Listings'.$cat.$catp;
 
+      $facebook_meta = HTML::facebook_meta($fb_meta);
+
       $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"'."\n";
       $html .= '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'."\n";
       $html .= ''."\n";
-      $html .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">'."\n";
+      $html .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">'."\n";
       $html .= '<head>'."\n";
       $html .= '	<meta http-equiv="content-type" content="text/html; charset=utf-8" />'."\n";
       $html .= '	<meta name="description" content="'.$meta_d.'" />'."\n";
@@ -983,6 +996,7 @@ class HTML {
       $html .= '	<title>'.$title.'</title>'."\n";
       $html .= $csslinks."\n";
       $html .= $jslinks."\n";
+      $html .= $facebook_meta."\n";
       $html .= HTML::google_analytics();
       $html .= '</head>'."\n";
       $html .= '<body>'."\n";
@@ -993,6 +1007,27 @@ class HTML {
       $html .= $status."\n";
       $html .= '		</div><!-- end #header -->'."\n";
       $html .= '		<div id="main">'."\n";
+
+      return $html;
+   }
+
+   public function facebook_meta($fbm) {
+      if ( ! is_array($fbm)) return '';
+
+      $s = '	';
+      $html = '';
+      if (isset($fbm['title']))
+	 $html .= $s.'<meta property="og:title" content="'.$fbm['title'].'" />'."\n";
+      if (isset($fbm['type']))
+	 $html .= $s.'<meta property="og:type" content="'.$fbm['type'].'" />'."\n";
+      if (isset($fbm['url']))
+	 $html .= $s.'<meta property="og:url" content="'.$fbm['url'].'" />'."\n";
+      if (isset($fbm['image']))
+	 $html .= $s.'<meta property="og:image" content="'.$fbm['image'].'" />'."\n";
+      if (isset($fbm['site_name']))
+	 $html .= $s.'<meta property="og:site_name" content="'.$fbm['site_name'].'" />'."\n";
+      if (isset($fbm['admins']))
+	 $html .= $s.'<meta property="fb:admins" content="'.$fbm['admins'].'" />'."\n";
 
       return $html;
    }
@@ -1033,20 +1068,27 @@ class HTML {
 
    public function FB_like($uri, $event) {
       $s = '					';
-      $url = urlencode('http://'.$_SERVER['HTTP_HOST'].$uri);
+      $url = urlencode(ROOT_URL.$uri);
       $ref = urlencode($event['id']);
 
-      $html = $s.'<iframe src="http://www.facebook.com/plugins/like.php?href='.$url.'&amp;layout=button_count&amp;show_faces=false&amp;width=90&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=21&amp;ref='.$ref.'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true" id="iframe_'.$ref.'"></iframe>'."\n";
+      $html = $s.'<fb:like href="'.$url.'" layout="button_count" show_faces="false" width="70" action="recommend" font="lucida grande" ref="'.$ref.'"></fb:like>'."\n";
+
       return $html;
    }
 
    public function Tweet($uri, $event) {
       $s = '					';
       $url = urlencode('http://'.$_SERVER['HTTP_HOST'].$uri);
-      $date = $event['time'];
-      $venue = ''; //FIXME
-      $text = urlencode($event['title'].' on '.$date.' @ '.$venue);
-      $id = htmlspecialchars($event['id']);
+
+      if (is_array($event)) {
+	 $date = $event['time'];
+	 $venue = ''; //FIXME
+	 $text = urlencode($event['title'].' on '.$date.' @ '.$venue);
+	 $id = htmlspecialchars($event['id']);
+      } else {
+	 $text = 'AreaPilot is a social event hub. Find out what’s happening around you, vote for the stuff you like, and post your own events.';
+	 $id = 0;
+      }
       
       $html  = $s.'<a id="tweet_'.$id.'" class="tweetit" href="http://twitter.com/share?url='.$url.'&text='.$text.'&count=horizontal" target="_blank" title="Share this event on Twitter">'."\n";
       $html .= '<img src="/images/icons/tweetn.png" alt="Tweet" />'."\n";

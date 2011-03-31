@@ -1062,3 +1062,12 @@ div.attendees span.fmr {
 	margin: 10px 0;
 	float: right;
 }
+
+div.shares {
+	line-height: 2.5em;
+}
+
+decol div.shares a.tweetit {
+	padding-top: 15px;
+	margin-top: 15px;
+}

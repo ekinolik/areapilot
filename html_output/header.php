@@ -10,7 +10,7 @@ $jslinks  = HTML::create_js_links($JS);
 $csslinks = HTML::create_css_links($CSS);
 $menu = HTML::menu($h_category->category);
 
-$header = HTML::header($TITLE, $csslinks, $jslinks, $menu, LOGGED_IN);
+$header = HTML::header($TITLE, $csslinks, $jslinks, $menu, LOGGED_IN, $fb_meta);
 print <<<EOF
 $header
 EOF;

@@ -19,4 +19,11 @@ $comment->event_id = $venue->event_id;
 $comment->get_parent_comments();
 
 $TITLE = $venue->events[0]['title'];
+
+$fb_meta['title'] = $TITLE;
+$fb_meta['type'] = 'activity';
+$fb_meta['url'] = ROOT_URL.$venue->events[0]['uri_title'];
+$fb_meta['image'] = IMG_URL.'images/logo.png';
+$fb_meta['site_name'] = 'AreaPilot';
+$fb_meta['admins'] = FACEBOOK_ADMINS;
 ?>
