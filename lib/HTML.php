@@ -329,7 +329,7 @@ class HTML {
    public function datemenu($dates_with_events, $category='') {
       $s = '			';
 
-      $fb_like = HTML::FB_like(ROOT_URL, array('id'=>0));
+      $fb_like = HTML::FB_like('', array('id'=>0));
       $tweet   = HTML::Tweet(ROOT_URL, '');
 
       /* FIXME: This should be improved for better optimization */
