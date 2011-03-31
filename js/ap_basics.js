@@ -6,7 +6,6 @@ $(document).ready(function() {
       $("input.nospam").addClass('nobots');
 
       /* Rounded Corners */
-      $(".blockElement, .blockMsg").corner("10px");
       $("#header, #subhead, .likeit").corner("br bl 8px");
       $("button.btn-submit").corner("8px");
       $("#loggedout a, #loggedin a").corner("8px");
@@ -261,6 +260,10 @@ function blockThis(element, text, callback, roundit, overlayClose) {
 			callback;
 		}
 	});
+
+	/* This needs to go here for some reason now*/
+	$(".blockElement, .blockMsg").corner("10px");
+
 	if(overlayClose == true) {
 		 $(".modal a.close_button").click(function() {
 			$.unblockUI;
