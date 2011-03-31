@@ -390,8 +390,6 @@ class HTML {
    public function sub_datemenu($week_start, $category, $dates_with_events) {
       $s = '				';
 
-      if (strlen($category) > 1) $category .= '/';
-
       $year  = substr($week_start, 0, 4);
       $month = substr($week_start, 4, 2);
       $day   = substr($week_start, 6, 2);
