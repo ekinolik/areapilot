@@ -969,7 +969,7 @@ class HTML {
       else $catp = '';
       /* FIXME: Need to add area info */
 
-      $meta_d = 'AreaPilot is a social effort to find out what\'s happening in your local area and vote for the ones you like.  Be your own promoter and post events for others to attend.';
+      $meta_d = 'AreaPilot is your online hub for local events. Find out what’s happening around you and vote for the stuff you like. Become your own promoter and post your own events.';
       $meta_k = 'Post events,Search events,Find events,Whats happening,Promoter,Local,Advertise,Tonight,Something to do,Listings'.$cat.$catp;
 
       $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"'."\n";
