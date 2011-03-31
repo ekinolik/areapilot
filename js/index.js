@@ -47,6 +47,10 @@ $(document).ready(function() {
       });
 
 
+      $("a.tweetit").click(function() {
+	    window.open($(this).attr('href'), 'blah', 'height=200, width=200');
+	    return false;
+      });
       window.fbAsyncInit = function() {
        FB.init({appId: 'AreaPilot', status: false, cookie: false,
 		xfbml: true});

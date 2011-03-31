@@ -1078,19 +1078,20 @@ class HTML {
 
    public function Tweet($uri, $event) {
       $s = '					';
-      $url = urlencode('http://'.$_SERVER['HTTP_HOST'].$uri);
 
       if (is_array($event)) {
 	 $date = $event['time'];
 	 $venue = ''; //FIXME
 	 $text = urlencode($event['title'].' on '.$date.' @ '.$venue);
 	 $id = htmlspecialchars($event['id']);
+	 $url = urlencode('http://'.$_SERVER['HTTP_HOST'].$uri);
       } else {
-	 $text = 'AreaPilot is a social event hub. Find out what’s happening around you, vote for the stuff you like, and post your own events.';
+	 $text = 'AreaPilot is a social event hub Find out whats happening around you vote for the stuff you like and post your own events';
 	 $id = 0;
+	 $url = urlencode(ROOT_URL);
       }
       
-      $html  = $s.'<a id="tweet_'.$id.'" class="tweetit" href="http://twitter.com/share?url='.$url.'&text='.$text.'&count=horizontal" target="_blank" title="Share this event on Twitter">'."\n";
+      $html  = $s.'<a id="tweet_'.$id.'" class="tweetit" href="http://twitter.com/share?url='.$url.'&text='.$text.'&count=horizontal" title="Share this event on Twitter">'."\n";
       $html .= '<img src="/images/icons/tweetn.png" alt="Tweet" />'."\n";
       $html .= '</a>'."\n";
 
