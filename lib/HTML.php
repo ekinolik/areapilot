@@ -42,7 +42,7 @@ class HTML {
       $html .= $s.'		<div class="description"><p>'.$description.'</p>'."\n";
       $html .= $s.'		</div><!-- end .description -->'."\n";
       $html .= $s.'		<ul class="actionlinks">'."\n";
-      $html .= $s.'			<li><a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a=a&r=h').'" name="'.$id.'" class="attendthis">Attend This Event</a></li>'."\n";
+      $html .= $s.'			<li><a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a=a&r=h').'" name="'.$id.'" class="attendthis" rel="nofollow" >Attend This Event</a></li>'."\n";
       $html .= $s.'			<li><a href="#" class="attending">'.$attendance.'</a></li>'."\n";
       $html .= $s.'			<li><a href="'.ROOT_URL.$uri_title.'" class="commentsnum"><!--___COMMENT_COUNT___--></a></li>'."\n";
       $html .= $s.'		</ul>'."\n";
@@ -83,7 +83,7 @@ class HTML {
       $html  = $s.'<div class="likebox">'."\n";
       $html .= $s.'	<span class="numlikes" id="numlikes_'.$id.'">'.$rating.'</span>'."\n";
       $html .= $s.'	<span class="xtra">'.$liketext.'</span>'."\n";
-      $html .= $s.'	<a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a=l&r=h').'" name="'.$id.'" class="likeit">I Like It</a>'."\n";
+      $html .= $s.'	<a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a=l&r=h').'" name="'.$id.'" class="likeit" rel="nofollow">I Like It</a>'."\n";
       $html .= $s.'</div><!-- end .likebox -->'."\n";
 
       return $html;
@@ -656,7 +656,7 @@ class HTML {
    public function modal_login() {
       $s = '			';
       $html  = $s.'<div id="modal-login" class="modal">'."\n";
-      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="asdf" class="close_modal" /></a>'."\n";
+      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="close" class="close_modal" /></a>'."\n";
       $html .= $s.'	<h2 class="title">Log in</h2>'."\n";
       $html .= HTML::login_form('modalform', '');
       $html .= $s.'</div><!-- end #modal-login -->'."\n";
@@ -667,7 +667,7 @@ class HTML {
    public function modal_signup() {
       $s = '			';
       $html  = $s.'<div id="modal-signup" class="modal">'."\n";
-      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="asdf" class="close_modal" /></a>'."\n";
+      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="close" class="close_modal" /></a>'."\n";
       $html .= $s.'	<h2 class="title">Create a New Account</h2>'."\n";
       $html .= HTML::signup_form('modalform', '');
       $html .= $s.'</div><!-- end #modal-signup -->'."\n";
@@ -678,7 +678,7 @@ class HTML {
    public function modal_change_password() {
       $s = '			';
       $html  = $s.'<div id="modal-change-password" class="modal">'."\n";
-      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="asdf" class="close_modal" /></a>'."\n";
+      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="close" class="close_modal" /></a>'."\n";
       $html .= $s.'	<h2 class="title">Change My Password</h2>'."\n";
       $html .= HTML::change_password_form('modalform', '');
       $html .= $s.'</div><!-- end #modal-change-password -->'."\n";
@@ -689,7 +689,7 @@ class HTML {
    public function modal_forgot_password() {
       $s = '			';
       $html  = $s.'<div id="modal-forgot-password" class="modal">'."\n";
-      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="asdf" class="close_modal" /></a>'."\n";
+      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="close" class="close_modal" /></a>'."\n";
       $html .= $s.'	<h2 class="title">Reset My Password</h2>'."\n";
       $html .= HTML::forgot_password_form('modalform', '');
       $html .= $s.'</div><!-- end #modal-forgot-password -->'."\n";
@@ -700,10 +700,31 @@ class HTML {
    public function modal_message() {
       $s = '			';
       $html  = $s.'<div id="modal-message" class="modal">'."\n";
-      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="asdf" class="close_modal" /></a>'."\n";
+      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="close" class="close_modal" /></a>'."\n";
       $html .= $s.'	<h2 class="title">Important Message</h2>'."\n";
       $html .= $s.'	<span class="modal-message"></span>'."\n";
       $html .= $s.'</div><!-- end #modal-message -->'."\n";
+
+      return $html;
+   }
+
+   public function modal_attendees() {
+      $s = '			';
+      $html  = $s.'<div id="modal-attendees" class="modal">'."\n";
+      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="close" class="close_modal" /></a>'."\n";
+      $html .= $s.'	<h2 class="title">People Attending this Event</h2>'."\n";
+      $html .= $s.'	<ul class="attendees" id="attendees_1">'."\n";
+      $html .= $s.'	</ul>'."\n";
+      $html .= $s.'	<ul class="attendees" id="attendees_2">'."\n";
+      $html .= $s.'	</ul>'."\n";
+      $html .= $s.'	<ul class="attendees" id="attendees_3">'."\n";
+      $html .= $s.'	</ul>'."\n";
+      $html .= $s.'	<div class="clearfix"></div>'."\n";
+      $html .= $s.'	<div class="attendees">'."\n";
+      $html .= $s.'		<span class="fml"><a href="#">Previous</a></span>'."\n";
+      $html .= $s.'		<span class="fmr"><a href="#">Next</a></span>'."\n";
+      $html .= $s.'	</div>'."\n";
+      $html .= $s.'</div>'."\n";
 
       return $html;
    }

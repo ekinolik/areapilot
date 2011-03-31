@@ -898,6 +898,30 @@ class Event extends Location {
       return $db_class->rows['rating'];
    }
 
+   public function attendance($id, &$db_class) {
+      if (verify_int($id) === FALSE) return FALSE;
+
+      if ($db_class === FALSE) {
+	 if ($this->sanity_check() === FALSE) return FALSE;
+	 $rating_table = &$this->rating_table;
+	 $user_table = &$this->user_table;
+	 $db_class = &$this->dbc;
+      } else {
+	 $rating_table = 'rating';
+	 $user_table = 'user';
+      }
+
+      $sql = 'SELECT u."username" as username
+	       FROM "'.$rating_table.'" as r
+	       LEFT OUTER JOIN "'.$user_table.'" as u
+	        ON (u."id" = r."user_id")
+		WHERE r."value" = \'2\' and r."event_id" = \''.$id.'\' ';
+      $db_class->query($sql);
+      $db_class->fetch_array();
+
+      return $db_class->rows;
+   }
+
 }
 
 ?>

@@ -1,3 +1,7 @@
+attendees = null;
+attendeesCols = 15;
+nextAttendant = 0;
+
 $(document).ready(function() {
       $("input.nospam").addClass('nobots');
 
@@ -44,6 +48,12 @@ $(document).ready(function() {
       });
 
       $("a.attending").click(function() {
+	    attendees = null;
+	    nextAttendant = 0;
+
+	    var pardiv = $(this).parents('div.entry').attr('id');
+	    attendance($("#"+pardiv+" div.likebox a.likeit").attr('name'));
+	    blockThis("body",$("#modal-attendees"),nothing(),false,true);
 	    return false;
       });
 
@@ -122,6 +132,17 @@ $(document).ready(function() {
 	    $(this).removeClass('defaultvalue');
       });
 
+      $("div.attendees span.fml a").click(function() {
+	    nextAttendant -= ((attendeesCols * 3) * 2);
+	    createAttendanceCols(nextAttendant);
+	    return false;
+      });
+
+      $("div.attendees span.fmr a").click(function() {
+	    createAttendanceCols(nextAttendant);
+	    return false;
+      });
+
 });
 
 function vote(id, a, t) {
@@ -140,6 +161,61 @@ function vote(id, a, t) {
          alert('strange things are afoot at the circle k');
       }
    });
+}
+
+function attendance(id) {
+   var queryString = 'id='+id;
+
+   $.ajax({
+      type: "GET",
+      url: '/attendance.php?'+queryString,
+      dataType: "json",
+      cache: false,
+      success: function(jsonString) {
+	 displayAttendance(jsonString);
+	 return true;
+      },
+      error: function(xmlhr, ts, et) {
+	 alert('error! error!');
+      }
+   });
+}
+
+function displayAttendance(json) {
+   if (json.error.length > 0) {
+      alert(json.error);
+      return false;
+   }
+
+   attendees = json.attendees;
+   createAttendanceCols(nextAttendant);
+
+   return true;
+}
+
+function createAttendanceCols(offset) {
+   $("ul#attendees_1 li, ul#attendees_2 li, ul#attendees_3 li").empty().remove();
+   
+   var attendantEnd = nextAttendant + (attendeesCols * 3);
+   if (nextAttendant <= 0) {
+      $("div.attendees span.fml a").hide();
+   } else {
+      $("div.attendees span.fml a").show();
+   }
+   if (attendees.length <= attendantEnd) {
+      $("div.attendees span.fmr a").hide();
+   } else {
+      $("div.attendees span.fmr a").show();
+   }
+   for (i = offset; i < attendantEnd; i++) {
+      if (i >= attendees.length) break;
+      if (attendees[i].username.length <= 0) continue;
+      var myLI = $(document.createElement('li')).text(attendees[i].username);
+      var idx = i % 3;
+      $("ul#attendees_"+(idx+1)).append(myLI);
+   }
+
+   nextAttendant = attendantEnd;
 }
 
 function readRating(json) {

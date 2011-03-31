@@ -1040,3 +1040,25 @@ ol#subfaq li a {
 a#faq_answer {
 	font-weight: bold;
 }
+
+ul.attendees {
+	width: 150px;
+	float: left;
+	font-size: 14px;
+	line-height: 1.5em;
+}
+
+div.attendees {
+	width: 400px;
+	margin: 10px auto;
+}
+
+div.attendees span.fml {
+	margin: 10px 0;
+	float: left;
+}
+	
+div.attendees span.fmr {
+	margin: 10px 0;
+	float: right;
+}
