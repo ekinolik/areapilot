@@ -83,7 +83,7 @@ class HTML {
       $html  = $s.'<div class="likebox">'."\n";
       $html .= $s.'	<span class="numlikes" id="numlikes_'.$id.'">'.$rating.'</span>'."\n";
       $html .= $s.'	<span class="xtra">'.$liketext.'</span>'."\n";
-      $html .= $s.'	<a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a=l&r=h').'" name="'.$id.'" class="likeit" rel="nofollow">I Like It</a>'."\n";
+      $html .= $s.'	<a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a=l&r=h').'"  class="likeit" rel="nofollow"><span style="display: none;">'.$id.'</span>I Like It</a>'."\n";
       $html .= $s.'</div><!-- end .likebox -->'."\n";
 
       return $html;
@@ -723,11 +723,11 @@ class HTML {
       $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="close" class="close_modal" /></a>'."\n";
       $html .= $s.'	<h2 class="title">People Attending this Event</h2>'."\n";
       $html .= $s.'	<ul class="attendees" id="attendees_1">'."\n";
-      $html .= $s.'	</ul>'."\n";
+      $html .= $s.'	<li></li></ul>'."\n";
       $html .= $s.'	<ul class="attendees" id="attendees_2">'."\n";
-      $html .= $s.'	</ul>'."\n";
+      $html .= $s.'	<li></li></ul>'."\n";
       $html .= $s.'	<ul class="attendees" id="attendees_3">'."\n";
-      $html .= $s.'	</ul>'."\n";
+      $html .= $s.'	<li></li></ul>'."\n";
       $html .= $s.'	<div class="clearfix"></div>'."\n";
       $html .= $s.'	<div class="attendees">'."\n";
       $html .= $s.'		<span class="fml"><a href="#">Previous</a></span>'."\n";
@@ -741,9 +741,9 @@ class HTML {
    public function login_form($class='', $error='') {
       $s = '				';
       $html = $s.'<form class="modalform" id="login-form" action="'.SROOT_URL.'login" method="post">'."\n";
-      $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
-      $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'	<fieldset>'."\n";
+      $html .= $s.'		<input type="text" name="ns" class="nospam" />'."\n";
+      $html .= $s.'		<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'		<ol>'."\n";
       $html .= $s.'			<li><label for="login-username">Username :</label><input type="text" id="login-username" name="username" class="textfield" /></li>'."\n";
       $html .= $s.'			<li><label for="login-password">Password :</label><input type="password" id="login-password" name="password" class="textfield" />'."\n";
@@ -775,9 +775,9 @@ class HTML {
 
       $s = '				';
       $html  = $s.'<form class="'.$class.'" id="signup-form" action="'.SROOT_URL.'signup" method="post">'."\n";
-      $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
-      $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'	<fieldset>'."\n";
+      $html .= $s.'		<input type="text" name="ns" class="nospam" />'."\n";
+      $html .= $s.'		<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span>'."\n";
       $html .= $s.'		<ol>'."\n";
       $html .= $s.'             <li><span class="formmsg">Required *</span></li>'."\n";
@@ -798,9 +798,9 @@ class HTML {
    public function change_password_form($class='', $error='') {
       $s = '				';
       $html  = $s.'<form class="'.$class.'" id="change_password_form" action="'.SROOT_URL.'change_password" method="post">'."\n";
-      $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
-      $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'	<fieldset>'."\n";
+      $html .= $s.'		<input type="text" name="ns" class="nospam" />'."\n";
+      $html .= $s.'		<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span>'."\n";
       $html .= $s.'		<ol>'."\n";
       $html .= $s.'			<li><label for="change_password">New Password :</label><input type="password" id="change_password" name="password" class="textfield" /></li>'."\n";
@@ -816,13 +816,13 @@ class HTML {
    public function forgot_password_form($class='', $error='') {
       $s = '				';
       $html = $s.'<form class="modalform" id="forgot-password-form" action="'.SROOT_URL.'forgot_password" method="post">'."\n";
-      $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
-      $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'	<fieldset>'."\n";
+      $html .= $s.'		<input type="text" name="ns" class="nospam" />'."\n";
+      $html .= $s.'		<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'		<span class="errormsg">'.$error.'</span><br />'."\n";
       $html .= $s.'		<ol>'."\n";
       $html .= $s.'			<li><label for="login-username">Username :</label><input type="text" id="forgot-username" name="username" class="textfield" /></li>'."\n";
-      $html .= $s.'			<li><label for="login-email">Email :</label><input type="text" id="forgot-email" name="email" class="textfield" />'."\n";
+      $html .= $s.'			<li><label for="forgot-email">Email :</label><input type="text" id="forgot-email" name="email" class="textfield" />'."\n";
       $html .= $s.'			</li>'."\n";
       $html .= $s.'		</ol>'."\n";
       $html .= $s.'		<button type="submit" class="btn-submit ib" id="btn-resetpassword">Reset Password</button>'."\n";
@@ -874,9 +874,9 @@ class HTML {
       $s = '   ';
       $html  = $s.'<div id="submitform" class="submitform">'."\n";
       $html .= $s.'   <form method="post" action="'.SROOT_URL.'post_event" class="fullform">'."\n";
-      $html .= $s.'	<input type="text" name="ns" class="nospam" />'."\n";
-      $html .= $s.'	<input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'   <fieldset>'."\n";
+      $html .= $s.'      <input type="text" name="ns" class="nospam" />'."\n";
+      $html .= $s.'      <input type="text" name="ns2" class="nospam" value="ap" />'."\n";
       $html .= $s.'      <span class="errormsg">'.$error.'</span><br />'."\n";
       $html .= $s.'      <ol>'."\n";
       $html .= $s.'         <li><span class="formmsg">Required *</span></li>'."\n";
@@ -985,10 +985,11 @@ class HTML {
 
       $facebook_meta = HTML::facebook_meta($fb_meta);
 
-      $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"'."\n";
-      $html .= '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'."\n";
+      //$html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"'."\n";
+      $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">'."\n";
+      //$html .= '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'."\n";
       $html .= ''."\n";
-      $html .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">'."\n";
+      $html .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">'."\n";
       $html .= '<head>'."\n";
       $html .= '	<meta http-equiv="content-type" content="text/html; charset=utf-8" />'."\n";
       $html .= '	<meta name="description" content="'.$meta_d.'" />'."\n";
@@ -1041,7 +1042,7 @@ class HTML {
       $address .= $event['zip'];
       $address = urlencode($address);
 
-      $img = '<img src="http://maps.google.com/maps/api/staticmap?center='.$address.'&zoom=14&size=300x200&format=JPEG&sensor=false&markers=color:blue|'.$address.'" alt="'.$address.'" />';
+      $img = '<img src="http://maps.google.com/maps/api/staticmap?center='.$address.'&amp;zoom=14&amp;size=300x200&amp;format=JPEG&amp;sensor=false&amp;markers=color:blue|'.$address.'" alt="'.$address.'" />';
       $map = '<div id="map_canvas">'.$img.'</div>'."\n";
 
       return $map;
@@ -1091,7 +1092,7 @@ class HTML {
 	 $url = urlencode(ROOT_URL);
       }
       
-      $html  = $s.'<a id="tweet_'.$id.'" class="tweetit" href="http://twitter.com/share?url='.$url.'&text='.$text.'&count=horizontal" title="Share this event on Twitter">'."\n";
+      $html  = $s.'<a id="tweet_'.$id.'" class="tweetit" href="http://twitter.com/share?url='.$url.'&amp;text='.$text.'&amp;count=horizontal" title="Share this event on Twitter">'."\n";
       $html .= '<img src="/images/icons/tweetn.png" alt="Tweet" />'."\n";
       $html .= '</a>'."\n";
 

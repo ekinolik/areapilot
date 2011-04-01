@@ -30,7 +30,7 @@ $(document).ready(function() {
 
       // For voting
       $("a.likeit").bind('click', function() {
-	 vote($(this).attr('name'), 'l', 'e');
+	 vote($("span", $(this)).text(), 'l', 'e');
 	 return false;
       });
 
@@ -51,7 +51,7 @@ $(document).ready(function() {
 	    nextAttendant = 0;
 
 	    var pardiv = $(this).parents('div.entry').attr('id');
-	    attendance($("#"+pardiv+" div.likebox a.likeit").attr('name'));
+	    attendance($("#"+pardiv+" div.likebox a.likeit span").text());
 	    blockThis("body",$("#modal-attendees"),nothing(),false,true);
 	    return false;
       });
