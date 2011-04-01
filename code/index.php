@@ -22,5 +22,4 @@ $fb_meta['url'] = ROOT_URL;
 $fb_meta['image'] = IMG_URL.'images/logo.png';
 $fb_meta['site_name'] = 'AreaPilot';
 $fb_meta['admins'] = FACEBOOK_ADMINS;
-$fb_meta['app_id'] = FACEBOOK_APP_ID;
 ?>
