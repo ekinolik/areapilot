@@ -1029,6 +1029,8 @@ class HTML {
 	 $html .= $s.'<meta property="og:site_name" content="'.$fbm['site_name'].'" />'."\n";
       if (isset($fbm['admins']))
 	 $html .= $s.'<meta property="fb:admins" content="'.$fbm['admins'].'" />'."\n";
+      if (isset($fbm['app_id']))
+	 $html .= $s.'<meta property="fb:app_id" content="'.$fbm['app_id'].'" />'."\n";
 
       return $html;
    }
