@@ -203,18 +203,28 @@ class Event extends Location {
 
       $sql = '
 	       FROM ( '.$rating_query.' ) as r
-	       LEFT OUTER JOIN "'.$this->event_table.'" as e ON (e."id" = r."event_id")
-	       LEFT OUTER JOIN "'.$this->event_category_table.'" as ec ON (ec."event_id" = e."id")
+	       LEFT OUTER JOIN "'.$this->event_table.'" as e
+	        ON (e."id" = r."event_id")
+	       LEFT OUTER JOIN "'.$this->event_category_table.'" as ec
+		ON (ec."event_id" = e."id")
 	       LEFT OUTER JOIN "'.$this->category_table.'" as cat 
-	       ON (cat."id" = ec."category_id" )
+	        ON (cat."id" = ec."category_id" )
 	       LEFT OUTER JOIN "'.$this->event_description_table.'" as ed
-	       ON (ed."event_id" = e."id")
-	       LEFT OUTER JOIN "'.$this->venue_table.'" as v ON (v."id" = ed."venue_id")
-	       LEFT OUTER JOIN "'.$this->zip_table.'" as z ON (z."id" = v."zip_id")
-	       LEFT OUTER JOIN "'.$this->zip_city_table.'" as zc ON (zc."zip_id" = z."id")
-	       LEFT OUTER JOIN "'.$this->city_table.'" as c ON (c."id" = zc."city_id")
-	       LEFT OUTER JOIN "'.$this->area_table.'" as a ON (a."id" = e."area_id")
-	       LEFT OUTER JOIN "'.$this->user_table.'" as u ON (u."id" = e."user_id")
+	        ON (ed."event_id" = e."id")
+		LEFT OUTER JOIN "'.$this->venue_table.'" as v
+		 ON (v."id" = ed."venue_id")
+	       LEFT OUTER JOIN "'.$this->zip_table.'" as z
+	        ON (z."id" = v."zip_id")
+	       LEFT OUTER JOIN "'.$this->zip_city_table.'" as zc
+	        ON (zc."zip_id" = z."id")
+	       LEFT OUTER JOIN "'.$this->city_table.'" as c
+	        ON (c."id" = zc."city_id")
+	       LEFT OUTER JOIN "'.$this->area_table.'" as a
+	        ON (a."id" = e."area_id")
+	       LEFT OUTER JOIN "'.$this->user_table.'" as u
+	        ON (u."id" = e."user_id")
+	       LEFT OUTER JOIN "'.$this->rating_table.'" as r2 
+	        ON (r2."event_id" = e."id" AND r2."user_id" = \''.$this->user_id.'\')
 	       WHERE '.$category_clause.' AND '.$date_clause.' ';
 
       return $sql;
@@ -249,7 +259,7 @@ class Event extends Location {
       $offset = $this->create_offset(PAGE);
       $sql = 'SELECT e."id", u."username", e."time", e."title", e."uri_title", ed."description",
 	        c."name" as city, a."name" as area, r."rating", cat."title" as category,
-	        v."name" as venue
+	        v."name" as venue, r2."value" as user_rating
 	       '.$this->event_query().'
 	       ORDER BY r."rating" DESC, ed."date_added" DESC
 	       LIMIT '.EVENT_LIST_COUNT.' 

@@ -5,6 +5,11 @@ if ( ! defined('CHATCLASS'))  require(LIB_DIR.'Chat.php');
 
 $event = new Event($db_class, $error_class);
 
+if (LOGGED_IN === TRUE) 
+   $event->user_id = $session->user_id;
+else
+   $event->user_id = -1;
+
 $event->start_time = TIME_START;
 $event->end_time = TIME_END;
 

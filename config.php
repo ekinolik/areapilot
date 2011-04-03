@@ -65,4 +65,6 @@ $CSS = array('ap_default.min.css');
 
 define('CURRENT_TIME', time());
 define('BIGINT', 9223372036854775807);
+
+$fb_meta = array();
 ?>

@@ -28,8 +28,15 @@ class HTML {
       else if ($attendance === '1') $attendance .= ' Person Attending';
       else                          $attendance =  ' 0 People Attending';
 
-      //$fb_like = HTML::FB_like($event['uri_title'], $event);
-      //$tweet   = HTML::Tweet('/'.$event['uri_title'], $event);
+      if ($event['user_rating'] == 2) {
+	 $attend_text = 'No Longer Attending';
+	 $attend_class = 'notattending';
+	 $attend_action = 'l';
+      } else {
+	 $attend_text = 'Attend This Event';
+	 $attend_class = 'attendthis';
+	 $attend_action = 'a';
+      } 
 
       $html  = $s.'<div class="entry clearfix" id="entry_'.$count.'">'."\n";
       $html .= HTML::likebox($event);
@@ -42,7 +49,7 @@ class HTML {
       $html .= $s.'		<div class="description"><p>'.$description.'</p>'."\n";
       $html .= $s.'		</div><!-- end .description -->'."\n";
       $html .= $s.'		<ul class="actionlinks">'."\n";
-      $html .= $s.'			<li><a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a=a&r=h').'" name="'.$id.'" class="attendthis" rel="nofollow" >Attend This Event</a></li>'."\n";
+      $html .= $s.'			<li><a href="'.ROOT_URL.'vote.php?'.urlencode('id='.$id.'&t=e&a='.$attend_action.'&r=h').'" name="'.$id.'" class="attend_rating '.$attend_class.'" rel="nofollow" >'.$attend_text.'</a></li>'."\n";
       $html .= $s.'			<li><a href="#" class="attending">'.$attendance.'</a></li>'."\n";
       $html .= $s.'			<li><a href="'.ROOT_URL.$uri_title.'" class="commentsnum"><!--___COMMENT_COUNT___--></a></li>'."\n";
       $html .= $s.'		</ul>'."\n";

@@ -1,6 +1,7 @@
 attendees = null;
 attendeesCols = 15;
 nextAttendant = 0;
+last_vote_type = 0;
 
 $(document).ready(function() {
       $("input.nospam").addClass('nobots');
@@ -30,12 +31,19 @@ $(document).ready(function() {
 
       // For voting
       $("a.likeit").bind('click', function() {
+	 last_vote_type = 1;
 	 vote($("span", $(this)).text(), 'l', 'e');
 	 return false;
       });
 
-      $("a.attendthis").bind('click', function() {
-	 vote($(this).attr('name'), 'a', 'e');
+      $("a.attend_rating").bind('click', function() {
+	 last_vote_type = 2;
+	 if ($(this).hasClass('attendthis')) {
+	    vote($(this).attr('name'), 'a', 'e');
+	 } else {
+	    vote($(this).attr('name'), 'l', 'e');
+	 }
+
 	 return false;
       });
 
@@ -154,9 +162,11 @@ function vote(id, a, t) {
       cache: false,
       success: function(jsonString) {
          readRating(jsonString);
+	 last_vote_type = 0;
 	 return true;
       },
       error: function(xmlhr, ts, et) {
+	 last_vote_type = 0;
          alert('strange things are afoot at the circle k');
       }
    });
@@ -218,7 +228,7 @@ function createAttendanceCols(offset) {
 }
 
 function readRating(json) {
-   if (json.error.length > 0) {
+   if (typeof json.error.error != 'undefined' && json.error.error.length > 0) {
       if (json.error.errno == 4) {
 	 blockThis("body",$("#modal-login"),nothing(),false,true);
       } else {
@@ -234,6 +244,17 @@ function readRating(json) {
 
 function updateRating(e, v) {
    $("span#numlikes_"+e).text(v);
+
+   attend = $("a.attend_rating", $("span#numlikes_"+e).parent().parent());
+   if (attend.hasClass('attendthis') && last_vote_type == 2) {
+      attend.removeClass('attendthis');
+      attend.addClass('notattending');
+      attend.text('No Longer Attending');
+   } else if (attend.hasClass('notattending')) {
+      attend.removeClass('notattending');
+      attend.addClass('attendthis');
+      attend.text('Attend This Event');
+   }
 }
 
 // For generic blockUI functions, only for blocking specific elements
