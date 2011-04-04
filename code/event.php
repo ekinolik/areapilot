@@ -27,8 +27,9 @@ $fb_meta['image'] = IMG_URL.'images/logo.png';
 $fb_meta['site_name'] = 'AreaPilot';
 $fb_meta['admins'] = FACEBOOK_ADMINS;
 
-if ($_SERVER['HTTP_REFERER'] === ROOT_URL.'post_event' ||
-   $_SERVER['HTTP_REFERER'] === SROOT_URL.'post_event') {
+if (isset($_SERVER['HTTP_REFERER']) && 
+   ($_SERVER['HTTP_REFERER'] === ROOT_URL.'post_event' ||
+    $_SERVER['HTTP_REFERER'] === SROOT_URL.'post_event')) {
       $display_shares = TRUE;
 }
 ?>
