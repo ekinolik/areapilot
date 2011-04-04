@@ -1101,6 +1101,7 @@ class HTML {
 
    public function FB_like($uri, $event) {
       $s = '					';
+      if (substr($uri, 0, 1) === '/') $uri = substr($uri, 1);
       $url = urlencode(ROOT_URL.$uri);
       $ref = urlencode($event['id']);
 
