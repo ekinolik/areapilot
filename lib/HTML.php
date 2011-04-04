@@ -745,6 +745,31 @@ class HTML {
       return $html;
    }
 
+   public function modal_shares($display, $event=FALSE) {
+
+      if ($display === TRUE) {
+	 $display_class = ' displayshares ';
+	 $fb_like = HTML::FB_like($_SERVER['REQUEST_URI'], $event);
+	 $tweet   = HTML::Tweet($_SERVER['REQUEST_URI'], $event);
+      } else {
+	 $display_class = ' ';
+	 $fb_like = HTML::FB_like(ROOT_URL, array('id'=>0));
+	 $tweet   = HTML::Tweet(ROOT_URL, array('id'=>0));
+      }
+
+      $s = '			';
+      $html  = $s.'<div id="modal-share" class="modal '.$display_class.'">'."\n";
+      $html .= $s.'	<a href="#" class="close_button"><img src="/images/icons/ico-close-button.png" alt="close" class="close_modal" /></a>'."\n";
+      $html .= $s.'	<h2 class="title">Do You Want To Share This Event?</h2>'."\n";
+      $html .= $s.'	<div>'."\n";
+      $html .= $s.$fb_like;
+      $html .= $s.$tweet;
+      $html .= $s.'	</div>'."\n";
+      $html .= $s.'</div>'."\n";
+
+      return $html;
+   }
+
    public function login_form($class='', $error='') {
       $s = '				';
       $html = $s.'<form class="modalform" id="login-form" action="'.SROOT_URL.'login" method="post">'."\n";

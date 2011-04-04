@@ -308,6 +308,15 @@ div.modal h2.title {
 	text-shadow: #fff 1px 1px 0;
 }
 
+div#modal-share {
+	width: 450px;
+}
+
+div#modal-share div {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
 #maincol h3#time {
 	width: 100%;
 	padding-bottom: 5px;

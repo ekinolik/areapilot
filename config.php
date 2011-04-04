@@ -67,4 +67,5 @@ define('CURRENT_TIME', time());
 define('BIGINT', 9223372036854775807);
 
 $fb_meta = array();
+$display_shares = FALSE;
 ?>

@@ -144,6 +144,10 @@ jQuery(function($) {
 	    });
       }
 
+      if ($("div#modal-share").hasClass('displayshares')) {
+	 blockThis("body",$("#modal-share"), nothing(), false, true);
+      }
+
       window.fbAsyncInit = function() {
        FB.init({appId: 'AreaPilot', status: true, cookie: true,
 		xfbml: true});

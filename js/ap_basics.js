@@ -51,7 +51,8 @@ $(document).ready(function() {
 	 var tag_id = $(this).attr('id');
 	 var id = tag_id.substr(tag_id.indexOf('_')+1);
 	 vote(id, 'l', 'e');
-	 return true;
+	 window.open($(this).attr('href'), 'blah', 'height=200, width=200');
+	 return false;
       });
 
       $("a.attending").click(function() {
@@ -191,7 +192,7 @@ function attendance(id) {
 }
 
 function displayAttendance(json) {
-   if (json.error.length > 0) {
+   if (typeof json.error.error != 'undefined' && json.error.error.length > 0) {
       alert(json.error);
       return false;
    }
@@ -232,7 +233,7 @@ function readRating(json) {
       if (json.error.errno == 4) {
 	 blockThis("body",$("#modal-login"),nothing(),false,true);
       } else {
-	 alert(json.error);
+	 alert(json.error.error);
       }
       return false;
    }
