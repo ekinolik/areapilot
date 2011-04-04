@@ -754,7 +754,7 @@ class HTML {
       } else {
 	 $display_class = ' ';
 	 $fb_like = HTML::FB_like(ROOT_URL, array('id'=>0));
-	 $tweet   = HTML::Tweet(ROOT_URL, array('id'=>0));
+	 $tweet   = HTML::Tweet(ROOT_URL, '');
       }
 
       $s = '			';
