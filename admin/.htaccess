@@ -1,4 +1,0 @@
-AuthType Basic
-AuthName "Admin Area"
-AuthUserFile /etc/httpd/conf.d/htpasswd/wh.direnetworks.com
-Require valid-user
